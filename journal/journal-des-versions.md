@@ -895,3 +895,14 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Comme pour la Gomme, les objectifs de coups des bots ne sont pas recalculés : le Compas joué par un bot (boss du Jardin) peut être un peu plus lent qu'avant.
 - Testé : parties de bots Compas contre Classique sur 4 circuits, toutes terminées, sans erreur.
 - Archive : pencil-race_v193_avant-compas.html
+
+## v195 — L'Agrafeuse : le boss final prend vie
+- Dans le dernier niveau (Usine), l'Agrafeuse ne roule plus comme une simple Classique : elle reste toujours légèrement derrière toi (environ un demi-tir), quitte à tirer en arrière quand elle est devant.
+- Tous les 3 de ses tours, elle échange sa place avec toi (même si elle est déjà devant). L'échange prend son tour, puis c'est à toi.
+- Si tu peux toucher l'arrivée à ton prochain tour et qu'elle est derrière toi, elle échange tout de suite, sans attendre les 3 tours (le compteur repart à 3 après chaque échange).
+- Si elle peut elle-même toucher l'arrivée, elle y va et elle gagne.
+- Un compteur est affiché à côté de son nom : « échange dans 3 tours », « 2 tours », « à son prochain tour ».
+- Le « un tour sur deux » en arrière n'est pas une alternance fixe : elle recule seulement quand elle est devant le point où elle veut se placer.
+- Attention, à valider en jouant : avec ces règles exactes, la fenêtre pour gagner est très étroite (il faut que, après l'échange, ton ancienne place à elle te permette encore de toucher l'arrivée). Dans les parties simulées, le joueur automatique ne la bat pas ; à voir à la main, et à ajuster (écart, délai de 3 tours) selon ton ressenti.
+- Testé : parties simulées sur l'Usine (joueur qui fonce, joueur malin, joueur prudent) sans erreur, échanges tous les 3 tours et échanges d'urgence observés, compteur affiché ; bots sur Zigzag et Jardin inchangés.
+- Archive : pencil-race_v194_avant-agrafeuse.html

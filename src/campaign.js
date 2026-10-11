@@ -35,6 +35,63 @@
     for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && CAMP_BOSS[c] === key && camp.won[c]) return true;
     return false;
   }
+  // ---------- L'AGRAFEUSE (boss final) ----------
+  // Elle ne mène jamais par ses propres tirs : elle reste « légèrement derrière » le joueur (environ la moitié d'un tir), quitte à tirer en arrière.
+  // Tous les 3 de ses tours elle échange sa place avec lui ; et si le joueur peut toucher l'arrivée à son prochain tour (alors qu'elle est derrière), elle échange tout de suite.
+  var STAPLE_EVERY = 3;
+  function campBossInit() {
+    for (var i = 0; i < players.length; i++) {
+      var q = players[i];
+      q.boss = (botMode && camp.active && camp.circuit === CAMP_FINAL && q.bot) ? 'agrafeuse' : null;
+      q.stapleTurns = 0;
+      q.bossAim = null;
+    }
+  }
+  // texte du compteur d'échange, affiché à côté de son nom
+  function campBossChip(q) {
+    if (!q.boss || q.done) return '';
+    var left = STAPLE_EVERY - (q.stapleTurns || 0);
+    return left <= 1 ? ' · échange à son prochain tour' : ' · échange dans ' + left + ' tours';
+  }
+  // est-ce que cette voiture peut toucher l'arrivée avec un seul tir, depuis sa place ?
+  function stapleCanFinish(q) {
+    var rng = MAXD * POWER * (q.rm || 1);
+    if (progressOf(q.x, q.y, null).s + rng * 1.05 < circuit.finishS) return false;
+    var pows = [1, 0.85, 0.7, 0.55];
+    for (var ai = 0; ai < 144; ai++) {
+      var ang = ai * Math.PI * 2 / 144;
+      for (var pi = 0; pi < pows.length; pi++) {
+        var sm = simulateShot(q, q.x, q.y, ang, rng * pows[pi], inTrack, Math.random, true);
+        if (sm.res.type === 'finish') return true;
+      }
+    }
+    return false;
+  }
+  // renvoie true si elle a échangé sa place (son tour est alors terminé) ; sinon règle sa visée (p.bossAim) et laisse le bot tirer
+  function stapleMove(p, now) {
+    p.bossAim = null;
+    var h = null, i;
+    for (i = 0; i < players.length; i++) if (!players[i].bot && !players[i].done) h = players[i];
+    if (!h) return false;
+    p.stapleTurns = (p.stapleTurns || 0) + 1;
+    var sA = progressOf(p.x, p.y, null).s, sH = progressOf(h.x, h.y, null).s;
+    var behind = sA < sH - 1;
+    var gap = MAXD * POWER * (p.rm || 1) * 0.5;
+    // capable de toucher l'arrivée (elle est alors devant, ou le joueur n'y est pas encore) : elle gagne
+    if (stapleCanFinish(p)) { p.bossAim = { allowFinish: true, target: sH - gap }; return false; }
+    var swap = (behind && stapleCanFinish(h)) || p.stapleTurns >= STAPLE_EVERY;
+    if (swap) {
+      var tx = p.x, ty = p.y;
+      p.x = h.x; p.y = h.y;
+      h.x = tx; h.y = ty;
+      p.stapleTurns = 0;
+      say(p.name + ' échange sa place avec toi !', now);
+      endTurn(now);
+      return true;
+    }
+    p.bossAim = { allowFinish: false, target: sH - gap };
+    return false;
+  }
   function campOpen(cid) { return cid !== CAMP_FINAL || campWonCount() >= 7 || CAMP_ALL; }
   function campRestore() {
     if (camp.saved) { for (var k in camp.saved) settings[k] = camp.saved[k]; camp.saved = null; }

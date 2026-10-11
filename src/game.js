@@ -1522,7 +1522,7 @@
       for (var i = 0; i < players.length; i++) {
         var p = players[i];
         h += '<div class="chip' + (i === cur && !finished ? ' on' : '') + '" style="--c:' + p.color +
-          ';--t:' + p.on + '">' + p.name + ' · ' + p.shots + (p.puActive ? ' · ' + puShort(p.puActive) : p.pu ? ' · ' + puShort(p.pu) : '') + (i === cur && p.spt > 1 && !finished && !p.done ? ' (' + Math.max(0, p.shotsLeft) + '/' + p.spt + ')' : '') + (p.done ? ' 🏁' : '') + '</div>';
+          ';--t:' + p.on + '">' + p.name + ' · ' + p.shots + (p.puActive ? ' · ' + puShort(p.puActive) : p.pu ? ' · ' + puShort(p.pu) : '') + (i === cur && p.spt > 1 && !finished && !p.done ? ' (' + Math.max(0, p.shotsLeft) + '/' + p.spt + ')' : '') + (p.done ? ' 🏁' : '') + campBossChip(p) + '</div>';
       }
       s2.innerHTML = h;
     }
@@ -1659,6 +1659,7 @@
     }
     // face à la même voiture (campagne) : l'adversaire prend une couleur différente
     if (botMode && players[0].carKey === players[1].carKey) { players[1].car = '#1d4ed8'; players[1].color = '#1d4ed8'; players[1].on = '#ffffff'; }
+    campBossInit();
     // paramètres cachés : l'avantage d'une némésis s'applique quand on joue contre elle
     if (botMode) {
       for (var hi = 0; hi < 2; hi++) {
@@ -4905,6 +4906,12 @@
     var crossBot = p.power === 'cross' && !p.erased;
     function pace(g, w) { return crossBot ? -Math.max(0, w - g) - 0.03 * Math.max(0, g - w) : -Math.abs(g - w); }
     function score(r) {
+      if (p.bossAim) {
+        // l'Agrafeuse : rester environ un demi-tir derrière le joueur (jamais finir sauf si elle est devant)
+        if (r.type === 'finish') return p.bossAim.allowFinish ? 1e6 : -1e5;
+        var pbs = progressOf(r.x, r.y, r.tunnel ? null : idx);
+        return -Math.abs(pbs.s - p.bossAim.target) - 0.25 * pbs.d - (r.type === 'exit' ? 40 : 0);
+      }
       if (r.type === 'finish') return lastOne ? 1e6 : -1e5;
       if (r.tunnel && r.tunnel.kind === 'in') {
         if (lvl === 'facile') return -1e5;
@@ -5001,6 +5008,7 @@
   function botMove(now) {
     var p = players[cur];
     var plan;
+    if (p.boss === 'agrafeuse' && stapleMove(p, now)) return;
     if (p.pushed) {
       var r0 = p.rm;
       p.rm = r0 * 0.5;
