@@ -1972,7 +1972,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
   var elPause = document.getElementById('pause');
 
   function goRequired() {
-    if (online) return cur === online.me;
+    if (online) return false;   // en ligne : pas de bouton GO (seul ton tour te laisse viser)
     var soloGo = settings.diff === 'hard' || settings.go === 'oui';
     if (botMode) return !(players[cur] && players[cur].bot) && soloGo;
     return n > 1 || soloGo;
@@ -2046,7 +2046,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
         ? "Appuie sur GO quand tu es prêt, puis glisse vers l'arrière et relâche."
         : "Glisse le doigt vers l'arrière, relâche : la voiture part dans l'autre sens.";
     } else {
-      t = online ? 'Tu es ' + players[online.me].name + ". Chacun son tour : GO, puis glisse vers l'arrière et relâche." : "Chacun son tour : GO, puis glisse vers l'arrière et relâche. Rouge commence !";
+      t = online ? 'Tu es ' + players[online.me].name + ". Chacun son tour : glisse vers l'arrière et relâche quand c'est à toi." : "Chacun son tour : GO, puis glisse vers l'arrière et relâche. Rouge commence !";
     }
     if (players[0] && humanOf().follow) t += " Compas : choisis la direction et la force, ta voiture épouse la courbe du circuit.";
     if (circuit.big) t += " Maintiens le bouton carte (en bas à droite) pour voir toute la piste, avant le GO.";

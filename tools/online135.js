@@ -57,8 +57,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const pg = pages[cur];
     const ang0 = await pg.evaluate(() => window.__T.circuitNow().ang0);
     // GO
-    await pg.waitForFunction(() => !document.getElementById('goBtn').hidden, null, { timeout: 8000 });
-    await pg.evaluate(() => document.getElementById('goBtn').click());
+    if (!(await pg.evaluate(() => document.getElementById('goBtn').hidden))) { console.log('ERREUR : le bouton GO est visible'); bad++; }
     const box = await pg.evaluate(() => { const r = document.getElementById('c').getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; });
     const cx = box.x + box.w / 2, cy = box.y + box.h * 0.75;
     const len = 50 + (k % 4) * 8, jit = ((k * 37) % 21 - 10) * 0.01;

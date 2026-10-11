@@ -590,3 +590,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Code : `src/online.js` (inclus par `tools/build.py`), `vendor/peerjs.min.js` (PeerJS 1.5.4, MIT), `fire` découpé en `buildShot` + `launch`. Test : `tools/online135.js` (serveur PeerJS local + 2 à 3 navigateurs : positions identiques après chaque tour sur Zigzag, Grotte à 3 joueurs, Jardin).
 - À vérifier par Mika sur de vrais téléphones (4G / Wi-Fi différents).
 - Archive : pencil-race_v134_avant-multi-en-ligne.html
+
+## v136 — Multi en ligne : plus de bouton GO
+- En ligne, le bouton GO disparaît : à ton tour tu glisses et relâches directement ; le texte d'aide est adapté. Le multi sur un seul téléphone et le solo ne changent pas. Test en ligne refait (2 joueurs, positions identiques, bouton GO jamais visible).
+- Archive : pencil-race_v135_avant-sans-go.html
