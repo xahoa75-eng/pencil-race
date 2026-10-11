@@ -420,3 +420,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .pic-btn.onl-mode.fr { --H: 34px; --fs: 22px; }
 /* les deux icônes ont exactement la même taille : l'image s'étire pour remplir la même boîte */
 .pic-btn.onl-mode.fr img { object-fit: fill; aspect-ratio: 425 / 510; }
+/* bouton « Lancer » : le dessin du feu vert (GO), même icône dans Entraînement, Multi local et En ligne */
+.launch.fr { width: 78%; margin: 0 auto; }
+.launch.fr img { aspect-ratio: 949 / 884; object-fit: fill; object-position: 50% 50%; }
+.launch[disabled] { opacity: .45; cursor: not-allowed; }

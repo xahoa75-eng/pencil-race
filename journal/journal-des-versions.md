@@ -713,3 +713,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v163 — Créer / Rejoindre : les deux icônes à la même taille
 - Les deux cadres ont maintenant exactement la même taille (mesuré : 286 × 333 px sur un écran de 393 px) : les images s'étirent légèrement pour remplir la même boîte.
 - Archive : pencil-race_v162_avant-meme-taille.html
+
+## v164 — Nouvelle icône « Lancer » (feu vert GO)
+- Les boutons « Lancer » (Entraînement, Jouer en local) et « Lancer la course » (En ligne) utilisent tous la même nouvelle icône : le feu tricolore, la ligne de damier et le GO vert avec la flèche. En ligne, le bouton garde son état grisé tant que tous les joueurs ne sont pas connectés.
+- L'ancienne image est conservée (`assets/images/lancer-ancienne.jpg`). Nouvelle image : `assets/images/lancer.jpg`.
+- Archive : pencil-race_v163_avant-icone-go.html
