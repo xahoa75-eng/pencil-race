@@ -1327,6 +1327,8 @@
   var forced = null;      // tirage imposé par l'hôte en ligne : { door, tun }
   var lastDoor = null, lastTun = null;   // ce qui a été tiré au début de la partie (envoyé aux invités)
   var puddles = [];
+  var bubbles = [];       // bulles « ? » (power-ups, multi en ligne) : { id, x, y, popped }
+  var BUB_R = 13;
   var tunnels = [];       // tunnels de la Grotte (tirés au hasard à chaque partie) : { id, kind: 'in' (petite bouche) | 'out' (grande bouche), x, y, r, to: [x, y] }
   var fx = [];            // traînées et flaques de la Colle et du Correcteur : { kind: 'glue'|'corr', type: 'trail'|'blob', owner, pts, hw }
   var phase = 'aim';      // 'pre' = avant le GO, 'aim' = visée / tir
@@ -1397,7 +1399,7 @@
       for (var i = 0; i < players.length; i++) {
         var p = players[i];
         h += '<div class="chip' + (i === cur && !finished ? ' on' : '') + '" style="--c:' + p.color +
-          ';--t:' + p.on + '">' + p.name + ' · ' + p.shots + (i === cur && p.spt > 1 && !finished && !p.done ? ' (' + Math.max(0, p.shotsLeft) + '/' + p.spt + ')' : '') + (p.done ? ' 🏁' : '') + '</div>';
+          ';--t:' + p.on + '">' + p.name + ' · ' + p.shots + (p.puActive ? ' · ' + CARS[p.puActive].short : p.pu ? ' · ' + CARS[p.pu].short : '') + (i === cur && p.spt > 1 && !finished && !p.done ? ' (' + Math.max(0, p.shotsLeft) + '/' + p.spt + ')' : '') + (p.done ? ' 🏁' : '') + '</div>';
       }
       s2.innerHTML = h;
     }
@@ -1547,10 +1549,11 @@
       botFirst = true;
     }
     // le Compas a besoin de la progression sur la piste pour épouser sa courbe
-    if (players.some(function (pl) { return pl.follow; })) ensureProgGrid();
+    if (online || players.some(function (pl) { return pl.follow; })) ensureProgGrid();
     cur = 0;
     trails = [];
     puddles = [];
+    bubbles = [];
     fx = [];
     (circuit.funnels || []).forEach(function (f) { f.used = false; });
     gapSide = 1;
@@ -1593,15 +1596,58 @@
   // Colle = son tir suivant est réduit de moitié ; Correcteur = son pouvoir est annulé pour ce tour (elle joue comme une Classique)
   var corrFlip = false;
   function hasPower(q) { return !!(q.power || q.spt > 1 || q.follow); }
+  // power-ups (en ligne) : une bulle donne le pouvoir d'une voiture pour le prochain tour de celui qui l'a ramassée
+  var PU_KEYS = ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle'];
+  function equipPU(p, key) {
+    var sh = CARS[key];
+    p.puActive = key;
+    p.power = sh.power;
+    p.bounceLoss = sh.bounceLoss;
+    p.bounceGains = sh.bounceGains || null;
+    p.crossLoss = sh.crossLoss;
+    p.spt = sh.shotsPerTurn || 1;
+    p.rm = p.rmBase = sh.rangeMul || 1;
+    p.shotsLeft = p.spt;
+    p.follow = sh.follow || null;
+    p.trail = sh.trail || null;
+  }
+  function unequipPU(p) {
+    if (!p.puActive) return;
+    p.puActive = null;
+    p.power = null;
+    p.bounceLoss = undefined;
+    p.bounceGains = null;
+    p.crossLoss = undefined;
+    p.spt = 1;
+    p.rm = p.rmBase = 1;
+    p.shotsLeft = 1;
+    p.follow = null;
+    p.trail = null;
+  }
+  function applyPicks(p, a, now) {
+    if (!a.ev) return;
+    var got = null, i, k;
+    for (i = 0; i < a.ev.length; i++) {
+      if (a.ev[i].t !== 'pick') continue;
+      for (k = bubbles.length - 1; k >= 0; k--) if (bubbles[k].id === a.ev[i].b) bubbles.splice(k, 1);
+      if (!got) got = a.ev[i].k;
+    }
+    if (got && CARS[got]) {
+      p.pu = got;
+      say('Bulle ! Pouvoir ' + CARS[got].short + ' au prochain tour', now);
+    }
+  }
   function corrTurn(now) {
     var pl = players[cur], i;
     for (i = 0; i < players.length; i++) {
+      unequipPU(players[i]);
       players[i].erased = false;
       players[i].pushed = false;
       players[i].glueOn = false;
       players[i].rm = players[i].rmBase;
     }
     if (!pl.done) {
+      if (pl.pu) { equipPU(pl, pl.pu); pl.pu = null; }
       var erasedNow = false;
       if (pl.eraseNext) {
         pl.eraseNext = false;
@@ -1731,7 +1777,7 @@
     ovHeld = false;
     phase = goRequired() ? 'pre' : 'aim';
     botAt = now + 800;
-    if (online && !(toast && toast.until > now)) say(cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name, now);
+    if (online && !(toast && toast.until > now)) say((cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name) + (players[cur].puActive ? ' · pouvoir ' + CARS[players[cur].puActive].short : ''), now);
   }
 
   // passe au joueur suivant ; une voiture qui joue « un tour sur deux » saute son tour
@@ -3727,6 +3773,29 @@
     ctx.stroke();
   }
   // taches d'encre de la Plume
+  function drawBubbles(now) {
+    for (var k = 0; k < bubbles.length; k++) {
+      var b = bubbles[k];
+      if (b.popped) continue;
+      var bob = Math.sin(now / 420 + b.id) * 1.6, r = BUB_R;
+      var g = ctx.createRadialGradient(b.x - r * 0.35, b.y + bob - r * 0.4, r * 0.1, b.x, b.y + bob, r);
+      g.addColorStop(0, 'rgba(255,255,255,0.95)');
+      g.addColorStop(0.55, 'rgba(160,215,255,0.55)');
+      g.addColorStop(1, 'rgba(90,150,235,0.75)');
+      ctx.beginPath();
+      ctx.arc(b.x, b.y + bob, r, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = 'rgba(40,90,190,0.9)';
+      ctx.stroke();
+      ctx.fillStyle = '#1b3f9c';
+      ctx.font = 'bold 15px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('?', b.x, b.y + bob + 1);
+    }
+  }
   function drawPuddles() {
     for (var k = 0; k < puddles.length; k++) {
       var q = puddles[k], N = q.blob.length, pts = [];
@@ -4229,6 +4298,7 @@
     }
     if (anim && !anim.fail) pencilLine(anim.path, anim.idx, anim.cx, anim.cy, p.color);
     drawPuddles();
+    drawBubbles(now);
     drawFx();
 
     // viseur : crayon d'élan (toujours) + trajectoire (mode facile)
@@ -4434,7 +4504,7 @@
     // si elle part déjà de l'intérieur d'une flaque, celle-ci ne l'arrête pas
     var pi = puddleAt(p, x, y, hit);
     if (pi >= 0) hit[pi] = 1;
-    var th = {};
+    var th = {}, bgot = false;
     if (tunnels.length) { var ti0 = tunnelAt(x, y, th); if (ti0 >= 0) th[ti0] = 1; }
     while (rem > 0 && guard++ < 4000) {
       var s = Math.min(STEP, rem);
@@ -4445,6 +4515,12 @@
         uy = Math.sin(thh);
       }
       var nx = x + ux * s, ny = y + uy * s;
+      if (!lite && !bgot && bubbles.length) {
+        for (var bi = 0; bi < bubbles.length; bi++) {
+          var bb = bubbles[bi];
+          if (Math.hypot(nx - bb.x, ny - bb.y) <= BUB_R + 2) { bgot = true; ev.push({ i: path.length - 1, t: 'pick', b: bb.id, k: PU_KEYS[(Math.random() * PU_KEYS.length) | 0] }); break; }
+        }
+      }
       if (inT(nx, ny)) {
         onTrack = true;
         x = nx;
@@ -4826,6 +4902,7 @@
     else if (type === 'cross') say('Traversée !', now);
     else if (type === 'splash') say((e && e.m) || circuit.block || 'Plouf !', now);
     else if (type === 'push') say('Recul !', now);
+    else if (type === 'pick') { for (var bk = 0; bk < bubbles.length; bk++) if (bubbles[bk].id === e.b) bubbles[bk].popped = true; say('Bulle !', now); }
   }
   function updateAnim(now) {
     var p = players[cur];
@@ -4859,6 +4936,7 @@
   // applique le résultat du tir une fois l'animation terminée
   function endShot(now) {
     var p = players[cur], a = anim, r = a.res;
+    if (r.type !== 'exit' || settings.exit === 'tol') applyPicks(p, a, now);
     var drop = (p.power === 'plume' && !p.erased) ? backPoint(a.path, a.cum, circuit.puddleR + PUDDLE_GAP) : null;
     if (r.type === 'finish') {
       trails.push({ pts: a.path, color: p.color, ok: true });

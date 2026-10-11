@@ -594,3 +594,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v136 — Multi en ligne : plus de bouton GO
 - En ligne, le bouton GO disparaît : à ton tour tu glisses et relâches directement ; le texte d'aide est adapté. Le multi sur un seul téléphone et le solo ne changent pas. Test en ligne refait (2 joueurs, positions identiques, bouton GO jamais visible).
 - Archive : pencil-race_v135_avant-sans-go.html
+
+## v137 — Multi en ligne : power-ups (bulles « ? »)
+- Des bulles « ? » apparaissent au hasard sur la route (3 au départ pour 2 joueurs, jamais loin de la piste ni sur le départ, les tunnels ou les flaques ; une nouvelle peut apparaître après un tir, jusqu'à n+2 bulles). La voiture qui passe dessus pendant un tir la fait éclater et gagne, au hasard, le pouvoir d'une voiture : Bille (rebonds), Plume (flaque devant l'adversaire), Gomme (traverse les murs), Porte-mine (3 petits coups), Compas (épouse la courbe), Colle (traînée qui ralentit). Le Correcteur n'est pas inclus.
+- Le pouvoir sert pour le prochain tour du joueur, puis disparaît (pour le Porte-mine : ses 3 petits coups). Un seul pouvoir en réserve à la fois (une nouvelle bulle remplace l'ancien). Le nom du pouvoir en réserve s'affiche à côté du joueur en haut.
+- Technique : l'hôte place les bulles et tire le pouvoir ; ils sont envoyés avec le tir, donc identiques chez tout le monde. `equipPU`/`unequipPU` prêtent les réglages d'une voiture au joueur le temps d'un tour. Test : `FORCE_PU=1`/`FORCE_BUB=1 node tools/online135.js` (14 tours Zigzag et Jardin, 6 pouvoirs, positions/pouvoirs/bulles identiques chez les deux joueurs).
+- Archive : pencil-race_v136_avant-powerups.html

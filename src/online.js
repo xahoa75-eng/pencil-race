@@ -192,7 +192,9 @@
     onlApply(null, null);
     forced = null;
     startGame(settings.players, false);
-    onlBroadcast({ t: 'start', circuit: settings.circuit, count: settings.players, door: lastDoor, tun: lastTun, exit: settings.exit });
+    bubSeq = 0;
+    for (var bi = 0; bi < settings.players + 1; bi++) { var nb = onlSpawn(null); if (nb) bubbles.push({ id: nb.id, x: nb.x, y: nb.y, popped: false }); }
+    onlBroadcast({ t: 'start', circuit: settings.circuit, count: settings.players, door: lastDoor, tun: lastTun, exit: settings.exit, bub: bubbles.map(function (b) { return { id: b.id, x: b.x, y: b.y }; }) });
   }
   function onlStartGuest(o, m) {
     o.started = true;
@@ -203,6 +205,7 @@
     document.body.classList.remove('onl-end');
     startGame(m.count, false);
     forced = null;
+    bubbles = (m.bub || []).map(function (b) { return { id: b.id, x: b.x, y: b.y, popped: false }; });
   }
   function onlineRestart() {
     var o = online;
@@ -227,19 +230,45 @@
     elWin.classList.add('show');
   }
 
+  // ----- les bulles (power-ups) : l'hôte les place, tout le monde reçoit les mêmes -----
+  var bubSeq = 0;
+  function BUB_MAX() { return n + 2; }
+  function onlSpawn(res) {
+    var cum = circuit.cum;
+    if (!cum) return null;
+    var total = cum[cum.length - 1];
+    for (var t = 0; t < 60; t++) {
+      var pt = posAtS(total * (0.08 + 0.84 * Math.random()));
+      var x = pt[0], y = pt[1], ok = inTrack(x, y), i;
+      if (ok && Math.hypot(x - circuit.START.x, y - circuit.START.y) < 110) ok = false;
+      for (i = 0; ok && i < bubbles.length; i++) if (Math.hypot(x - bubbles[i].x, y - bubbles[i].y) < 150) ok = false;
+      for (i = 0; ok && i < players.length; i++) if (Math.hypot(x - players[i].x, y - players[i].y) < 80) ok = false;
+      if (ok && res && Math.hypot(x - res.x, y - res.y) < 80) ok = false;
+      for (i = 0; ok && i < tunnels.length; i++) if (Math.hypot(x - tunnels[i].x, y - tunnels[i].y) < 45) ok = false;
+      for (i = 0; ok && i < puddles.length; i++) if (Math.hypot(x - puddles[i].x, y - puddles[i].y) < puddles[i].r + 25) ok = false;
+      if (ok) return { id: ++bubSeq, x: r2(x), y: r2(y) };
+    }
+    return null;
+  }
+
   // ----- les tirs -----
   function r2(v) { return Math.round(v * 100) / 100; }
   function packShot(shot) {
-    var p = [], i, r = shot.res;
+    var p = [], i, r = shot.res, spawn = [];
+    var taken = 0;
+    for (i = 0; shot.ev && i < shot.ev.length; i++) if (shot.ev[i].t === 'pick') { taken = 1; break; }
+    if (bubbles.length - taken < BUB_MAX() && Math.random() < 0.6) { var nb = onlSpawn(shot.res); if (nb) spawn.push(nb); }
     for (i = 0; i < shot.path.length; i++) { p.push(r2(shot.path[i][0]), r2(shot.path[i][1])); }
     return { t: 'shot', cur: cur, a: shot.ang, d: r2(shot.dist), p: p, e: shot.ev || [],
-      r: { type: r.type, x: r2(r.x), y: r2(r.y), tu: r.tunnel ? tunnels.indexOf(r.tunnel) : -1 } };
+      r: { type: r.type, x: r2(r.x), y: r2(r.y), tu: r.tunnel ? tunnels.indexOf(r.tunnel) : -1, pu: r.puddle ? puddles.indexOf(r.puddle) : -1 }, sp: spawn };
   }
   function unpackShot(m) {
     var path = [];
     for (var i = 0; i + 1 < m.p.length; i += 2) path.push([m.p[i], m.p[i + 1]]);
     var res = { type: m.r.type, x: m.r.x, y: m.r.y };
     if (m.r.tu >= 0 && tunnels[m.r.tu]) res.tunnel = tunnels[m.r.tu];
+    if (m.r.pu >= 0 && puddles[m.r.pu]) res.puddle = puddles[m.r.pu];
+    for (var si = 0; m.sp && si < m.sp.length; si++) bubbles.push({ id: m.sp[si].id, x: m.sp[si].x, y: m.sp[si].y, popped: false });
     return { path: path, ev: m.e, res: res, ang: m.a, dist: m.d };
   }
   // l'hôte calcule le tir du joueur `slot`, l'envoie à tout le monde et le lance chez lui

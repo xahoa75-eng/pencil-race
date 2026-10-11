@@ -45,7 +45,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   console.log('statut hôte :', await host.evaluate(() => document.getElementById('onlStatus').textContent));
   await click(host, '[data-act="onl-start"]');
   for (const pg of pages) await pg.waitForFunction(() => window.__T && window.__T.P().players.length > 0 && document.getElementById('s-game').classList.contains('on'), null, { timeout: 15000 });
-  const st = async () => Promise.all(pages.map(pg => pg.evaluate(() => { const p = window.__T.P(); return { cur: p.cur, anim: !!p.anim, fin: p.finished, tun: p.tunnels, doors: p.doors, lt: p.lastTun && p.lastTun.join(','), pos: p.players.map(q => q.x.toFixed(2) + ',' + q.y.toFixed(2) + ',' + q.shots).join(' | ') }; })));
+  const st = async () => Promise.all(pages.map(pg => pg.evaluate(() => { const p = window.__T.P(); return { cur: p.cur, anim: !!p.anim, fin: p.finished, tun: p.tunnels, doors: p.doors, lt: p.lastTun && p.lastTun.join(','), pus: p.pus, bub: p.bub, pos: p.players.map(q => q.x.toFixed(2) + ',' + q.y.toFixed(2) + ',' + q.shots).join(' | ') }; })));
   let s = await st();
   console.log('départ', JSON.stringify(s[0]));
   let bad = 0;
@@ -56,8 +56,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const cur = s[0].cur;
     const pg = pages[cur];
     const ang0 = await pg.evaluate(() => window.__T.circuitNow().ang0);
-    // GO
     if (!(await pg.evaluate(() => document.getElementById('goBtn').hidden))) { console.log('ERREUR : le bouton GO est visible'); bad++; }
+    if (k < 2 && process.env.FORCE_BUB) await Promise.all(pages.map(q => q.evaluate(a => { const T = window.__T, P = T.S().players[T.S().cur], b = T.B(); b.length = 0; b.push({ id: 900 + T.S().cur, x: P.x + Math.cos(a) * 45, y: P.y + Math.sin(a) * 45, popped: false }); }, ang0)));
+    if (process.env.FORCE_PU) await Promise.all(pages.map(q => q.evaluate(k => { const P = window.__T.S().players; P.forEach(x => { x.pu = k; }); }, ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle'][k % 6])));
     const box = await pg.evaluate(() => { const r = document.getElementById('c').getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; });
     const cx = box.x + box.w / 2, cy = box.y + box.h * 0.75;
     const len = 50 + (k % 4) * 8, jit = ((k * 37) % 21 - 10) * 0.01;
@@ -73,8 +74,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
       if (s.every(x => !x.anim) && s.every(x => x.cur === s[0].cur) || Date.now() - t0 > 15000) break;
       await sleep(150);
     }
-    const same = s.every(x => x.pos === s[0].pos && x.cur === s[0].cur && x.fin === s[0].fin);
-    console.log('tour', k, 'joueur', cur, same ? 'OK' : 'DIFFÉRENT', JSON.stringify(s.map(x => x.pos)));
+    const same = s.every(x => x.pos === s[0].pos && x.cur === s[0].cur && x.fin === s[0].fin && x.pus === s[0].pus && x.bub === s[0].bub);
+    console.log('tour', k, 'joueur', cur, same ? 'OK' : 'DIFFÉRENT', JSON.stringify(s[0].pos), 'pouvoirs', s[0].pus, 'bulles', s[0].bub);
     if (!same) { bad++; }
     if (s[0].fin) { console.log('course finie'); break; }
   }
