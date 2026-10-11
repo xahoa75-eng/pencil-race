@@ -928,10 +928,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
   var CARS = {
     normale: { id: 'normale', name: 'La Classique', short: 'Classique', color: '#d62828', car: '#d62828', on: '#ffffff', power: null },
     bille:   { id: 'bille', name: 'La Bille', short: 'Bille', color: '#128f87', car: '#2cc7bd', on: '#ffffff',
-               power: 'bounce', bounceLoss: 0, bounceGains: [1.10, 1.15, 1.20],
-               // paramètre caché (jamais affiché) : face à La Classique, sa némésis, ses rebonds ne donnent plus aucun gain :
-               // elle perd 90 % de sa force à chaque rebond
-               hidden: { normale: { bounceLoss: 0.90 } },
+               power: 'bounce', bounceLoss: 0, bounceGains: [1.15, 1.20, 1.25],
                // règle du bot uniquement : un tir qui ne touche aucun mur est interdit (jamais appliquée à un joueur)
                botMustBounce: true,
                // le bot Bille s'exécute avec moins d'erreur : ses enchaînements de rebonds amplifient la moindre imprécision
@@ -5945,7 +5942,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
         }
         return { bn: bounced, path: path, ev: ev, cut: li, res: { type: 'exit', x: lx, y: ly } };
       } else if (power === 'bounce' && nb < 3) {
-        // jusqu'à 3 rebonds : chacun fait gagner de la force (+10 %, +15 %, +20 % de la distance restante) ;
+        // jusqu'à 3 rebonds : chacun fait gagner de la force (+15 %, +20 %, +25 % de la distance restante) ;
         // si une perte est imposée (paramètre caché), elle remplace le gain
         var bgain = p.erased ? 1 : (p.bounceLoss > 0 ? 1 - p.bounceLoss : (p.bounceGains ? p.bounceGains[nb] : 1));
         bounced = true;

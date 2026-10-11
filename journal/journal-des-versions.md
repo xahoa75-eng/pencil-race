@@ -966,3 +966,10 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - L'échange d'urgence (quand tu peux toucher l'arrivée à ton prochain tour) n'existe plus qu'en Hard : en Facile et en Normal elle n'échange qu'à son rythme programmé.
 - Testé : parties simulées aux 3 niveaux, sans erreur ; en Facile le joueur automatique bat l'Agrafeuse (35 coups), en Normal et Hard pas dans le même temps.
 - Archive : pencil-race_v203_avant-agrafeuse-niveaux.html
+
+## v205 — Bille : fin du paramètre caché, rebonds plus forts
+- Le paramètre caché de la Bille est supprimé : face à la Classique (et à l'Agrafeuse, qui est une Classique), ses rebonds gardent maintenant leur bonus au lieu de perdre 90 % de force.
+- Le bonus des rebonds passe de +10 % / +15 % / +20 % à +15 % / +20 % / +25 % (1er, 2e, 3e rebond), pour la voiture et le power-up en ligne ; valable aussi pour le boss Bille de la Grotte.
+- Les objectifs de coups des bots (« coups parfaits ») ne sont pas recalculés : le boss Bille est maintenant plus fort que ce que ses objectifs prévoient.
+- Testé : tir avec rebond plus long (348 contre 315) et identique face à la Classique, à la Plume, à la Bille, seule et dans la campagne contre l'Agrafeuse (339), sans erreur.
+- Archive : pencil-race_v204_avant-bille.html
