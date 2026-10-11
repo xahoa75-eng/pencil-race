@@ -693,3 +693,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les deux images sont recadrées au plus près du dessin (marges blanches retirées en haut) : elles sont nettement plus grandes dans leur cadre.
 - Les boutons CRÉER et REJOINDRE passent côte à côte → l'un sous l'autre, dans la même disposition que l'écran « En ligne / En local ».
 - Archive : pencil-race_v157_avant-creer-rejoindre-grand.html
+
+## v159 — Créer / Rejoindre : images échangées
+- Les deux dessins étaient inversés : « Créer » montre maintenant la main qui dessine le circuit, « Rejoindre » montre la voiture en réseau avec les câbles.
+- Archive : pencil-race_v158_avant-inversion.html
