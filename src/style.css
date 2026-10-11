@@ -428,7 +428,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 /* Jouer en local : les 5 icônes (3 joueurs + 2 GO) ont toutes la même taille ;
    dernier écran : les 3 pilotages et le bouton Lancer aussi. */
 #s-multi2 .seg.imgseg, #s-multi4 .seg.imgseg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-#s-multi2 .seg.imgseg button.fr img, #s-multi4 .seg.imgseg button.fr img,
+#s-multi2 .seg.imgseg button.fr img, #s-multi4 .seg.imgseg button.fr img { aspect-ratio: 421 / 430 !important; object-fit: cover; }
 
 /* En ligne : le code et le bouton « Envoyer le lien » dans le cadre crayon habituel */
 .fr.frbox { display: block; width: 100%; box-sizing: border-box; text-align: center; --H: 30px; --fs: 19px; }
@@ -439,3 +439,4 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 /* En ligne : les icônes du nombre de joueurs et du GO ont la même taille (comme en local) */
 #s-online2 .seg.imgseg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 #s-online2 .seg.imgseg button.fr img { aspect-ratio: 421 / 430 !important; object-fit: cover; }
+.fr.frbox.valider { margin-top: 4px; }

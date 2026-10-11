@@ -751,3 +751,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v170 — Bouton « Lancer » de la même taille partout
 - Le bouton « Lancer » a la taille de celui de Solo › Entraînement dans tous les menus : Jouer en local et Créer une partie (mesuré : 278 × 266 px sur un écran de 393 px). Les réductions ajoutées aux v165 et v166 sont supprimées.
 - Archive : pencil-race_v169_avant-lancer-uniforme.html
+
+## v171 — Bouton « Valider » dans la D.A.
+- Les deux boutons « Valider » (Jouer en local et Créer une partie) ne sont plus des rectangles noirs : ils reprennent le cadre crayon habituel, « VALIDER » dans le bandeau et le texte écrit à la main, comme le bouton du lien.
+- Correction : une règle de style cassée à la v170 déréglait la hauteur des icônes de pilotage et de GO (113 et 110 px au lieu de 116). Les 8 icônes de l'écran font de nouveau exactement la même taille.
+- Archive : pencil-race_v170_avant-valider-da.html
