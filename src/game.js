@@ -5273,7 +5273,6 @@
       settings[key] = key === 'players' ? parseInt(val, 10) : val;
       saveSettings();
       refresh();
-      if (key === 'players' && currentScreen === 'multi2') go('multi3');
       return;
     }
     var act = el.getAttribute('data-act');

@@ -674,3 +674,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v154 — Nouvelle icône « Jouer en local »
 - L'icône « Jouer en local » (Multi, écran 1) est remplacée par ton nouveau dessin sans cadre (main qui tient le téléphone avec les 4 crayons), placé dans le cadre crayon commun avec « JOUER EN LOCAL » dans le bandeau.
 - Archive : pencil-race_v153_avant-icone-local2.html
+
+## v155 — Bouton « Valider » au choix du nombre de joueurs
+- Jouer en local, écran du nombre de joueurs : toucher 2/3/4 sélectionne seulement (les pastilles de couleur des joueurs se mettent à jour) ; un bouton noir « Valider » en dessous passe au choix du circuit.
+- Archive : pencil-race_v154_avant-valider.html

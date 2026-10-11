@@ -522,6 +522,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     </div>
     <div class="chips" id="multiPreview"></div>
     <p class="note">Sur ce téléphone : chacun son tour. Les voitures partent toutes du même point.</p>
+    <button class="big primary valider" type="button" data-go="multi3">Valider</button>
   </div>
 </section>
 
@@ -5999,7 +6000,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       settings[key] = key === 'players' ? parseInt(val, 10) : val;
       saveSettings();
       refresh();
-      if (key === 'players' && currentScreen === 'multi2') go('multi3');
       return;
     }
     var act = el.getAttribute('data-act');
