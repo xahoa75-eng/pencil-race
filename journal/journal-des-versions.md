@@ -709,3 +709,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v162 — Retour à l'affichage de la v160 (Créer / Rejoindre)
 - Annulation de la v161 : les images de « Créer » et « Rejoindre » ne débordent plus sur la marge crème du cadre. On revient exactement à l'affichage de la v160. La v161 reste dans le dépôt (tag v161).
 - Archive : pencil-race_v161_avant-retour.html
+
+## v163 — Créer / Rejoindre : les deux icônes à la même taille
+- Les deux cadres ont maintenant exactement la même taille (mesuré : 286 × 333 px sur un écran de 393 px) : les images s'étirent légèrement pour remplir la même boîte.
+- Archive : pencil-race_v162_avant-meme-taille.html

@@ -425,9 +425,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .onl-pics { display: flex; flex-direction: column; gap: 12px; }
 .pic-btn.onl-mode { width: 80%; margin: 0 auto; flex: none; }
 .pic-btn.onl-mode.fr { --H: 34px; --fs: 22px; }
-.pic-btn.onl-mode.fr img { object-fit: fill; }
-.pic-btn.onl-mode.fr[aria-label="Rejoindre une partie"] img { aspect-ratio: 425 / 452; }
-.pic-btn.onl-mode.fr[aria-label="Créer une partie"] img { aspect-ratio: 425 / 565; }
+/* les deux icônes ont exactement la même taille : l'image s'étire pour remplir la même boîte */
+.pic-btn.onl-mode.fr img { object-fit: fill; aspect-ratio: 425 / 510; }
 </style>
 </head>
 <body>
