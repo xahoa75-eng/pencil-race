@@ -658,3 +658,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v151 — Tête de mort alignée sur la bande du capot
 - Sur les 8 voitures adversaires, la tête de mort est maintenant centrée sur la bande du capot et posée « à plat » sur le capot (orientée dans le sens de la bande, déformée en perspective comme le capot). La bande dépasse devant et derrière, dans le prolongement.
 - Archive : pencil-race_v150_avant-tete-de-mort-alignee.html
+
+## v152 — Règles : menu « Pilotage » retiré
+- L'écran Règles n'affiche plus que les deux icônes Voitures et Circuits. Le bouton « Pilotage » est retiré (sa page reste dans le code, inaccessible, au cas où).
+- Archive : pencil-race_v151_avant-sans-pilotage.html
