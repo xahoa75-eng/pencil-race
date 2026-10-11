@@ -6,7 +6,7 @@ const file = path.resolve(process.argv[2]);
 const circuit = process.argv[3] || 'zigzag';
 const N = parseInt(process.argv[4] || '2', 10);
 const TURNS = parseInt(process.argv[5] || '10', 10);
-const url = 'file://' + file + '?peerserver=127.0.0.1:9000';
+const url = 'file://' + file + '?peerserver=127.0.0.1:9000' + (process.env.ONL_RELAY ? '&onlrelay=1' : '');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 (async () => {
   const br = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--disable-features=WebRtcHideLocalIpsWithMdns', '--no-sandbox'] });

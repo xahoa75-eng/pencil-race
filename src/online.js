@@ -19,6 +19,14 @@
     if (m) { var hp = decodeURIComponent(m[1]).split(':'); o.host = hp[0]; o.port = parseInt(hp[1], 10) || 9000; o.path = '/'; o.secure = false; }
     return o;
   }
+  // ----- chemin de secours : si la liaison directe est bloquée (box, réseau strict), les messages passent par le serveur de mise en relation -----
+  function RelayConn(peer, remote) { this.peer = remote; this._pr = peer; this.open = true; this.relay = true; this._h = {}; }
+  RelayConn.prototype.on = function (ev, fn) { this._h[ev] = fn; };
+  RelayConn.prototype.emit = function (ev, x) { if (this._h[ev]) this._h[ev](x); };
+  RelayConn.prototype.send = function (m) {
+    try { this._pr.socket.send({ type: 'CANDIDATE', payload: { pr: 1, m: m }, dst: this.peer }); } catch (e) {}
+  };
+  RelayConn.prototype.close = function () { this.open = false; };
   function onlCode() {
     var c = '';
     for (var i = 0; i < 4; i++) c += ONL_LETTERS.charAt((Math.random() * ONL_LETTERS.length) | 0);
@@ -53,7 +61,7 @@
   function onlineHost() {
     onlineLeave();
     if (!onlSupported()) { onlSetNo(); return; }
-    var o = online = { role: 'host', me: 0, conns: [null], queue: [], sent: false, started: false, code: '', status: 'Connexion…', peer: null };
+    var o = online = { role: 'host', me: 0, conns: [null], queue: [], sent: false, started: false, code: '', status: 'Connexion…', peer: null, relays: {} };
     onlView = 'host';
     function open(attempt) {
       var code = onlCode();
@@ -68,6 +76,14 @@
         onlineRefresh();
       });
       pr.on('connection', function (conn) { if (online === o) onlHostConn(o, conn); });
+      try {
+        pr.socket.on('message', function (msg) {
+          if (online !== o || !msg || !msg.payload || !msg.payload.pr || !msg.src) return;
+          var rc = o.relays[msg.src];
+          if (!rc || !rc.open) { rc = o.relays[msg.src] = new RelayConn(pr, msg.src); onlHostConn(o, rc); }
+          rc.emit('data', msg.payload.m);
+        });
+      } catch (e) {}
       // si le téléphone de l'hôte est passé en arrière-plan, la liaison avec le serveur peut tomber : on la rétablit
       pr.on('disconnected', function () { if (online === o && !pr.destroyed) setTimeout(function () { try { if (online === o && pr.disconnected && !pr.destroyed) pr.reconnect(); } catch (e) {} }, 800); });
     }
@@ -93,8 +109,9 @@
     if (!m || !m.t) return;
     if (m.t === 'hello') {
       if (o.started) { onlSend(conn, { t: 'busy' }); setTimeout(function () { try { conn.close(); } catch (e) {} }, 300); return; }
-      var slot = 0;
-      for (var i = 1; i < settings.players; i++) if (!o.conns[i]) { slot = i; break; }
+      var slot = 0, i;
+      for (i = 1; i < settings.players; i++) if (o.conns[i] && o.conns[i].peer === conn.peer) { slot = i; break; }
+      if (!slot) for (i = 1; i < settings.players; i++) if (!o.conns[i]) { slot = i; break; }
       if (!slot) { onlSend(conn, { t: 'full' }); setTimeout(function () { try { conn.close(); } catch (e) {} }, 300); return; }
       o.conns[slot] = conn;
       conn._slot = slot;
@@ -134,21 +151,42 @@
     o.peer = pr;
     var timer = setTimeout(function () {
       if (online === o && o.me == null) { o.status = "Pas de réponse. Le code est peut-être faux, ou le réseau ne laisse pas passer la connexion."; onlineRefresh(); }
-    }, 20000);
+    }, 25000);
     pr.on('error', function (err) {
       if (online !== o) return;
+      if (err && err.type !== 'peer-unavailable' && o.me == null && o.hostConn && o.hostConn.relay) return;
       clearTimeout(timer);
       o.status = onlFailText(err);
       onlineRefresh();
     });
+    function wire(c) {
+      c.on('data', function (m) { if (online === o && o.hostConn === c) { clearTimeout(timer); onlGuestData(o, m); } });
+      c.on('close', function () { if (online === o && o.hostConn === c) onlGuestLost(o); });
+      c.on('error', function () { if (online === o && o.hostConn === c) onlGuestLost(o); });
+    }
+    function useRelay() {
+      if (online !== o || o.me != null || (o.hostConn && o.hostConn.relay)) return;
+      var old = o.hostConn;
+      var rc = new RelayConn(pr, ONL_PREFIX + code);
+      o.hostConn = rc;
+      wire(rc);
+      try { if (old) old.close(); } catch (e) {}
+      onlSend(rc, { t: 'hello' });
+    }
     pr.on('open', function () {
       if (online !== o) return;
+      try {
+        pr.socket.on('message', function (msg) {
+          if (online !== o || !msg || !msg.payload || !msg.payload.pr || msg.src !== ONL_PREFIX + code) return;
+          if (o.hostConn && o.hostConn.relay) o.hostConn.emit('data', msg.payload.m);
+        });
+      } catch (e) {}
+      if (/[?&]onlrelay=1/.test(location.search)) { useRelay(); return; }   // essai : on force le chemin de secours
       var c = pr.connect(ONL_PREFIX + code, { serialization: 'json', reliable: true });
       o.hostConn = c;
-      c.on('open', function () { if (online === o) onlSend(c, { t: 'hello' }); });
-      c.on('data', function (m) { if (online === o) { clearTimeout(timer); onlGuestData(o, m); } });
-      c.on('close', function () { if (online === o) onlGuestLost(o); });
-      c.on('error', function () { if (online === o) onlGuestLost(o); });
+      c.on('open', function () { if (online === o && o.hostConn === c) onlSend(c, { t: 'hello' }); });
+      wire(c);
+      setTimeout(useRelay, 6000);      // pas de réponse en direct au bout de 6 s : on passe par le serveur
     });
     onlineRefresh();
   }

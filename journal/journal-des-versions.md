@@ -785,3 +785,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - « Rejoindre » se déclenche dès l'appui (avant la fermeture du clavier) et aussi avec la touche Entrée.
 - Testé : rejoindre par code avec appuis tactiles, parties en ligne à 2 et 3 joueurs (synchronisées). Les vrais réseaux ne sont pas testables d'ici.
 - Archive : pencil-race_v175_avant-rejoindre-robuste.html
+
+## v177 — En ligne : chemin de secours par le serveur
+- Si la liaison directe entre deux appareils est bloquée (cas typique : PC en câble et téléphone en Wi-Fi sur la même box), au bout de 6 secondes « Rejoindre » bascule tout seul sur un chemin de secours : les messages passent par le serveur de mise en relation. Aucune action à faire pour les joueurs.
+- L'hôte accepte les deux chemins et ne donne pas deux places au même invité.
+- Testé : liaison directe (2 joueurs) ; chemin de secours forcé (3 joueurs, GO, power-ups : synchronisé) ; liaison directe sabotée côté invité : bascule automatique OK. Les vrais réseaux restent à essayer sur vos appareils.
+- Archive : pencil-race_v176_avant-relais.html
