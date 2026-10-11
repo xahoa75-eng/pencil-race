@@ -670,3 +670,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Écran 4 : pilotage (Facile / Normal / Hard, comme en Entraînement) et le bouton « Lancer » de l'Entraînement, qui démarre la course.
 - Le rappel des options et l'ancien bouton texte « Lancer la course » sont retirés. Jouer en ligne ne change pas.
 - Archive : pencil-race_v152_avant-multi-ecrans.html
+
+## v154 — Nouvelle icône « Jouer en local »
+- L'icône « Jouer en local » (Multi, écran 1) est remplacée par ton nouveau dessin sans cadre (main qui tient le téléphone avec les 4 crayons), placé dans le cadre crayon commun avec « JOUER EN LOCAL » dans le bandeau.
+- Archive : pencil-race_v153_avant-icone-local2.html
