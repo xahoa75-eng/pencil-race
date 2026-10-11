@@ -67,7 +67,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
       if (!(await pg.evaluate(() => document.getElementById('goBtn').hidden))) { console.log('ERREUR : le GO ne disparaît pas après appui'); bad++; }
     } else if (goVisible) { console.log('ERREUR : le bouton GO est visible'); bad++; }
     if (k < 2 && process.env.FORCE_BUB) await Promise.all(pages.map(q => q.evaluate(a => { const T = window.__T, P = T.S().players[T.S().cur], b = T.B(); b.length = 0; b.push({ id: 900 + T.S().cur, x: P.x + Math.cos(a) * 45, y: P.y + Math.sin(a) * 45, popped: false }); }, ang0)));
-    if (process.env.FORCE_PU) await Promise.all(pages.map(q => q.evaluate(k => { const P = window.__T.S().players; P.forEach(x => { x.pu = k; }); }, ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle'][k % 6])));
+    if (process.env.FORCE_PU) await Promise.all(pages.map(q => q.evaluate(k => { const P = window.__T.S().players; P.forEach(x => { x.pu = k; }); }, (process.env.FORCE_PU.length > 1 ? process.env.FORCE_PU : ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle'][k % 6]))));
     const box = await pg.evaluate(() => { const r = document.getElementById('c').getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; });
     const cx = box.x + box.w / 2, cy = box.y + box.h * 0.75;
     const len = 50 + (k % 4) * 8, jit = ((k * 37) % 21 - 10) * 0.01;

@@ -1481,7 +1481,7 @@
       for (var i = 0; i < players.length; i++) {
         var p = players[i];
         h += '<div class="chip' + (i === cur && !finished ? ' on' : '') + '" style="--c:' + p.color +
-          ';--t:' + p.on + '">' + p.name + ' · ' + p.shots + (p.puActive ? ' · ' + CARS[p.puActive].short : p.pu ? ' · ' + CARS[p.pu].short : '') + (i === cur && p.spt > 1 && !finished && !p.done ? ' (' + Math.max(0, p.shotsLeft) + '/' + p.spt + ')' : '') + (p.done ? ' 🏁' : '') + '</div>';
+          ';--t:' + p.on + '">' + p.name + ' · ' + p.shots + (p.puActive ? ' · ' + puShort(p.puActive) : p.pu ? ' · ' + puShort(p.pu) : '') + (i === cur && p.spt > 1 && !finished && !p.done ? ' (' + Math.max(0, p.shotsLeft) + '/' + p.spt + ')' : '') + (p.done ? ' 🏁' : '') + '</div>';
       }
       s2.innerHTML = h;
     }
@@ -1677,11 +1677,29 @@
   // La Colle et le Correcteur : une voiture qui a traversé leur traînée (ou leur flaque) subit l'effet à son tour suivant :
   // Colle = son tir suivant est réduit de moitié ; Correcteur = son pouvoir est annulé pour ce tour (elle joue comme une Classique)
   var corrFlip = false;
-  function hasPower(q) { return !!(q.power || q.spt > 1 || q.follow); }
+  function hasPower(q) { return !!(q.power || q.spt > 1 || q.follow || q.puActive === 'taille'); }
   // power-ups (en ligne) : une bulle donne le pouvoir d'une voiture pour le prochain tour de celui qui l'a ramassée
-  var PU_KEYS = ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle'];
+  var PU_KEYS = ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle', 'taille', 'agrafeuse'];
+  // deux pouvoirs qui n'existent qu'en bulle (multi en ligne) : le Taille-crayon double la force du tir, l'Agrafeuse échange sa place avec le premier
+  var PU2 = { taille: { short: 'Taille-crayon' }, agrafeuse: { short: 'Agrafeuse' } };
+  function puShort(k) { return CARS[k] ? CARS[k].short : PU2[k] ? PU2[k].short : ''; }
+  function isLeader(i) {
+    var s0 = projectS(circuit, players[i].x, players[i].y);
+    for (var j = 0; j < players.length; j++) if (j !== i && !players[j].done && projectS(circuit, players[j].x, players[j].y) > s0) return false;
+    return true;
+  }
+  function puPick(p) {
+    var pool = PU_KEYS, pi = players.indexOf(p);
+    if (pi >= 0 && isLeader(pi)) pool = PU_KEYS.filter(function (k) { return k !== 'agrafeuse'; });   // le premier n'a jamais l'Agrafeuse
+    return pool[(Math.random() * pool.length) | 0];
+  }
   function equipPU(p, key) {
     var sh = CARS[key];
+    if (!sh) {      // Taille-crayon / Agrafeuse
+      p.puActive = key;
+      p.rm = p.rmBase = key === 'taille' ? 2 : 1;
+      return;
+    }
     p.puActive = key;
     p.power = sh.power;
     p.bounceLoss = sh.bounceLoss;
@@ -1714,9 +1732,9 @@
       for (k = bubbles.length - 1; k >= 0; k--) if (bubbles[k].id === a.ev[i].b) bubbles.splice(k, 1);
       if (!got) got = a.ev[i].k;
     }
-    if (got && CARS[got]) {
+    if (got && (CARS[got] || PU2[got])) {
       p.pu = got;
-      say('Bulle ! Pouvoir ' + CARS[got].short + ' au prochain tour', now);
+      say('Bulle ! Pouvoir ' + puShort(got) + ' au prochain tour', now);
     }
   }
   function corrTurn(now) {
@@ -1730,13 +1748,27 @@
     }
     if (!pl.done) {
       if (pl.pu) { equipPU(pl, pl.pu); pl.pu = null; }
+      if (pl.puActive === 'agrafeuse') {
+        var ci = players.indexOf(pl), li = -1, ls = -1;
+        for (i = 0; i < players.length; i++) {
+          if (i === ci || players[i].done) continue;
+          var si = projectS(circuit, players[i].x, players[i].y);
+          if (si > ls) { ls = si; li = i; }
+        }
+        if (li >= 0 && ls > projectS(circuit, pl.x, pl.y)) {
+          var tx = pl.x, ty = pl.y;
+          pl.x = players[li].x; pl.y = players[li].y;
+          players[li].x = tx; players[li].y = ty;
+          say('Agrafeuse ! ' + pl.name + ' prend la place de ' + players[li].name, now);
+        } else say('Agrafeuse : tu es déjà premier', now);
+      }
       var erasedNow = false;
       if (pl.eraseNext) {
         pl.eraseNext = false;
         if (hasPower(pl)) {
           pl.erased = true;
           erasedNow = true;
-          if (pl.spt > 1) pl.rm = 1;
+          if (pl.spt > 1 || pl.puActive === 'taille') pl.rm = 1;
         }
       }
       var gluedNow = false;
@@ -1868,7 +1900,7 @@
     ovHeld = false;
     phase = goRequired() ? 'pre' : 'aim';
     botAt = now + 800;
-    if (online && !(toast && toast.until > now)) say((cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name) + (players[cur].puActive ? ' · pouvoir ' + CARS[players[cur].puActive].short : ''), now);
+    if (online && !(toast && toast.until > now)) say((cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name) + (players[cur].puActive ? ' · pouvoir ' + puShort(players[cur].puActive) : ''), now);
   }
 
   // passe au joueur suivant ; une voiture qui joue « un tour sur deux » saute son tour
@@ -4602,7 +4634,7 @@
       if (!lite && !bgot && bubbles.length) {
         for (var bi = 0; bi < bubbles.length; bi++) {
           var bb = bubbles[bi];
-          if (Math.hypot(nx - bb.x, ny - bb.y) <= BUB_R + 2) { bgot = true; ev.push({ i: path.length - 1, t: 'pick', b: bb.id, k: PU_KEYS[(Math.random() * PU_KEYS.length) | 0] }); break; }
+          if (Math.hypot(nx - bb.x, ny - bb.y) <= BUB_R + 2) { bgot = true; ev.push({ i: path.length - 1, t: 'pick', b: bb.id, k: puPick(p) }); break; }
         }
       }
       if (inT(nx, ny)) {

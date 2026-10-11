@@ -797,3 +797,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le passage au chemin de secours se fait au bout de 4 s (au lieu de 6) et l'invité voit « Liaison directe impossible, j'essaie par un autre chemin… ».
 - « version 178 » est écrit en petit en bas de l'écran En ligne, pour vérifier que le téléphone a bien la dernière version.
 - Archive : pencil-race_v177_avant-diagnostic.html
+
+## v179 — Deux nouveaux power-ups (multi en ligne) : Taille-crayon et Agrafeuse
+- Les bulles peuvent maintenant donner 8 pouvoirs : Bille, Plume, Gomme, Porte-mine, Compas, Colle + **Taille-crayon** (double la force du tir au prochain tour) + **Agrafeuse** (au prochain tour, la voiture échange sa place avec celle du premier).
+- Le premier de la course ne reçoit jamais l'Agrafeuse (elle est retirée du tirage pour lui). Si, au moment de s'en servir, le joueur est devenu premier, elle ne fait rien (message « tu es déjà premier »).
+- Le Taille-crayon est annulé par le Correcteur comme les autres pouvoirs ; la Colle le réduit de moitié (donc tir normal).
+- Ces pouvoirs n'existent qu'en bulle : aucune voiture ne les a, ils ne touchent ni le solo ni le local.
+- Testé : échange de place (le joueur arrière prend la place du premier, puis rien s'il est déjà premier), force ×2, parties en ligne à 3 joueurs avec chaque pouvoir forcé et avec bulles forcées (synchronisé).
+- Archive : pencil-race_v178_avant-2-powerups.html
