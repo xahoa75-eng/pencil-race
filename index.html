@@ -161,10 +161,10 @@ canvas.thumb {
   border: 1px solid #bbb;
   border-radius: 4px;
 }
-#cirSolo, #cirMulti { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
-#cirSolo .card, #cirMulti .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
-#cirSolo canvas.thumb, #cirMulti canvas.thumb { width: 100%; height: auto; }
-#cirSolo .card .cname, #cirMulti .card .cname { font-size: 17px; }
+#cirSolo, #cirMulti, #cirOnline { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
+#cirSolo .card, #cirMulti .card, #cirOnline .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
+#cirSolo canvas.thumb, #cirMulti canvas.thumb, #cirOnline canvas.thumb { width: 100%; height: auto; }
+#cirSolo .card .cname, #cirMulti .card .cname, #cirOnline .card .cname { font-size: 17px; }
 .cars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
 .carbtn {
   display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px 6px;
@@ -390,7 +390,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .seg.imgseg[data-key="players"] button.fr img { aspect-ratio: 421 / 430; object-fit: cover; }
 .fr-s { --H: 20px; --fs: 12px; align-self: stretch; }
 .fr-s canvas.thumb { display: block; width: 100%; height: auto; border: 0 !important; border-radius: 0 !important; aspect-ratio: 190 / 340; }
-#cirSolo .fr-s, #cirMulti .fr-s { --H: 28px; --fs: 17px; }
+#cirSolo .fr-s, #cirMulti .fr-s, #cirOnline .fr-s { --H: 28px; --fs: 17px; }
 .card:not([aria-pressed="true"]) { border-color: transparent; }
 .card { padding-top: 6px; }
 .carbtn.pic.fr { --H: 28px; --fs: 17px; }

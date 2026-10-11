@@ -729,3 +729,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le code de la partie et le bouton « Envoyer le lien » sont écrits à la main (police du jeu) dans le cadre crayon habituel, avec leur titre dans le bandeau. Le bouton « Lancer » est la même icône que dans les autres menus (grisé tant que tout le monde n'est pas là).
 - La partie n'est créée qu'en arrivant sur le dernier écran, et elle est refermée si on revient en arrière. « Rejoindre une partie » ne change pas.
 - Archive : pencil-race_v165_avant-enligne-ecrans.html
+
+## v167 — En ligne : choix du circuit en vertical
+- L'écran de choix du circuit de « Créer une partie » utilise la même grille verticale (2 colonnes, grandes cartes) que Solo › Entraînement et Jouer en local, au lieu du carrousel horizontal.
+- Archive : pencil-race_v166_avant-circuits-verticaux.html
