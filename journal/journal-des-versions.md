@@ -912,3 +912,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les niveaux des bots dépendent du nombre de boss battus, pas de la place : rien d'autre ne change.
 - Testé : ordre des 8 cartes vérifié, sans erreur.
 - Archive : pencil-race_v195_avant-ordre-boss.html
+
+## v197 — Campagne : tu choisis le niveau de l'adversaire
+- Sur l'écran de départ de la campagne (celui du pilotage), un nouveau choix « Adversaire : niveau » avec Facile, Normal et Hard (mêmes images que dans le reste du jeu). Il remplace l'ancien niveau automatique (selon le nombre de boss battus).
+- Ton choix est gardé pour la prochaine fois (Normal au tout premier lancement). Il ne change pas le niveau de bot de l'entraînement : celui-ci revient quand tu quittes la campagne.
+- L'Agrafeuse (final) reste toujours en Hard : le choix n'est pas proposé pour elle.
+- Le texte « (niveau …) » sous le nom du circuit est retiré (le niveau se choisit à l'écran suivant).
+- Testé : choix du niveau pris en compte au lancement, retour en arrière qui restaure le niveau d'entraînement, niveau mémorisé après rechargement, choix caché pour le final, sans erreur.
+- Archive : pencil-race_v196_avant-niveau-campagne.html

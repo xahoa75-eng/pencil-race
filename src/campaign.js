@@ -17,20 +17,20 @@
   function campBossImg(cid) { return CAMP_BOSS_IMG[cid === CAMP_FINAL ? 'agrafeuse' : CAMP_BOSS[cid]]; }
   // l'adversaire de la campagne porte le nom de son boss (l'Agrafeuse pour le niveau final)
   function campBotName(opp) { return camp.active && camp.circuit === CAMP_FINAL ? CAMP_BOSS_NAME[CAMP_FINAL] : opp.name; }
-  // niveau du bot selon le nombre de voitures déjà débloquées (sans la Classique) ; le niveau final est toujours Hard
+  // niveau du bot : celui que le joueur choisit avant le départ ; le niveau final est toujours Hard
   function campLevel(cid) {
     if (cid === CAMP_FINAL) return 'hard';
-    var w = campWonCount();
-    return w <= 2 ? 'facile' : (w <= 5 ? 'normal' : 'hard');
+    return camp.level;
   }
-  var camp = { won: {}, active: false, circuit: null, saved: null };
+  var camp = { won: {}, active: false, circuit: null, saved: null, level: 'normal', pre: null };
   var CAMP_ALL = /[?&]debloquer=1/.test(location.search);       // essai : toutes les voitures débloquées
   try {
     if (/[?&]campagne=reset/.test(location.search)) localStorage.removeItem('pr-campaign');
     var csv = JSON.parse(localStorage.getItem('pr-campaign') || 'null');
     if (csv && csv.won) camp.won = csv.won;
+    if (csv && BOT_LEVEL[csv.level]) camp.level = csv.level;
   } catch (e) {}
-  function campSave() { try { localStorage.setItem('pr-campaign', JSON.stringify({ won: camp.won })); } catch (e) {} }
+  function campSave() { try { localStorage.setItem('pr-campaign', JSON.stringify({ won: camp.won, level: camp.level })); } catch (e) {} }
   function campWonCount() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && camp.won[c]) k++; return k; }
   function carUnlocked(key) {
     if (CAMP_ALL || key === 'normale') return true;
@@ -95,6 +95,10 @@
     return false;
   }
   function campOpen(cid) { return cid !== CAMP_FINAL || campWonCount() >= 7 || CAMP_ALL; }
+  // en quittant l'écran de départ de la campagne, le niveau de bot de l'entraînement revient
+  function campLevelRestore() {
+    if (camp.pre != null) { settings.botLevel = camp.pre; camp.pre = null; }
+  }
   function campRestore() {
     if (camp.saved) { for (var k in camp.saved) settings[k] = camp.saved[k]; camp.saved = null; }
     camp.active = false;
@@ -145,10 +149,12 @@
   function campRefresh() {
     var el = document.getElementById('campCircuitName');
     if (el && camp.circuit) {
-      el.textContent = CIRCUITS[camp.circuit].name + ' · adversaire : ' + campBossName(camp.circuit) + ' (niveau ' + BOT_LEVEL[campLevel(camp.circuit)] + ')';
+      el.textContent = CIRCUITS[camp.circuit].name + ' · adversaire : ' + campBossName(camp.circuit);
     }
     var rc = document.getElementById('campRecap2');
     if (rc && camp.circuit) rc.textContent = 'Circuit : ' + CIRCUITS[camp.circuit].name + ' · Ta voiture : ' + CARS[campCar].name + ' · Adversaire : ' + campBossName(camp.circuit);
+    var lb = document.getElementById('campLevelBox');
+    if (lb) lb.hidden = camp.circuit === CAMP_FINAL;
     var dd = document.getElementById('diffDesc6');
     if (dd) dd.textContent = DIFF_DESC[settings.diff];
     var cbs = document.querySelectorAll('#carsCamp .carbtn');
@@ -184,11 +190,14 @@
     } else if (el.hasAttribute('data-campcar')) {
       if (el.classList.contains('locked')) return;
       campCar = el.getAttribute('data-car');
+      if (camp.pre == null) camp.pre = settings.botLevel;
+      settings.botLevel = camp.level;
       campRefresh();
       go('campaign3');
     } else if (el.getAttribute('data-act') === 'play-campaign') {
       if (!camp.circuit) return;
-      if (!camp.saved) camp.saved = { circuit: settings.circuit, playerCar: settings.playerCar, botCar: settings.botCar, botLevel: settings.botLevel };
+      if (camp.circuit !== CAMP_FINAL && BOT_LEVEL[settings.botLevel]) { camp.level = settings.botLevel; campSave(); }
+      if (!camp.saved) camp.saved = { circuit: settings.circuit, playerCar: settings.playerCar, botCar: settings.botCar, botLevel: camp.pre != null ? camp.pre : settings.botLevel };
       camp.active = true;
       settings.circuit = camp.circuit;
       settings.playerCar = campCar;
