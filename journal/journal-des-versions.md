@@ -772,3 +772,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v174 — Bouton carte rond
 - Exception à la v173 : le bouton carte (vue d'ensemble) redevient rond, mais avec le fond crème et le trait crayon de la D.A. (plus de cadre carré).
 - Archive : pencil-race_v173_avant-carte-ronde.html
+
+## v175 — Bulles de power-up : copeau de taille-crayon
+- Les bulles « ? » du multi en ligne sont remplacées par le dessin de copeau de taille-crayon (fond blanc rendu transparent, le blanc du centre est conservé), avec une légère ombre ; elles flottent toujours doucement.
+- La zone de ramassage ne change pas.
+- Testé : partie en ligne à 2 joueurs avec bulles forcées (pouvoirs ramassés et synchronisés).
+- Archive : pencil-race_v174_avant-bulle-taille-crayon.html

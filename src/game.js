@@ -1408,6 +1408,8 @@
   var puddles = [];
   var bubbles = [];       // bulles « ? » (power-ups, multi en ligne) : { id, x, y, popped }
   var BUB_R = 13;
+  var BUB_IMG = new Image();
+  BUB_IMG.src = 'data:image/png;base64,@@A:bulle-taille-crayon.png@@';
   var tunnels = [];       // tunnels de la Grotte (tirés au hasard à chaque partie) : { id, kind: 'in' (petite bouche) | 'out' (grande bouche), x, y, r, to: [x, y] }
   var fx = [];            // traînées et flaques de la Colle et du Correcteur : { kind: 'glue'|'corr', type: 'trail'|'blob', owner, pts, hw }
   var phase = 'aim';      // 'pre' = avant le GO, 'aim' = visée / tir
@@ -3867,22 +3869,15 @@
       var b = bubbles[k];
       if (b.popped) continue;
       var bob = Math.sin(now / 420 + b.id) * 1.6, r = BUB_R;
-      var g = ctx.createRadialGradient(b.x - r * 0.35, b.y + bob - r * 0.4, r * 0.1, b.x, b.y + bob, r);
-      g.addColorStop(0, 'rgba(255,255,255,0.95)');
-      g.addColorStop(0.55, 'rgba(160,215,255,0.55)');
-      g.addColorStop(1, 'rgba(90,150,235,0.75)');
-      ctx.beginPath();
-      ctx.arc(b.x, b.y + bob, r, 0, Math.PI * 2);
-      ctx.fillStyle = g;
-      ctx.fill();
-      ctx.lineWidth = 1.6;
-      ctx.strokeStyle = 'rgba(40,90,190,0.9)';
-      ctx.stroke();
-      ctx.fillStyle = '#1b3f9c';
-      ctx.font = 'bold 15px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('?', b.x, b.y + bob + 1);
+      if (BUB_IMG.complete && BUB_IMG.naturalWidth) {
+        var bw = r * 3.2, bh = bw * BUB_IMG.naturalHeight / BUB_IMG.naturalWidth;
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.3)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetY = 2;
+        ctx.drawImage(BUB_IMG, b.x - bw / 2, b.y + bob - bh / 2, bw, bh);
+        ctx.restore();
+      }
     }
   }
   function drawPuddles() {
