@@ -646,3 +646,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v148 — Nouvelles icônes de voitures
 - Les 8 icônes de voitures (Classique, Bille, Plume, Gomme, Porte-mine, Compas, Correcteur, Colle) sont remplacées par ta nouvelle planche, découpée carte par carte et débarrassée de ses anciens cadres/titres (le cadre crayon commun les entoure). Elles s'affichent dans « Ma voiture » (Entraînement) et dans Règles › Voitures. Les cartes de l'écran « Adversaire » ne changent pas. Images : `assets/images/voiture-*.jpg`.
 - Archive : pencil-race_v147_avant-voitures.html
+
+## v149 — Voitures plus grandes dans les cadres
+- Chaque image de voiture est recadrée au plus près de la voiture (marge de 3 %), et l'image utilise les marges vides gauche/droite du cadre : les voitures sont nettement plus grandes, sans toucher ni cacher le cadre (le damier en bas à droite reste visible). Valable dans « Ma voiture » et Règles › Voitures.
+- Archive : pencil-race_v148_avant-voitures-grandes.html

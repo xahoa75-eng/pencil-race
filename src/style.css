@@ -402,3 +402,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .pic-btn.rc-pic.fr { --H: 44px; --fs: 28px; }
 .pic-btn.rc-pic.fr img { aspect-ratio: 770 / 694; object-fit: contain; }
 .pic-btn.rc-pic[data-go="rvoitures"].fr img { aspect-ratio: 782 / 646; }
+/* voitures : l'image déborde sur les marges vides du cadre (gauche/droite) pour que la voiture soit plus grande */
+.carbtn.pic.fr .carpic { width: calc(100% + 34px); margin-left: -20px; background: transparent !important; }
+.fc-f.fr canvas { width: calc(100% + 34px) !important; max-width: none; margin-left: -20px; flex: 1; background: transparent; }
+.carbtn.pic.fr .carpic { width: calc(100% + 24px); margin-left: -13px; }
+.carbtn.pic.fr, .fc-f.fr:has(canvas) { background: #f1f1e9 !important; }
