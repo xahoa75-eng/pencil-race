@@ -768,3 +768,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le texte des boutons « Sons : oui/non » se met toujours à jour (dans le bandeau).
 - Testé : captures de chaque écran, parcours solo, partie en ligne à 2 joueurs (synchronisée).
 - Archive : pencil-race_v172_avant-boutons-da.html
+
+## v174 — Bouton carte rond
+- Exception à la v173 : le bouton carte (vue d'ensemble) redevient rond, mais avec le fond crème et le trait crayon de la D.A. (plus de cadre carré).
+- Archive : pencil-race_v173_avant-carte-ronde.html

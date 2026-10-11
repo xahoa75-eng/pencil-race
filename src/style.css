@@ -456,9 +456,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .overlay .box.fr > .fr.frb { margin: 0; }
 .carbtn.none.fr, .fr.frbox.none { grid-column: 1 / -1; --H: 26px; --fs: 17px; padding: 0 !important; }
 .fr.frbox.none .frlink-txt { padding: 8px 14px 12px; }
-#ovBtn.fr { --H: 16px; --fs: 10px; width: 66px; height: 66px; right: 8px; bottom: 8px; border-radius: 0 !important; touch-action: none; }
-#ovBtn.fr svg { width: 28px; height: 28px; margin: 0 auto; }
-#ovBtn.fr.held { background: #e2e2e2 !important; transform: scale(1.12); }
+#ovBtn { width: 54px; height: 54px; border-radius: 50%; background: #f6f3ea; border: 3px solid #2e2e32; box-shadow: inset 0 0 0 2px #f6f3ea, inset 0 0 0 3px #8a877d, 0 2px 4px rgba(0,0,0,.25); }
+#ovBtn.held { background: #e4e0d2; transform: scale(1.12); }
 #goBtn.fr { --H: 34px; --fs: 20px; border-radius: 0 !important; }
 #goBtn.fr > span { display: block !important; text-align: center; }
 #goBtn.fr { flex-direction: column; justify-content: center; }
