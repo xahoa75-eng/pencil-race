@@ -739,3 +739,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - En ligne avec GO, le bouton n'apparaît que chez le joueur dont c'est le tour.
 - Testé avec le serveur local : 2 et 3 joueurs, avec GO et sans GO, tout reste synchronisé (tirs, bulles, pouvoirs).
 - Archive : pencil-race_v167_avant-go-en-ligne.html
+
+## v169 — Pilotage sur l'écran du nombre de joueurs
+- Jouer en local et Créer une partie : l'écran du nombre de joueurs présente, dans cet ordre, 1) le nombre de joueurs, 2) le pilotage (Facile / Normal / Hard), 3) le bouton GO, puis « Valider ». Toutes les icônes ont la même taille.
+- En Hard, l'option GO est grisée et bloquée sur « GO activé » (c'est lui qui lance le chrono) ; un appui dessus ne change rien.
+- Le pilotage n'est plus demandé sur le dernier écran du mode local, qui ne garde que le bouton « Lancer ».
+- En ligne, le pilotage n'est plus forcé sur « Normal » : l'hôte choisit, et son réglage est envoyé aux invités avec le départ.
+- Testé : parcours local complet, GO grisé en Hard, partie en ligne à 2 joueurs avec GO (synchronisée).
+- Archive : pencil-race_v168_avant-pilotage-ecran2.html

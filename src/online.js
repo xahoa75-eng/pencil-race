@@ -183,10 +183,10 @@
   }
 
   // ----- démarrage de la course -----
-  function onlApply(exit, circuitId, goMulti) {
+  function onlApply(exit, circuitId, goMulti, diff) {
     var o = online;
     if (!o.saved) o.saved = { diff: settings.diff, exit: settings.exit, circuit: settings.circuit, players: settings.players, goMulti: settings.goMulti };
-    settings.diff = 'normal';     // pas de chrono en ligne
+    if (diff && DIFF[diff]) settings.diff = diff;   // l'hôte choisit le pilotage pour tout le monde
     if (goMulti) settings.goMulti = goMulti;   // l'hôte décide du bouton GO
     if (exit) settings.exit = exit;
     if (circuitId) settings.circuit = circuitId;
@@ -202,12 +202,12 @@
     startGame(settings.players, false);
     bubSeq = 0;
     for (var bi = 0; bi < players.length; bi++) { var nb = onlSpawn(players[bi], null, bubbles); if (nb) bubbles.push({ id: nb.id, x: nb.x, y: nb.y, popped: false }); }
-    onlBroadcast({ t: 'start', circuit: settings.circuit, count: settings.players, go: settings.goMulti, door: lastDoor, tun: lastTun, exit: settings.exit, bub: bubbles.map(function (b) { return { id: b.id, x: b.x, y: b.y }; }) });
+    onlBroadcast({ t: 'start', circuit: settings.circuit, count: settings.players, go: settings.goMulti, diff: settings.diff, door: lastDoor, tun: lastTun, exit: settings.exit, bub: bubbles.map(function (b) { return { id: b.id, x: b.x, y: b.y }; }) });
   }
   function onlStartGuest(o, m) {
     o.started = true;
     o.sent = false;
-    onlApply(m.exit, m.circuit, m.go);
+    onlApply(m.exit, m.circuit, m.go, m.diff);
     forced = { door: m.door, tun: m.tun };
     document.body.classList.add('onl-guest');
     document.body.classList.remove('onl-end');

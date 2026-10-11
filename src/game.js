@@ -1314,7 +1314,14 @@
     document.getElementById('mRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
     document.getElementById('oRecap').textContent = settings.players + ' joueurs';
     document.getElementById('oRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
-    document.getElementById('diffDesc3').textContent = DIFF_DESC[settings.diff];
+    document.getElementById('diffDesc4').textContent = DIFF_DESC[settings.diff];
+    document.getElementById('diffDesc5').textContent = DIFF_DESC[settings.diff];
+    // en Hard, le bouton GO est obligatoire (il lance le chrono) : l'option est grisée et bloquée sur « GO activé »
+    var hard = settings.diff === 'hard';
+    Array.prototype.forEach.call(document.querySelectorAll('.seg[data-key="goMulti"] button'), function (b) {
+      b.disabled = hard;
+      if (hard) b.setAttribute('aria-pressed', b.getAttribute('data-val') === 'oui' ? 'true' : 'false');
+    });
     if (onlReady) onlineRefresh();
   }
 
