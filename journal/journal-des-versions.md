@@ -600,3 +600,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le pouvoir sert pour le prochain tour du joueur, puis disparaît (pour le Porte-mine : ses 3 petits coups). Un seul pouvoir en réserve à la fois (une nouvelle bulle remplace l'ancien). Le nom du pouvoir en réserve s'affiche à côté du joueur en haut.
 - Technique : l'hôte place les bulles et tire le pouvoir ; ils sont envoyés avec le tir, donc identiques chez tout le monde. `equipPU`/`unequipPU` prêtent les réglages d'une voiture au joueur le temps d'un tour. Test : `FORCE_PU=1`/`FORCE_BUB=1 node tools/online135.js` (14 tours Zigzag et Jardin, 6 pouvoirs, positions/pouvoirs/bulles identiques chez les deux joueurs).
 - Archive : pencil-race_v136_avant-powerups.html
+
+## v138 — Power-ups : une bulle à chaque tir, près des joueurs
+- À chaque tir, une nouvelle bulle apparaît près du joueur qui va jouer, et une fois sur deux une autre près du tireur : le plus souvent devant (70 à 220 de piste), parfois derrière (50 à 110). Au départ, une bulle devant chaque joueur. Maximum de bulles sur la piste : 2 × joueurs + 1 (5 à 2 joueurs).
+- Archive : pencil-race_v137_avant-bulles-proches.html
