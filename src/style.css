@@ -464,4 +464,4 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #goBtn.fr { flex-direction: column; justify-content: center; }
 
 /* cartes Power-up */
-.fc-f.fr .pu-img { display: block; flex: 1; min-height: 0; width: calc(100% + 34px); margin-left: -20px; object-fit: contain; }
+.fc-f.fr .pu-img { display: block; flex: 1; min-height: 0; width: calc(100% + 34px); max-width: none; margin-left: -20px; margin-top: 8px; object-fit: contain; }
