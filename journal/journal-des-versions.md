@@ -608,3 +608,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v139 — Power-ups : les bulles oubliées loin derrière disparaissent
 - À chaque début de tour, toute bulle restée à plus de 180 de piste derrière le dernier joueur est effacée (même calcul chez tous les joueurs, rien à envoyer). Test : bulle laissée au départ pendant que les voitures sont près de l'arrivée → effacée ; bulle proche → gardée.
 - Archive : pencil-race_v138_avant-nettoyage-bulles.html
+
+## v140 — Miniatures des circuits : les dessins de Mika
+- Les 8 miniatures (Zigzag, Serpentin, Canyon, Escalier, Maelström, Usine, Jardin, Grotte) sont remplacées par les dessins au crayon de couleur fournis, découpés dans la planche (`assets/images/circuit-*.jpg`). Elles s'affichent partout où il y en avait : Entraînement, Multi (même téléphone), Multi en ligne et les fiches « Circuits » des Règles. Les dessins non carrés (Usine, Jardin) sont centrés sur fond papier. Le tracé « fil de fer » reste en secours si une image manque.
+- Archive : pencil-race_v139_avant-miniatures-circuits.html

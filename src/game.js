@@ -602,11 +602,44 @@
   }
   function plural(n) { return n + (n > 1 ? ' coups' : ' coup'); }
 
-  // ---------- vignettes « fil de fer » ----------
+  // ---------- vignettes des circuits : les dessins de Mika (à défaut, le « fil de fer ») ----------
+  var CIR_SRC = {
+    zigzag: 'data:image/jpeg;base64,@@A:circuit-zigzag.jpg@@',
+    serpentin: 'data:image/jpeg;base64,@@A:circuit-serpentin.jpg@@',
+    canyon: 'data:image/jpeg;base64,@@A:circuit-canyon.jpg@@',
+    escalier: 'data:image/jpeg;base64,@@A:circuit-escalier.jpg@@',
+    maelstrom: 'data:image/jpeg;base64,@@A:circuit-maelstrom.jpg@@',
+    usine: 'data:image/jpeg;base64,@@A:circuit-usine.jpg@@',
+    jardin: 'data:image/jpeg;base64,@@A:circuit-jardin.jpg@@',
+    grotte: 'data:image/jpeg;base64,@@A:circuit-grotte.jpg@@'
+  };
+  var CIR_IMG = {}, thumbPend = [];
+  function cirImg(id) {
+    if (!CIR_SRC[id]) return null;
+    var im = CIR_IMG[id];
+    if (!im) {
+      im = new Image();
+      im.onload = function () { var l = thumbPend; thumbPend = []; l.forEach(function (t) { drawThumb(t[0], t[1]); }); };
+      im.src = CIR_SRC[id];
+      CIR_IMG[id] = im;
+    }
+    return im.complete && im.naturalWidth ? im : null;
+  }
   function drawThumb(cv, c) {
     var g = cv.getContext('2d');
     var w = cv.width, h = cv.height, pad = 12;
     g.setTransform(1, 0, 0, 1, 0, 0);
+    if (CIR_SRC[c.id]) {
+      g.fillStyle = '#f4f1e8';
+      g.fillRect(0, 0, w, h);
+      var im0 = cirImg(c.id);
+      if (!im0) { thumbPend.push([cv, c]); return; }
+      var k0 = Math.min(w / im0.naturalWidth, h / im0.naturalHeight);
+      var iw = im0.naturalWidth * k0, ih = im0.naturalHeight * k0;
+      g.imageSmoothingQuality = 'high';
+      g.drawImage(im0, (w - iw) / 2, (h - ih) / 2, iw, ih);
+      return;
+    }
     var tth = c.theme;
     g.fillStyle = tth ? tth.ground : '#fff';
     g.fillRect(0, 0, w, h);
