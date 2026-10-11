@@ -873,3 +873,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v190 — Crayons boss : même boîte, taille maximale
 - Chaque crayon boss est agrandi au maximum pour remplir la case de la carte : les 8 images ont maintenant exactement la même hauteur (de la gomme à la pointe, accessoires et flammes compris) et sont centrées. Avant, ils étaient à la même échelle mais de hauteurs différentes (la fumée et les flammes de l'Agrafeuse, les accessoires...) et laissaient du vide.
 - Archive : pencil-race_v189_avant-boss-max.html
+
+## v191 — Plume : plus de flaque une fois l'adversaire arrivé
+- Quand l'adversaire a déjà passé la ligne d'arrivée et que la Plume joue son dernier coup (dernière chance), elle ne pose plus de flaque : elle la posait devant une voiture déjà arrivée, ce qui n'avait aucun sens (et pouvait tomber au-delà de la ligne). Valable en campagne, en entraînement, en local et en ligne (pour les adversaires encore en course, rien ne change).
+- Testé : adversaire encore en course → 1 flaque posée ; adversaire arrivé → 0 flaque (3 circuits) ; parties de bots sur les 8 circuits : jamais plus de 2 flaques ni de flaques superposées ; en ligne 2 joueurs avec Plume, synchronisé.
+- Archive : pencil-race_v190_avant-plume-fin.html

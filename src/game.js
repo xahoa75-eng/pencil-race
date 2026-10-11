@@ -2106,11 +2106,15 @@
     var behind = pt || [p.x, p.y];
     var fs = circuit.funnels || [];
     var sp = projectS(circuit, p.x, p.y), so = -1;
+    var others = 0;
     for (var i = 0; i < players.length; i++) {
       if (players[i] === p) continue;
+      others++;
+      if (players[i].done) continue;           // une voiture qui a passé la ligne d'arrivée n'a plus rien à craindre : on ne la vise pas
       var sj = projectS(circuit, players[i].x, players[i].y);
       so = so < 0 ? sj : Math.min(so, sj);
     }
+    if (others && so < 0) return null;         // tous les adversaires ont fini : pas de flaque
     // l'adversaire est devant elle : la flaque se pose sur sa route, devant lui, en laissant un passage étroit
     if (so >= 0 && so > sp + 12) {
       if (circuit.field) {
