@@ -620,3 +620,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v142 — Bouton « Jouer en ligne » en image
 - Dans Multi, le bouton « Jouer en ligne (chacun son téléphone) » est remplacé par le dessin des quatre crayons branchés (câble réseau, nuage). « JOUER EN LIGNE » est écrit dans l'encadré du haut, dans le même style que « 2 JOUEURS » (lettres capitales manuscrites gris foncé, police Patrick Hand SC dessinée dans l'image). Image : `assets/images/jouer-en-ligne.jpg`.
 - Archive : pencil-race_v141_avant-icone-en-ligne.html
+
+## v143 — Nouvel écran d'accueil
+- L'image d'accueil est remplacée par la nouvelle (titre en lettres de crayon, 4 voitures, 4 gommes Solo / Multi / Options / Règles). Le fond de papier de l'image est rendu transparent (détection du papier, ombres conservées en transparence douce) : on voit les carreaux derrière. Les 4 zones de clic sont recalées sur les nouvelles gommes (testées : Solo, Multi, Options et Règles ouvrent le bon écran). `assets/images/accueil-v2.webp` ; l'ancienne `accueil.webp` reste dans le dépôt.
+- Archive : pencil-race_v142_avant-accueil2.html

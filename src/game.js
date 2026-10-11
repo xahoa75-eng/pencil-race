@@ -1217,7 +1217,7 @@
     var BW = box.clientWidth, BH = box.clientHeight;
     if (!BW || !BH) return;
     // l'image entière tient dans l'écran, posée sur la feuille (le blanc de l'image laisse voir les carreaux)
-    var iw = 864, ih = 1227, pad = 10;
+    var iw = 880, ih = 1211, pad = 10;
     // le dessin occupe toute la largeur (ses marges blanches peuvent déborder), sans jamais dépasser en hauteur
     var k = Math.min(BW / (iw * 0.9), (BH - 2 * pad) / ih);
     var dw = iw * k, dh = ih * k;
