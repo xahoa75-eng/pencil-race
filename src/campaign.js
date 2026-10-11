@@ -3,6 +3,8 @@
   // (les adversaires sont choisis par Mika ; l'Usine est le niveau final : il s'ouvre quand les 7 autres sont gagnés)
   var CAMP_BOSS = { zigzag: 'correcteur', serpentin: 'plume', canyon: 'gomme', escalier: 'portemine', maelstrom: 'colle', jardin: 'compas', grotte: 'bille', usine: 'normale' };
   var CAMP_FINAL = 'usine';
+  // ordre des cartes de la campagne (par boss : Colle, Gomme, Plume, Porte-mine, Correcteur, Compas, Bille, puis l'Agrafeuse en dernier)
+  var CAMP_ORDER = ['maelstrom', 'canyon', 'serpentin', 'escalier', 'zigzag', 'jardin', 'grotte', CAMP_FINAL];
   // le boss final est l'Agrafeuse (son pouvoir viendra plus tard : pour l'instant elle roule comme une Classique bleue, niveau Hard)
   var CAMP_BOSS_NAME = { usine: "L'Agrafeuse" };
   var CAMP_BOSS_IMG = {
@@ -106,7 +108,7 @@
     var box = document.getElementById('cirCamp');
     if (!box) return;
     box.innerHTML = '';
-    var order = ORDER.filter(function (cid) { return cid !== CAMP_FINAL; }).concat([CAMP_FINAL]);
+    var order = CAMP_ORDER;
     order.forEach(function (cid) {
       var c = CIRCUITS[cid];
       var open = campOpen(cid);

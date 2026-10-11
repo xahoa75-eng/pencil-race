@@ -906,3 +906,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Attention, à valider en jouant : avec ces règles exactes, la fenêtre pour gagner est très étroite (il faut que, après l'échange, ton ancienne place à elle te permette encore de toucher l'arrivée). Dans les parties simulées, le joueur automatique ne la bat pas ; à voir à la main, et à ajuster (écart, délai de 3 tours) selon ton ressenti.
 - Testé : parties simulées sur l'Usine (joueur qui fonce, joueur malin, joueur prudent) sans erreur, échanges tous les 3 tours et échanges d'urgence observés, compteur affiché ; bots sur Zigzag et Jardin inchangés.
 - Archive : pencil-race_v194_avant-agrafeuse.html
+
+## v196 — Campagne : nouvel ordre des boss
+- Les cartes de la campagne sont maintenant dans cet ordre : Colle, Gomme, Plume, Porte-mine, Correcteur, Compas, Bille, puis l'Agrafeuse (final) en dernier. (Avant : Correcteur, Plume, Gomme, Porte-mine, Colle, Compas, Bille.) Le Correcteur et la Colle, la Plume et la Gomme ont échangé leur place ; chaque boss garde son circuit.
+- Les niveaux des bots dépendent du nombre de boss battus, pas de la place : rien d'autre ne change.
+- Testé : ordre des 8 cartes vérifié, sans erreur.
+- Archive : pencil-race_v195_avant-ordre-boss.html
