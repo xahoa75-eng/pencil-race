@@ -634,3 +634,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v145 — Icône « Circuits » dans Règles
 - Dans Règles, le bouton « Circuits » est remplacé par ton dessin des 3 circuits (boucle rouge, serpentin vert, huit bleu, drapeau START). Son ancien cadre est retiré et remplacé par le cadre crayon commun, avec « CIRCUITS » dans le bandeau. Il ouvre toujours les cartes des circuits. Image : `assets/images/regles-circuits.jpg`.
 - Archive : pencil-race_v144_avant-icone-circuits.html
+
+## v146 — Icône « Voitures » dans Règles
+- Dans Règles, le bouton « Voitures » est remplacé par ton dessin des 3 voitures (rouge, verte, violette, drapeau VOITURES), dans le cadre crayon commun avec « VOITURES » dans le bandeau. Il ouvre toujours les cartes des voitures. Image : `assets/images/regles-voitures.jpg`.
+- Archive : pencil-race_v145_avant-icone-voitures.html
