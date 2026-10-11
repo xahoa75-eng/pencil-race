@@ -17,9 +17,8 @@
   function campBossImg(cid) { return CAMP_BOSS_IMG[cid === CAMP_FINAL ? 'agrafeuse' : CAMP_BOSS[cid]]; }
   // l'adversaire de la campagne porte le nom de son boss (l'Agrafeuse pour le niveau final)
   function campBotName(opp) { return camp.active && camp.circuit === CAMP_FINAL ? CAMP_BOSS_NAME[CAMP_FINAL] : opp.name; }
-  // niveau du bot : celui que le joueur choisit avant le départ ; le niveau final est toujours Hard
+  // niveau du bot : celui que le joueur choisit avant le départ (aussi pour l'Agrafeuse)
   function campLevel(cid) {
-    if (cid === CAMP_FINAL) return 'hard';
     return camp.level;
   }
   var camp = { won: {}, active: false, circuit: null, saved: null, level: 'normal', pre: null };
@@ -37,11 +36,13 @@
   var CAMP_LEVELS = ['facile', 'normal', 'hard'];
   function campWon(cid, lvl) { var w = camp.won[cid]; return !!(w && w[lvl]); }
   function campWonAny(cid) { return campWon(cid, 'facile') || campWon(cid, 'normal') || campWon(cid, 'hard'); }
-  function campWonAll(cid) { return cid === CAMP_FINAL ? campWon(cid, 'hard') : CAMP_LEVELS.every(function (l) { return campWon(cid, l); }); }
+  function campWonAll(cid) { return CAMP_LEVELS.every(function (l) { return campWon(cid, l); }); }
   // nombre de boss battus au moins une fois (le niveau final s'ouvre avec les 7)
   function campWonCount() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && campWonAny(c)) k++; return k; }
-  // nombre de victoires sur les 21 (7 boss x 3 niveaux)
-  function campWinTotal() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL) CAMP_LEVELS.forEach(function (l) { if (campWon(c, l)) k++; }); return k; }
+  // nombre de victoires sur les 24 (8 boss x 3 niveaux)
+  function campWinTotal() { var k = 0; for (var c in CAMP_BOSS) CAMP_LEVELS.forEach(function (l) { if (campWon(c, l)) k++; }); return k; }
+  // le niveau final s'ouvre quand les 7 autres boss sont battus en Facile
+  function campFinalOpen() { for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && !campWon(c, 'facile')) return false; return true; }
   // lvl : niveau de l'adversaire (campagne) ; sans niveau : battue au moins une fois, à n'importe quel niveau
   function carUnlocked(key, lvl) {
     if (CAMP_ALL || key === 'normale') return true;
@@ -58,6 +59,8 @@
       q.boss = (botMode && camp.active && camp.circuit === CAMP_FINAL && q.bot) ? 'agrafeuse' : null;
       q.stapleTurns = 0;
       q.bossAim = null;
+      // la Gomme du Canyon (boss de la campagne) n'a que 90 % de force, à tous les niveaux
+      if (botMode && camp.active && camp.circuit === 'canyon' && q.bot && q.carKey === 'gomme') q.rm = q.rmBase = 0.9;
     }
   }
   // texte du compteur d'échange, affiché à côté de son nom
@@ -105,7 +108,7 @@
     p.bossAim = { allowFinish: false, target: sH - gap };
     return false;
   }
-  function campOpen(cid) { return cid !== CAMP_FINAL || campWonCount() >= 7 || CAMP_ALL; }
+  function campOpen(cid) { return cid !== CAMP_FINAL || CAMP_ALL || campFinalOpen(); }
   // en quittant l'écran de départ de la campagne, le niveau de bot de l'entraînement revient
   function campLevelRestore() {
     if (camp.pre != null) { settings.botLevel = camp.pre; camp.pre = null; }
@@ -150,14 +153,14 @@
       var sb = document.createElement('div');
       sb.className = 'csub';
       var lv = CAMP_LEVELS.filter(function (l) { return campWon(cid, l); }).map(function (l) { return BOT_LEVEL[l]; });
-      sb.textContent = !open ? '🔒 Bats les 7 autres' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
+      sb.textContent = !open ? '🔒 Bats les 7 autres en Facile' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
       if (open && lv.length && !campWonAll(cid)) { sb.appendChild(document.createElement('br')); sb.appendChild(document.createTextNode('Battu : ' + lv.join(', '))); }
       b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);
     });
     var rc = document.getElementById('campRecap');
-    if (rc) rc.textContent = 'Victoires : ' + campWinTotal() + ' sur 21. Bats un boss pour gagner sa voiture, mais seulement au niveau où tu l\'as battu : il faut le battre en Facile, Normal et Hard pour l\'avoir partout.';
+    if (rc) rc.textContent = 'Victoires : ' + campWinTotal() + ' sur 24. Bats un boss pour gagner sa voiture, mais seulement au niveau où tu l\'as battu : il faut le battre en Facile, Normal et Hard pour l\'avoir partout.';
   }
   function campRefresh() {
     var el = document.getElementById('campCircuitName');
@@ -166,11 +169,9 @@
     }
     var rc = document.getElementById('campRecap2');
     if (rc && camp.circuit) rc.textContent = 'Circuit : ' + CIRCUITS[camp.circuit].name + ' · Ta voiture : ' + CARS[campCar].name + ' · Adversaire : ' + campBossName(camp.circuit);
-    var lb = document.getElementById('campLevelBox');
-    if (lb) lb.hidden = camp.circuit === CAMP_FINAL;
     var dd = document.getElementById('diffDesc6');
     if (dd) dd.textContent = DIFF_DESC[settings.diff];
-    var lvNow = camp.circuit === CAMP_FINAL ? 'hard' : settings.botLevel;
+    var lvNow = settings.botLevel;
     var cbs = document.querySelectorAll('#carsCamp .carbtn');
     for (var i = 0; i < cbs.length; i++) {
       var ok = carUnlocked(cbs[i].getAttribute('data-car'), lvNow);
@@ -236,7 +237,7 @@
       go('campaign3');
     } else if (el.getAttribute('data-act') === 'play-campaign') {
       if (!camp.circuit) return;
-      if (camp.circuit !== CAMP_FINAL && BOT_LEVEL[settings.botLevel]) { camp.level = settings.botLevel; campSave(); }
+      if (BOT_LEVEL[settings.botLevel]) { camp.level = settings.botLevel; campSave(); }
       if (!camp.saved) camp.saved = { circuit: settings.circuit, playerCar: settings.playerCar, botCar: settings.botCar, botLevel: camp.pre != null ? camp.pre : settings.botLevel };
       camp.active = true;
       settings.circuit = camp.circuit;

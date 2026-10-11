@@ -952,3 +952,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Inchangé : quand l'adversaire a déjà passé la ligne et que la Plume joue sa dernière chance sans arriver, elle ne pose pas de flaque (v191).
 - Testé : 4 parties sur chacun des 8 circuits, la Plume arrive à chaque fois avec sa flaque finale posée ; jamais plus de 2 flaques.
 - Archive : pencil-race_v201_avant-plume-ligne.html
+
+## v203 — Trajectoire facile (Bille, Gomme), Gomme du Canyon, Agrafeuse ouverte en Facile
+- Pilotage Facile : la trajectoire en pointillés montre maintenant les rebonds de la Bille et les traversées de la Gomme (ou son arrêt si elle ne peut pas traverser), comme pour le Compas, au lieu d'une simple ligne droite.
+- Campagne, Canyon : la Gomme boss a 90 % de force, à tous les niveaux d'adversaire (valeur cachée, non affichée).
+- Campagne : l'Agrafeuse s'ouvre dès que les 7 autres boss sont battus en Facile. Son niveau se choisit comme pour les autres boss (Facile / Normal / Hard) ; les voitures suivent la règle par niveau : en Facile toutes celles que tu as gagnées, en Normal / Hard seulement celles gagnées à ce niveau. La grande coche demande maintenant la victoire aux 3 niveaux pour tous les boss, l'Agrafeuse comprise ; le compteur passe à « sur 24 » (8 boss × 3 niveaux).
+- Le comportement de l'Agrafeuse ne change pas encore selon le niveau (même règle d'échange à tous les niveaux).
+- Testé : trajectoire avec rebond (Bille) en capture, Gomme au Canyon à 0,9 ; Usine verrouillée avec 6 boss, ouverte avec 7 ; choix du niveau présent et voitures verrouillées selon le niveau, sans erreur.
+- Archive : pencil-race_v202_avant-agrafeuse-facile.html

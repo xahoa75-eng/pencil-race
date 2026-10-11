@@ -4528,8 +4528,8 @@
         if (settings.diff === 'facile') {
           var d = q.l * POWER * (p.rm || 1);
           var ex, ey, fx, fy, pre = null;
-          if (p.follow) {
-            // le Compas : on montre la trajectoire simulée, qui épouse la piste
+          if (p.follow || p.power === 'bounce' || p.power === 'cross') {
+            // le Compas, la Bille (rebonds) et la Gomme (traversées) : on montre la trajectoire simulée
             var sm = simulateShot(p, p.x, p.y, Math.atan2(qy, qx), d, inTrack, Math.random, false);
             pre = sm.path.slice(0, ((sm.res.type === 'exit' && settings.exit === 'tol') ? sm.cut : sm.path.length - 1) + 1);
             var lp = pre[pre.length - 1], pp = pre[Math.max(0, pre.length - 3)];
