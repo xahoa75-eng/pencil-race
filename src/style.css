@@ -479,3 +479,10 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 /* Campagne : grande coche verte (boss battu), en bas à droite du cadre */
 .fr-boss .wonmark { position: absolute; z-index: 3; right: -21px; bottom: -22px; width: 60px; height: 60px; pointer-events: none; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
 .fr-boss .wonmark svg { display: block; width: 100%; height: 100%; }
+
+/* campagne : remise à zéro */
+#campResetBox { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+#campResetAsk { display: flex; flex-direction: column; gap: 14px; }
+#campResetAsk[hidden], #campResetBox [hidden] { display: none !important; }
+#campResetBox .resetrow { display: flex; gap: 12px; }
+#campResetBox .resetrow .fr { flex: 1; width: auto; min-width: 0; }

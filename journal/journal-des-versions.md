@@ -935,3 +935,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Tout en bas de la sélection des boss, un bouton « Remettre la campagne à zéro ». Il demande d'abord « Es-tu certain ? » avec Oui / Non (dans la page, pas de fenêtre du navigateur). Non (ou rien) ne change rien ; Oui efface toutes les victoires, les voitures débloquées et le niveau choisi (retour à Normal).
 - Testé : demande de confirmation, Non sans effet, Oui qui vide la sauvegarde et réaffiche « Victoires : 0 sur 21 », sans erreur.
 - Archive : pencil-race_v198_avant-remise-a-zero.html
+
+## v200 — Remise à zéro de la campagne : boutons dans la D.A. crayon
+- Le bouton « Remettre la campagne à zéro » et la confirmation (« Es-tu certain ? », Oui / Non) reprennent les cadres au crayon du reste du jeu (bandeau avec damier et titre, texte à la main), comme les boutons « Valider » et « Rejoindre ». Le fonctionnement ne change pas.
+- Testé : captures du bouton seul et de la confirmation, sans erreur.
+- Archive : pencil-race_v199_avant-da-remise-a-zero.html

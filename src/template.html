@@ -42,10 +42,13 @@
     <h3>Choisis ton circuit</h3>
     <div class="cards" id="cirCamp"></div>
     <div id="campResetBox">
-      <button class="big" type="button" data-campreset="ask">Remettre la campagne à zéro</button>
+      <button class="fr frbox frlink" type="button" data-campreset="ask" data-title="Remise à zéro"><span class="frlink-txt">Remettre la campagne à zéro</span></button>
       <div id="campResetAsk" hidden>
-        <p class="note">Es-tu certain ? Toutes tes victoires et les voitures débloquées seront effacées.</p>
-        <div class="seg"><button type="button" data-campreset="yes">Oui</button><button type="button" data-campreset="no">Non</button></div>
+        <div class="fr frbox frlink" data-title="Es-tu certain ?" style="cursor:default"><span class="frlink-txt">Toutes tes victoires et les voitures débloquées seront effacées.</span></div>
+        <div class="resetrow">
+          <button class="fr frbox frlink" type="button" data-campreset="yes" data-title="Oui"><span class="frlink-txt">Oui, tout effacer</span></button>
+          <button class="fr frbox frlink" type="button" data-campreset="no" data-title="Non"><span class="frlink-txt">Non, garder</span></button>
+        </div>
       </div>
     </div>
   </div>
