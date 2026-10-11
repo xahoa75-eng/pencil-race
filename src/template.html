@@ -309,7 +309,7 @@
 <!-- JEU -->
 <section class="screen" id="s-game">
   <div id="gh">
-    <button type="button" id="pauseBtn">☰ Menu</button>
+    <button type="button" id="pauseBtn" class="fr" data-title="☰ Menu"></button>
     <div class="info">
       <div id="stats1" class="stats">
         <div><span>Coups</span> <b id="shots">0</b></div>
@@ -322,8 +322,8 @@
   <div class="stage">
     <div class="cwrap">
       <canvas id="c" aria-label="Circuit de course au crayon"></canvas>
-      <button type="button" id="goBtn" hidden><span class="gtxt" id="goTxt">GO</span><span class="gsub" id="goSub"></span></button>
-      <button type="button" id="ovBtn" hidden aria-label="Vue d'ensemble : maintenir pour voir tout le circuit">
+      <button type="button" id="goBtn" class="fr" data-title="GO" hidden><span class="gtxt" id="goTxt">GO</span><span class="gsub" id="goSub"></span></button>
+      <button type="button" id="ovBtn" class="fr" data-title="Carte" hidden aria-label="Vue d'ensemble : maintenir pour voir tout le circuit">
         <svg viewBox="0 0 32 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M8 31 C8 24 26 26 26 19 C26 13 9 16 9 12" fill="none" stroke="#151515" stroke-width="6.5" stroke-linecap="round"/>
           <path d="M8 31 C8 24 26 26 26 19 C26 13 9 16 9 12" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.4 2.8"/>
@@ -336,22 +336,21 @@
 </section>
 
 <div class="overlay" id="pause" role="dialog">
-  <div class="box">
-    <h2>Pause</h2>
-    <button type="button" data-act="resume">Reprendre</button>
-    <button type="button" class="alt" data-act="restart">Rejouer</button>
-    <button type="button" class="alt" data-act="sound" id="soundBtn">Sons : oui</button>
-    <button type="button" class="alt" data-act="quit">Quitter vers le menu</button>
+  <div class="box fr" data-title="Pause">
+    <button type="button" class="fr frb" aria-pressed="true" data-title="Reprendre" data-act="resume"></button>
+    <button type="button" class="fr frb" data-title="Rejouer" data-act="restart"></button>
+    <button type="button" class="fr frb" data-title="Sons : oui" data-act="sound" id="soundBtn"></button>
+    <button type="button" class="fr frb" data-title="Quitter vers le menu" data-act="quit"></button>
   </div>
 </div>
 
 <div class="overlay" id="win" role="dialog" aria-live="polite">
-  <div class="box">
+  <div class="box fr" data-title="Fin de course">
     <h2 id="winTitle">Arrivée !</h2>
     <p id="winText"></p>
     <p id="winBest"></p>
-    <button type="button" data-act="restart">Rejouer</button>
-    <button type="button" class="alt" data-act="quit">Menu</button>
+    <button type="button" class="fr frb" aria-pressed="true" data-title="Rejouer" data-act="restart"></button>
+    <button type="button" class="fr frb" data-title="Menu" data-act="quit"></button>
   </div>
 </div>
 

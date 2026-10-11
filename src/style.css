@@ -443,3 +443,22 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 
 .fr.frbox .onl-input { font: 400 46px/1.1 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; font-weight: 400; letter-spacing: .22em; text-indent: .22em; text-transform: uppercase; text-align: center; padding: 8px 0 12px; border: 0; border-radius: 0; background: transparent; color: #2e2e32; width: 100%; box-sizing: border-box; outline: none; }
 .fr.frbox .onl-input::placeholder { color: #b9b6ab; }
+
+/* boutons restants dans la D.A. */
+.back.fr { --H: 22px; --fs: 15px; align-self: flex-start; width: 108px; height: 42px; display: block; cursor: pointer; }
+#pauseBtn.fr { --H: 22px; --fs: 15px; width: 104px; height: 42px; flex: none; cursor: pointer; }
+.fr.frb { --H: 24px; --fs: 16px; width: 100%; height: 44px; display: block; cursor: pointer; }
+.overlay .box.fr { --H: 34px; --fs: 22px; width: 82%; max-width: 330px; box-sizing: border-box; padding: 14px 14px 12px !important; color: #2e2e32; }
+.overlay .box.fr > h2 { font: 400 28px/1.1 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; }
+.overlay .box.fr p { font: 400 18px/1.25 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; }
+.overlay .box.fr button.fr { background: #f6f3ea !important; color: inherit; }
+.overlay .box.fr { gap: 16px; margin-top: 20px; }
+.overlay .box.fr > .fr.frb { margin: 0; }
+.carbtn.none.fr, .fr.frbox.none { grid-column: 1 / -1; --H: 26px; --fs: 17px; padding: 0 !important; }
+.fr.frbox.none .frlink-txt { padding: 8px 14px 12px; }
+#ovBtn.fr { --H: 16px; --fs: 10px; width: 66px; height: 66px; right: 8px; bottom: 8px; border-radius: 0 !important; touch-action: none; }
+#ovBtn.fr svg { width: 28px; height: 28px; margin: 0 auto; }
+#ovBtn.fr.held { background: #e2e2e2 !important; transform: scale(1.12); }
+#goBtn.fr { --H: 34px; --fs: 20px; border-radius: 0 !important; }
+#goBtn.fr > span { display: block !important; text-align: center; }
+#goBtn.fr { flex-direction: column; justify-content: center; }

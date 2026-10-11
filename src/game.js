@@ -1068,7 +1068,7 @@
     d.className = 'fc ' + cls;
     d.setAttribute('role', 'button');
     d.tabIndex = 0;
-    var inn = document.createElement('div');
+    var inn = document.createElement('span');
     inn.className = 'fc-in';
     var f = document.createElement('div'); f.className = 'fc-f';
     var b = document.createElement('div'); b.className = 'fc-b';
@@ -1165,12 +1165,13 @@
       if (cfg[1] === 'bot') {
         var nb = document.createElement('button');
         nb.type = 'button';
-        nb.className = 'carbtn none';
+        nb.className = 'fr frbox frlink none';
+        nb.setAttribute('data-title', 'Aucun adversaire');
         nb.setAttribute('data-carpick', 'bot');
         nb.setAttribute('data-car', 'none');
-        var nn = document.createElement('div');
-        nn.className = 'carname';
-        nn.textContent = 'Aucun adversaire · je joue seul';
+        var nn = document.createElement('span');
+        nn.className = 'frlink-txt';
+        nn.textContent = 'je joue seul';
         nb.appendChild(nn);
         box.appendChild(nb);
       }
@@ -1222,6 +1223,11 @@
         if (sm) t += ' · ' + sm.textContent;
       }
       b.setAttribute('data-title', t);
+      b.classList.add('fr');
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.back:not(.fr)'), function (b) {
+      b.setAttribute('data-title', '‹ Retour');
+      b.textContent = '';
       b.classList.add('fr');
     });
     Array.prototype.forEach.call(document.querySelectorAll('.launch:not(.fr)'), function (b) {
@@ -5174,7 +5180,7 @@
   }
 
   // ---------- pause ----------
-  function soundLabel() { var sb = document.getElementById('soundBtn'); if (sb) sb.textContent = 'Sons : ' + (settings.sound === 'non' ? 'non' : 'oui'); }
+  function soundLabel() { var sb = document.getElementById('soundBtn'); if (sb) sb.setAttribute('data-title', 'Sons : ' + (settings.sound === 'non' ? 'non' : 'oui')); }
   function pauseGame() {
     soundLabel();
     if (paused || currentScreen !== 'game' || finished) return;

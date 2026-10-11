@@ -762,3 +762,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le code se tape toujours en 4 lettres majuscules ; une fois connecté, la case et le bouton disparaissent comme avant.
 - Testé : capture de l'écran, puis partie en ligne à 2 joueurs (rejoindre par code, tout synchronisé).
 - Archive : pencil-race_v171_avant-rejoindre-da.html
+
+## v173 — Tous les boutons restants dans la D.A.
+- Cadre crayon (titre dans le bandeau) pour : « ‹ Retour » (tous les écrans), « ☰ Menu » en jeu, le bouton carte, le gros bouton GO, « Aucun adversaire · je joue seul » (choix de l'adversaire), et les menus Pause et Fin de course avec leurs boutons (Reprendre, Rejouer, Sons, Quitter / Menu).
+- Le texte des boutons « Sons : oui/non » se met toujours à jour (dans le bandeau).
+- Testé : captures de chaque écran, parcours solo, partie en ligne à 2 joueurs (synchronisée).
+- Archive : pencil-race_v172_avant-boutons-da.html
