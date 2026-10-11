@@ -723,3 +723,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Écran du nombre de joueurs : les 5 icônes (2/3/4 joueurs + GO activé / Sans GO) font exactement la même taille (mesuré : 114 × 116 px sur un écran de 393 px) ; les deux icônes GO sont sur la même grille de 3 colonnes que les joueurs.
 - Dernier écran : les 3 icônes de pilotage et le bouton « Lancer » font la même taille ; le bouton Lancer est centré sous les trois.
 - Archive : pencil-race_v164_avant-tailles-egales.html
+
+## v166 — Jouer en ligne : même architecture que le mode local
+- « Créer une partie » suit maintenant les mêmes écrans que Jouer en local : 1) nombre de joueurs (mêmes icônes + bouton Valider, pastilles des couleurs) → 2) choix du circuit (mêmes grandes cartes) → 3) dernier écran avec le code, le lien, l'attente des amis et le bouton Lancer.
+- Le code de la partie et le bouton « Envoyer le lien » sont écrits à la main (police du jeu) dans le cadre crayon habituel, avec leur titre dans le bandeau. Le bouton « Lancer » est la même icône que dans les autres menus (grisé tant que tout le monde n'est pas là).
+- La partie n'est créée qu'en arrivant sur le dernier écran, et elle est refermée si on revient en arrière. « Rejoindre une partie » ne change pas.
+- Archive : pencil-race_v165_avant-enligne-ecrans.html

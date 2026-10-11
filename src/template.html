@@ -148,27 +148,11 @@
     <h2>En ligne</h2>
     <div class="onl" id="onl-choose">
       <div class="onl-pics">
-        <button class="pic-btn onl-mode" type="button" data-act="onl-host" aria-label="Créer une partie"><img alt="" src="data:image/jpeg;base64,@@A:rejoindre-partie.jpg@@"><span>Créer</span></button>
+        <button class="pic-btn onl-mode" type="button" data-go="online2" aria-label="Créer une partie"><img alt="" src="data:image/jpeg;base64,@@A:rejoindre-partie.jpg@@"><span>Créer</span></button>
         <button class="pic-btn onl-mode" type="button" data-act="onl-join" aria-label="Rejoindre une partie"><img alt="" src="data:image/jpeg;base64,@@A:creer-partie.jpg@@"><span>Rejoindre</span></button>
       </div>
       <p class="note">Un joueur crée la partie et envoie le lien (ou le code) à ses amis. Chacun joue sur son propre téléphone.</p>
       <p class="note onl-warn" id="onlNo" hidden></p>
-    </div>
-    <div class="onl" id="onl-host" hidden>
-      <h3>Circuit</h3>
-      <div class="cards" id="cirOnline"></div>
-      <h3>Nombre de joueurs</h3>
-      <div class="seg imgseg" data-key="players" style="--n:3">
-        <button type="button" data-val="2" aria-label="2 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-2.jpg@@"><span>2 joueurs</span></button>
-        <button type="button" data-val="3" aria-label="3 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-3.jpg@@"><span>3 joueurs</span></button>
-        <button type="button" data-val="4" aria-label="4 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-4.jpg@@"><span>4 joueurs</span></button>
-      </div>
-      <h3>Code de la partie</h3>
-      <div class="onl-code" id="onlCode">····</div>
-      <button class="big" type="button" data-act="onl-share">Envoyer le lien</button>
-      <div class="chips" id="onlChips"></div>
-      <p class="note" id="onlStatus"></p>
-      <button class="launch" type="button" data-act="onl-start" id="onlStart" aria-label="Lancer" disabled><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
     </div>
     <div class="onl" id="onl-join" hidden>
       <h3>Code de la partie</h3>
@@ -176,6 +160,55 @@
       <button class="big primary" type="button" data-act="onl-connect" id="onlConnect">Rejoindre</button>
       <div class="chips" id="onlChips2"></div>
       <p class="note" id="onlStatus2"></p>
+    </div>
+  </div>
+</section>
+
+<!-- EN LIGNE : 2/3 le nombre de joueurs -->
+<section class="screen" id="s-online2">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Créer une partie</h2>
+    <h3>Nombre de joueurs</h3>
+    <div class="seg imgseg" data-key="players" style="--n:3">
+      <button type="button" data-val="2" aria-label="2 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-2.jpg@@"><span>2 joueurs</span></button>
+      <button type="button" data-val="3" aria-label="3 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-3.jpg@@"><span>3 joueurs</span></button>
+      <button type="button" data-val="4" aria-label="4 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-4.jpg@@"><span>4 joueurs</span></button>
+    </div>
+    <div class="chips" id="onlPreview"></div>
+    <p class="note">Chacun joue sur son propre téléphone.</p>
+    <button class="big primary valider" type="button" data-go="online3">Valider</button>
+  </div>
+</section>
+
+<!-- EN LIGNE : 3/3 le circuit -->
+<section class="screen" id="s-online3">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Créer une partie</h2>
+    <p class="note" id="oRecap"></p>
+    <h3>Choisis ton circuit</h3>
+    <div class="cards" id="cirOnline"></div>
+  </div>
+</section>
+
+<!-- EN LIGNE : 4/4 le code, les amis et le départ -->
+<section class="screen" id="s-online4">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Créer une partie</h2>
+    <p class="note" id="oRecap2"></p>
+    <p class="note onl-warn" id="onlNo2" hidden></p>
+    <div class="onl" id="onl-host">
+      <div class="fr frbox" data-title="Code de la partie">
+        <div class="onl-code" id="onlCode">····</div>
+      </div>
+      <button class="fr frbox frlink" type="button" data-act="onl-share" data-title="Envoyer le lien">
+        <span class="frlink-txt">touche pour envoyer le lien à tes amis</span>
+      </button>
+      <div class="chips" id="onlChips"></div>
+      <p class="note" id="onlStatus"></p>
+      <button class="launch" type="button" data-act="onl-start" id="onlStart" aria-label="Lancer" disabled><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
     </div>
   </div>
 </section>

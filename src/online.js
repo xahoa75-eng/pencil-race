@@ -68,6 +68,9 @@
     open(0);
     onlineRefresh();
   }
+  // écran « code de la partie » : on crée la partie en arrivant, on la ferme en repartant
+  function onlineHostStart() { if (!online) onlineHost(); }
+  function onlineHostCancel() { if (online && online.role === 'host' && !online.started) onlineLeave(); onlView = 'choose'; if (onlReady) onlineRefresh(); }
   function onlJoined(o) { var k = 0; for (var i = 1; i < o.conns.length; i++) if (o.conns[i]) k++; return k; }
   function onlLobbyMsg(o) {
     var joined = [true];
@@ -170,9 +173,13 @@
   var onlStatus2Text = '';
   function onlSetStatus2(t) { onlStatus2Text = t; onlineRefresh(); }
   function onlSetNo() {
-    var el = document.getElementById('onlNo');
-    el.hidden = false;
-    el.textContent = 'Le jeu en ligne marche sur le site ' + ONL_SITE + " (et sur un vrai téléphone ou ordinateur, pas dans une fenêtre de prévisualisation).";
+    var txt = 'Le jeu en ligne marche sur le site ' + ONL_SITE + " (et sur un vrai téléphone ou ordinateur, pas dans une fenêtre de prévisualisation).";
+    ['onlNo', 'onlNo2'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = false;
+      el.textContent = txt;
+    });
   }
 
   // ----- démarrage de la course -----
@@ -333,7 +340,7 @@
     ['choose', 'host', 'join'].forEach(function (id) { document.getElementById('onl-' + id).hidden = id !== v; });
     var okNo = onlSupported();
     document.getElementById('onl-choose').querySelectorAll('.big').forEach(function (b) { b.disabled = !okNo; });
-    if (!okNo && currentScreen === 'online') onlSetNoQuiet();
+    if (!okNo && (currentScreen === 'online' || currentScreen === 'online4')) onlSetNoQuiet();
     if (v === 'host') {
       document.getElementById('onlCode').textContent = (o && o.code) || '····';
       document.getElementById('onlChips').innerHTML = o ? onlChips(o) : '';
@@ -349,7 +356,7 @@
       document.getElementById('onlStatus2').textContent = o ? (o.status || (o.me != null ? "Tu es " + onlName(o.me) + ". En attente de l'hôte pour lancer la course…" : '')) : onlStatus2Text;
     }
   }
-  function onlSetNoQuiet() { var el = document.getElementById('onlNo'); if (el.hidden) onlSetNo(); }
+  function onlSetNoQuiet() { if (document.getElementById('onlNo').hidden) onlSetNo(); }
 
   function onlineShare() {
     var o = online;

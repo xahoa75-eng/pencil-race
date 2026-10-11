@@ -1232,7 +1232,7 @@
   frameIcons();
 
   // ---------- navigation ----------
-  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];
+  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];
   var stack = [], currentScreen = 'main';
 
   // écran d'accueil : le cahier remplit l'écran (zoom limité pour ne pas trop rogner sur un écran large)
@@ -1253,6 +1253,8 @@
   window.addEventListener('orientationchange', function () { setTimeout(fitHome, 200); });
   setTimeout(fitHome, 0);
   function show(name) {
+    if (currentScreen === 'online4' && name !== 'game' && name !== 'online4') onlineHostCancel();
+    if (name === 'online4' && currentScreen !== 'online4') onlineHostStart();
     if (name === 'main') setTimeout(fitHome, 0);
     if (name === 'rvoitures' || name === 'rcircuits') { var fcs = document.querySelectorAll('.fc.on'); for (var fi = 0; fi < fcs.length; fi++) fcs[fi].classList.remove('on'); }
     screens.forEach(function (id) {
@@ -1307,8 +1309,11 @@
       pv += '<div class="chip on" style="--c:' + PL[k].color + ';--t:' + PL[k].on + '">' + PL[k].name + '</div>';
     }
     document.getElementById('multiPreview').innerHTML = pv;
+    document.getElementById('onlPreview').innerHTML = pv;
     document.getElementById('mRecap').textContent = settings.players + ' joueurs';
     document.getElementById('mRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
+    document.getElementById('oRecap').textContent = settings.players + ' joueurs';
+    document.getElementById('oRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
     document.getElementById('diffDesc3').textContent = DIFF_DESC[settings.diff];
     if (onlReady) onlineRefresh();
   }
@@ -5267,6 +5272,7 @@
       refresh();
       if (currentScreen === 'training') go('training2');
       else if (currentScreen === 'multi3') go('multi4');
+      else if (currentScreen === 'online3') go('online4');
       return;
     }
     if (el.parentNode && el.parentNode.getAttribute && el.parentNode.getAttribute('data-key')) {
