@@ -960,3 +960,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le comportement de l'Agrafeuse ne change pas encore selon le niveau (même règle d'échange à tous les niveaux).
 - Testé : trajectoire avec rebond (Bille) en capture, Gomme au Canyon à 0,9 ; Usine verrouillée avec 6 boss, ouverte avec 7 ; choix du niveau présent et voitures verrouillées selon le niveau, sans erreur.
 - Archive : pencil-race_v202_avant-agrafeuse-facile.html
+
+## v204 — L'Agrafeuse : l'échange dépend du niveau
+- L'échange programmé se fait tous les 5 tours en Facile, tous les 4 tours en Normal, tous les 3 tours en Hard. Le compteur affiché à côté de son nom suit le niveau choisi.
+- L'échange d'urgence (quand tu peux toucher l'arrivée à ton prochain tour) n'existe plus qu'en Hard : en Facile et en Normal elle n'échange qu'à son rythme programmé.
+- Testé : parties simulées aux 3 niveaux, sans erreur ; en Facile le joueur automatique bat l'Agrafeuse (35 coups), en Normal et Hard pas dans le même temps.
+- Archive : pencil-race_v203_avant-agrafeuse-niveaux.html

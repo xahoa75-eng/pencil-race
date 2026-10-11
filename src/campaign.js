@@ -52,7 +52,9 @@
   // ---------- L'AGRAFEUSE (boss final) ----------
   // Elle ne mène jamais par ses propres tirs : elle reste « légèrement derrière » le joueur (environ la moitié d'un tir), quitte à tirer en arrière.
   // Tous les 3 de ses tours elle échange sa place avec lui ; et si le joueur peut toucher l'arrivée à son prochain tour (alors qu'elle est derrière), elle échange tout de suite.
-  var STAPLE_EVERY = 3;
+  // échange programmé : tous les 5 tours en Facile, 4 en Normal, 3 en Hard ; l'échange d'urgence (joueur près de l'arrivée) n'existe qu'en Hard
+  var STAPLE_EVERY = { facile: 5, normal: 4, hard: 3 };
+  function stapleEvery() { return STAPLE_EVERY[settings.botLevel] || 3; }
   function campBossInit() {
     for (var i = 0; i < players.length; i++) {
       var q = players[i];
@@ -66,7 +68,7 @@
   // texte du compteur d'échange, affiché à côté de son nom
   function campBossChip(q) {
     if (!q.boss || q.done) return '';
-    var left = STAPLE_EVERY - (q.stapleTurns || 0);
+    var left = stapleEvery() - (q.stapleTurns || 0);
     return left <= 1 ? ' · échange à son prochain tour' : ' · échange dans ' + left + ' tours';
   }
   // est-ce que cette voiture peut toucher l'arrivée avec un seul tir, depuis sa place ?
@@ -95,7 +97,7 @@
     var gap = MAXD * POWER * (p.rm || 1) * 0.5;
     // capable de toucher l'arrivée (elle est alors devant, ou le joueur n'y est pas encore) : elle gagne
     if (stapleCanFinish(p)) { p.bossAim = { allowFinish: true, target: sH - gap }; return false; }
-    var swap = (behind && stapleCanFinish(h)) || p.stapleTurns >= STAPLE_EVERY;
+    var swap = (settings.botLevel === 'hard' && behind && stapleCanFinish(h)) || p.stapleTurns >= stapleEvery();
     if (swap) {
       var tx = p.x, ty = p.y;
       p.x = h.x; p.y = h.y;
