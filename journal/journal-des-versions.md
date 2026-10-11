@@ -883,3 +883,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Un boss battu reçoit une grande coche verte (tracé au crayon, contour vert foncé) dans le coin en bas à droite de sa carte. L'ancienne petite coche dans le texte sous la carte est supprimée (on la voyait à peine).
 - Testé : 7 boss battus + final → 8 coches ; aucune coche sur un boss non battu.
 - Archive : pencil-race_v191_avant-coche.html
+
+## v193 — Gomme : plus de perte de force en traversant les murs
+- La Gomme (voiture et power-up en ligne) garde toute sa force quand elle traverse un mur : avant, elle perdait la moitié de sa force à chaque traversée. Les textes des règles (carte Gomme et carte Power-up Gomme) sont mis à jour.
+- Attention : les objectifs de coups des bots (calculés avec l'ancienne Gomme) ne sont pas recalculés ; la Gomme jouée par un bot ou face à toi peut maintenant être plus forte qu'avant (à revoir avec un nouveau tournoi si tu veux).
+- Testé : 4 parties de bots Gomme contre Classique sur Zigzag, Canyon, Serpentin et Escalier, toutes terminées, sans erreur.
+- Archive : pencil-race_v192_avant-gomme.html

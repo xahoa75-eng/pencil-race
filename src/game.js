@@ -22,7 +22,7 @@
                botErr: { aimErr: 0.01, powErr: 0.01 } },
     plume:   { id: 'plume', name: 'La Plume', short: 'Plume', color: '#111111', car: '#2b2b2f', on: '#ffffff', power: 'plume' },
     gomme:   { id: 'gomme', name: 'La Gomme', short: 'Gomme', color: '#c2476a', car: '#f4a3bb', on: '#ffffff',
-               power: 'cross', crossLoss: 0.5 },
+               power: 'cross', crossLoss: 0 },
     portemine: { id: 'portemine', name: 'Le Porte-mine', short: 'Porte-mine', color: '#6a2fa8', car: '#a45be0', on: '#ffffff',
                power: null, shotsPerTurn: 3, rangeMul: 1 / 3 },
     // le Compas : on choisit la direction et la force, puis la trajectoire épouse la courbe du circuit (portée à 105 %)
@@ -1052,7 +1052,7 @@
     normale: "Aucun pouvoir : la voiture de base. Tout repose sur ton coup d'œil.",
     bille: "Elle rebondit sur les murs, et chaque rebond (jusqu'à trois) lui redonne un peu de vitesse.",
     plume: "Après chaque tir, elle pose une flaque d'encre : la voiture qui roule dedans s'arrête net. Si elle est devant, la flaque reste derrière elle ; si elle est derrière, elle la pose devant la voiture de tête. Il n'y en a jamais plus de 2 sur la piste : la plus ancienne disparaît.",
-    gomme: "Elle traverse les murs, mais perd la moitié de sa force à chaque traversée.",
+    gomme: "Elle traverse les murs sans rien perdre de sa force.",
     portemine: "Trois petits tirs par tour, chacun trois fois moins fort qu'un tir normal.",
     compas: "Sa trajectoire suit la courbe de la piste, et elle porte un peu plus loin que les autres.",
     correcteur: "Son dernier tir laisse une traînée blanche : la voiture qui la traverse perd son pouvoir au tour suivant. Derrière, il peut aussi poser une flaque devant la voiture de tête. Ses taches restent tant qu'aucune voiture n'a roulé dessus, mais il n'y en a jamais plus de 2 et elles finissent par s'effacer.",
@@ -1109,7 +1109,7 @@
   var PU_CARDS = [
     { name: 'Le Taille-crayon', img: 'data:image/webp;base64,@@A:pu-taille.webp@@', txt: "Double la force de ton prochain tir." },
     { name: 'La Bille', img: 'data:image/webp;base64,@@A:pu-bille.webp@@', txt: "Au prochain tour, ta voiture rebondit sur les murs, et chaque rebond (jusqu'à trois) lui redonne un peu de vitesse." },
-    { name: 'La Gomme', img: 'data:image/webp;base64,@@A:pu-gomme.webp@@', txt: "Au prochain tour, ta voiture traverse les murs, mais perd la moitié de sa force à chaque traversée." },
+    { name: 'La Gomme', img: 'data:image/webp;base64,@@A:pu-gomme.webp@@', txt: "Au prochain tour, ta voiture traverse les murs sans rien perdre de sa force." },
     { name: 'La Plume', img: 'data:image/webp;base64,@@A:pu-plume.webp@@', txt: "Après ton prochain tir, tu poses une flaque d'encre : la voiture qui roule dedans s'arrête net." },
     { name: 'Le Porte-mine', img: 'data:image/webp;base64,@@A:pu-portemine.webp@@', txt: "Au prochain tour, trois petits tirs, chacun trois fois moins fort qu'un tir normal." },
     { name: 'Le Compas', img: 'data:image/webp;base64,@@A:pu-compas.webp@@', txt: "Au prochain tour, ta trajectoire suit la courbe de la piste, et ta voiture porte un peu plus loin." },
