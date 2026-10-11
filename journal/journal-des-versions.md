@@ -809,3 +809,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v180 — Règles : bouton Power-up
 - Nouveau bouton « Power-up » dans le menu Règles (sous Circuits), avec le dessin du copeau de taille-crayon dans le cadre habituel. Il ouvre un écran « Power-up » vide pour l'instant.
 - Archive : pencil-race_v179_avant-bouton-powerup.html
+
+## v181 — Règles › Power-up : les 8 cartes
+- L'écran Power-up contient 8 cartes qui se retournent, avec les icônes de ton image (cadres de l'image ignorés, fond rendu transparent) dans le cadre crayon habituel : Taille-crayon, Bille, Gomme, Plume, Porte-mine, Compas, Agrafeuse, Colle. Le nom est dans le bandeau ; au dos, une courte explication du pouvoir.
+- Une phrase en haut rappelle qu'une bulle ramassée en multi en ligne donne l'un de ces pouvoirs pour le prochain tour.
+- Les 8 icônes ont la même taille de fond (compas inclus, pointes et poignée complètes).
+- Archive : pencil-race_v180_avant-cartes-powerup.html

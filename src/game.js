@@ -1101,6 +1101,16 @@
     if (sub) { var sm = document.createElement('small'); sm.textContent = sub; nm.appendChild(sm); }
     parent.appendChild(nm);
   }
+  var PU_CARDS = [
+    { name: 'Le Taille-crayon', img: 'data:image/webp;base64,@@A:pu-taille.webp@@', txt: "Double la force de ton prochain tir." },
+    { name: 'La Bille', img: 'data:image/webp;base64,@@A:pu-bille.webp@@', txt: "Au prochain tour, ta voiture rebondit sur les murs, et chaque rebond (jusqu'à trois) lui redonne un peu de vitesse." },
+    { name: 'La Gomme', img: 'data:image/webp;base64,@@A:pu-gomme.webp@@', txt: "Au prochain tour, ta voiture traverse les murs, mais perd la moitié de sa force à chaque traversée." },
+    { name: 'La Plume', img: 'data:image/webp;base64,@@A:pu-plume.webp@@', txt: "Après ton prochain tir, tu poses une flaque d'encre : la voiture qui roule dedans s'arrête net." },
+    { name: 'Le Porte-mine', img: 'data:image/webp;base64,@@A:pu-portemine.webp@@', txt: "Au prochain tour, trois petits tirs, chacun trois fois moins fort qu'un tir normal." },
+    { name: 'Le Compas', img: 'data:image/webp;base64,@@A:pu-compas.webp@@', txt: "Au prochain tour, ta trajectoire suit la courbe de la piste, et ta voiture porte un peu plus loin." },
+    { name: "L'Agrafeuse", img: 'data:image/webp;base64,@@A:pu-agrafeuse.webp@@', txt: "Au prochain tour, ta voiture échange sa place avec celle du premier. Le premier ne peut jamais l'avoir." },
+    { name: 'La Colle', img: 'data:image/webp;base64,@@A:pu-colle.webp@@', txt: "Ton prochain tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant." }
+  ];
   function buildRulesCards() {
     var gc = document.getElementById('rgCars');
     gc.innerHTML = '';
@@ -1120,6 +1130,26 @@
         var t = document.createElement('div');
         t.className = 'fc-txt';
         t.textContent = CAR_TXT[key];
+        b.appendChild(t);
+      }));
+    });
+    var gp = document.getElementById('rgPowers');
+    gp.innerHTML = '';
+    PU_CARDS.forEach(function (pc) {
+      gp.appendChild(flipCard('', function (f) {
+        var im = document.createElement('img');
+        im.className = 'pu-img';
+        im.alt = '';
+        im.src = pc.img;
+        f.appendChild(im);
+        f.classList.add('fr');
+        f.setAttribute('data-title', pc.name);
+      }, function (b) {
+        b.classList.add('fr');
+        b.setAttribute('data-title', pc.name);
+        var t = document.createElement('div');
+        t.className = 'fc-txt';
+        t.textContent = pc.txt;
         b.appendChild(t);
       }));
     });
@@ -1262,7 +1292,7 @@
     if (currentScreen === 'online4' && name !== 'game' && name !== 'online4') onlineHostCancel();
     if (name === 'online4' && currentScreen !== 'online4') onlineHostStart();
     if (name === 'main') setTimeout(fitHome, 0);
-    if (name === 'rvoitures' || name === 'rcircuits') { var fcs = document.querySelectorAll('.fc.on'); for (var fi = 0; fi < fcs.length; fi++) fcs[fi].classList.remove('on'); }
+    if (name === 'rvoitures' || name === 'rcircuits' || name === 'rpowerup') { var fcs = document.querySelectorAll('.fc.on'); for (var fi = 0; fi < fcs.length; fi++) fcs[fi].classList.remove('on'); }
     screens.forEach(function (id) {
       document.getElementById('s-' + id).classList.toggle('on', id === name);
     });

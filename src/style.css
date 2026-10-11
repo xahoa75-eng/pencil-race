@@ -462,3 +462,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #goBtn.fr { --H: 34px; --fs: 20px; border-radius: 0 !important; }
 #goBtn.fr > span { display: block !important; text-align: center; }
 #goBtn.fr { flex-direction: column; justify-content: center; }
+
+/* cartes Power-up */
+.fc-f.fr .pu-img { display: block; flex: 1; min-height: 0; width: calc(100% + 34px); margin-left: -20px; object-fit: contain; }
