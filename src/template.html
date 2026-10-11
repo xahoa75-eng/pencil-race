@@ -155,9 +155,12 @@
       <p class="note onl-warn" id="onlNo" hidden></p>
     </div>
     <div class="onl" id="onl-join" hidden>
-      <h3>Code de la partie</h3>
-      <input class="onl-input" id="onlInput" type="text" inputmode="text" maxlength="4" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="ABCD">
-      <button class="big primary" type="button" data-act="onl-connect" id="onlConnect">Rejoindre</button>
+      <div class="fr frbox" id="onlInputBox" data-title="Code de la partie">
+        <input class="onl-input" id="onlInput" type="text" inputmode="text" maxlength="4" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="ABCD">
+      </div>
+      <button class="fr frbox frlink" type="button" data-act="onl-connect" id="onlConnect" data-title="Rejoindre">
+        <span class="frlink-txt">touche pour rejoindre la partie</span>
+      </button>
       <div class="chips" id="onlChips2"></div>
       <p class="note" id="onlStatus2"></p>
     </div>

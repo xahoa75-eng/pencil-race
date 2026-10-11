@@ -353,7 +353,7 @@
     } else if (v === 'join') {
       document.getElementById('onlChips2').innerHTML = o && o.me != null ? onlChips(o) : '';
       document.getElementById('onlConnect').hidden = !!(o && o.me != null);
-      document.getElementById('onlInput').hidden = !!(o && o.me != null);
+      document.getElementById('onlInputBox').hidden = !!(o && o.me != null);
       document.getElementById('onlStatus2').textContent = o ? (o.status || (o.me != null ? "Tu es " + onlName(o.me) + ". En attente de l'hôte pour lancer la course…" : '')) : onlStatus2Text;
     }
   }

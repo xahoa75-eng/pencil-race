@@ -756,3 +756,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les deux boutons « Valider » (Jouer en local et Créer une partie) ne sont plus des rectangles noirs : ils reprennent le cadre crayon habituel, « VALIDER » dans le bandeau et le texte écrit à la main, comme le bouton du lien.
 - Correction : une règle de style cassée à la v170 déréglait la hauteur des icônes de pilotage et de GO (113 et 110 px au lieu de 116). Les 8 icônes de l'écran font de nouveau exactement la même taille.
 - Archive : pencil-race_v170_avant-valider-da.html
+
+## v172 — Écran « Rejoindre » dans la D.A.
+- Sur l'écran Rejoindre une partie, la case du code et le bouton « Rejoindre » ne sont plus des éléments noirs : ils prennent le cadre crayon habituel (« CODE DE LA PARTIE » et « REJOINDRE » dans le bandeau, code écrit à la main), comme l'écran de l'hôte.
+- Le code se tape toujours en 4 lettres majuscules ; une fois connecté, la case et le bouton disparaissent comme avant.
+- Testé : capture de l'écran, puis partie en ligne à 2 joueurs (rejoindre par code, tout synchronisé).
+- Archive : pencil-race_v171_avant-rejoindre-da.html
