@@ -1008,3 +1008,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Valable pour le joueur, les bots et la trajectoire visible.
 - Testé sur le Canyon : 300 tirs de Bille au hasard, 231 avec rebond normalement, 0 quand elle est effacée ; aucune erreur.
 - Archive : pencil-race_v210_avant-correcteur-bille.html
+
+## v212 — Aide au bord : on ne reste plus coincé dans les murs
+- Une voiture collée à un mur (à moins de 7 unités) dont le tir penche vers le mur de moins de 30° est automatiquement redressée, juste ce qu'il faut, pour longer le mur au lieu de rester bloquée sur place. Un tir franchement dirigé vers le mur (plus de 30°) reste bloqué.
+- Valable pour toutes les voitures sauf la Gomme (elle traverse déjà) et la Bille (elle rebondit) ; pas sur les circuits sur l'eau (Maelström : elle tombe à l'eau). Joueur, bots et trajectoire visible utilisent la même règle. Elle complète la tolérance de la v207.
+- Testé : tirs au ras des murs, voitures bloquées sur place : Canyon 26 → 4, Jardin 15 → 3, Grotte 14 → 2, Usine 30 → 10, Serpentin 6 → 1 ; courses de bots identiques (±2 coups) ; aucune erreur.
+- Archive : pencil-race_v211_avant-glissement.html

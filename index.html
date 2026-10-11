@@ -5889,7 +5889,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     return -1;
   }
   // simule un tir complet : rebond, traversée des murs, flaques, arrivée. lite = sans tracé (pour le bot)
-  var EDGE_NEAR = 7, EDGE_TOL = 12;   // tolérance de bord : distance « collée au bord » et distance qu'on peut frôler hors piste
+  var EDGE_NEAR = 7, EDGE_TOL = 12, EDGE_PROBE = 18, EDGE_ASSIST = 30, EDGE_ASSIST_STEP = 3;   // tolérance de bord : distance « collée au bord » et distance qu'on peut frôler hors piste
   function simulateShot(p, x0, y0, ang, dist, inT, rnd, lite) {
     var ux = Math.cos(ang), uy = Math.sin(ang);
     var x = x0, y = y0, rem = dist;
@@ -5908,6 +5908,21 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     for (var ea = 0; ea < 8; ea++) {
       if (!inT(x0 + Math.cos(ea * Math.PI / 4) * EDGE_NEAR, y0 + Math.sin(ea * Math.PI / 4) * EDGE_NEAR)) { tolLeft = EDGE_TOL; break; }
     }
+    // aide au bord : collée au mur, si le tir part franchement vers le mur mais de peu (moins de 30°), le cap est redressé
+    // juste assez pour longer le mur au lieu de rester bloquée sur place (ni Gomme, ni Bille : elle rebondit déjà)
+    if (tolLeft > 0 && power !== 'cross' && power !== 'bounce' && circuit.block !== 'Plouf !') {
+      var okDir = function (a0) {
+        for (var pr = STEP; pr <= EDGE_PROBE; pr += STEP) if (!inT(x0 + Math.cos(a0) * pr, y0 + Math.sin(a0) * pr)) return false;
+        return true;
+      };
+      if (!okDir(ang)) {
+        for (var kk = 1; kk <= EDGE_ASSIST / EDGE_ASSIST_STEP; kk++) {
+          var dd = kk * EDGE_ASSIST_STEP * Math.PI / 180;
+          if (okDir(ang + dd)) { ux = Math.cos(ang + dd); uy = Math.sin(ang + dd); break; }
+          if (okDir(ang - dd)) { ux = Math.cos(ang - dd); uy = Math.sin(ang - dd); break; }
+        }
+      }
+    }
     while (rem > 0 && guard++ < 4000) {
       var s = Math.min(STEP, rem);
       if (p.follow && !p.erased) {
@@ -5925,7 +5940,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       }
       var insideNow = inT(nx, ny);
       if (insideNow) tolSnap = null;
-      else if (tolLeft >= s && power !== 'cross' && !circuit.block && !(circuit.rockMask && circuit.rockMask[(ny | 0) * circuit.mw + (nx | 0)])) {
+      else if (tolLeft >= s && power !== 'cross' && circuit.block !== 'Plouf !' && !(circuit.rockMask && circuit.rockMask[(ny | 0) * circuit.mw + (nx | 0)])) {
         // pas encore de blocage : on laisse passer ce petit bout hors de la piste (on garde de quoi revenir en arrière)
         if (!tolSnap) tolSnap = { x: x, y: y, rem: rem, ux: ux, uy: uy, pl: lite ? 0 : path.length, el: lite ? 0 : ev.length, li: li };
         tolLeft -= s;
