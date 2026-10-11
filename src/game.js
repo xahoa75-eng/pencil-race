@@ -31,7 +31,7 @@
     // le Correcteur : il laisse une traînée blanche (courte mais deux fois plus large que celle de la Colle) ;
     // la voiture qui la traverse a son pouvoir annulé au tour suivant
     correcteur: { id: 'correcteur', name: 'Le Correcteur', short: 'Correcteur', color: '#9a9ea6', car: '#ffffff', on: '#111111',
-               power: 'corrector', trail: { kind: 'corr', keep: 1, len: 90, hw: 14, blobMul: 0.6 } },
+               power: 'corrector', trail: { kind: 'corr', keep: 2, len: 90, hw: 14, blobMul: 0.6 } },
     // la Colle (jaune orangé, comme les tubes UHU) : traînée longue mais finie sur sa trajectoire ;
     // la voiture qui la traverse a son tir suivant réduit de moitié
     colle:   { id: 'colle', name: 'La Colle', short: 'Colle', color: '#c77700', car: '#ffae00', on: '#111111',
@@ -1051,12 +1051,12 @@
   var CAR_TXT = {
     normale: "Aucun pouvoir : la voiture de base. Tout repose sur ton coup d'œil.",
     bille: "Elle rebondit sur les murs, et chaque rebond (jusqu'à trois) lui redonne un peu de vitesse.",
-    plume: "Après chaque tir, elle pose une flaque d'encre : la voiture qui roule dedans s'arrête net. Si elle est devant, la flaque reste derrière elle ; si elle est derrière, elle la pose devant la voiture de tête.",
+    plume: "Après chaque tir, elle pose une flaque d'encre : la voiture qui roule dedans s'arrête net. Si elle est devant, la flaque reste derrière elle ; si elle est derrière, elle la pose devant la voiture de tête. Il n'y en a jamais plus de 2 sur la piste : la plus ancienne disparaît.",
     gomme: "Elle traverse les murs, mais perd la moitié de sa force à chaque traversée.",
     portemine: "Trois petits tirs par tour, chacun trois fois moins fort qu'un tir normal.",
     compas: "Sa trajectoire suit la courbe de la piste, et elle porte un peu plus loin que les autres.",
-    correcteur: "Son dernier tir laisse une traînée blanche : la voiture qui la traverse perd son pouvoir au tour suivant. Derrière, il peut aussi poser une flaque devant la voiture de tête.",
-    colle: "Son tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant. Derrière, elle peut aussi poser une flaque devant la voiture de tête."
+    correcteur: "Son dernier tir laisse une traînée blanche : la voiture qui la traverse perd son pouvoir au tour suivant. Derrière, il peut aussi poser une flaque devant la voiture de tête. Ses taches restent tant qu'aucune voiture n'a roulé dessus, mais il n'y en a jamais plus de 2 et elles finissent par s'effacer.",
+    colle: "Son tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant. Derrière, elle peut aussi poser une flaque devant la voiture de tête. Ses taches restent tant qu'aucune voiture n'a roulé dessus, mais il n'y en a jamais plus de 2 et elles finissent par s'effacer."
   };
   var CIR_TXT = {
     zigzag: ["Une feuille de cahier jonchée d'objets de papeterie : crayon, bille, plume, gomme, porte-mine, compas, correcteur et colle.", "Dix virages en zigzag le long d'un grand couloir. Pas de piège : seuls les murs te gênent."],
@@ -1449,6 +1449,9 @@
   var BUB_IMG = new Image();
   BUB_IMG.src = 'data:image/png;base64,@@A:bulle-taille-crayon.png@@';
   var tunnels = [];       // tunnels de la Grotte (tirés au hasard à chaque partie) : { id, kind: 'in' (petite bouche) | 'out' (grande bouche), x, y, r, to: [x, y] }
+  var markClock = 0;      // compteur de tours : sert à faire vieillir les flaques et traînées
+  var MARK_KEEP = 2;      // la Plume, la Colle et le Correcteur : 2 flaques au plus sur la piste (la plus ancienne disparaît)
+  var MARK_AGE = 5;       // une flaque ou traînée que personne n'a touchée disparaît au bout de 5 tours de table
   var fx = [];            // traînées et flaques de la Colle et du Correcteur : { kind: 'glue'|'corr', type: 'trail'|'blob', owner, pts, hw }
   var phase = 'aim';      // 'pre' = avant le GO, 'aim' = visée / tir
   var ovHeld = false;     // « Vue d'ensemble » maintenu
@@ -1677,6 +1680,7 @@
     puddles = [];
     bubbles = [];
     fx = [];
+    markClock = 0;
     (circuit.funnels || []).forEach(function (f) { f.used = false; });
     gapSide = 1;
     anim = null;
@@ -1904,7 +1908,7 @@
     if (!cfg || p.erased || path.length < 2) return;
     var pts = tailPath(path, cfg.len);
     if (pts.length > 1) {
-      fx.push({ kind: cfg.kind, type: 'trail', owner: p.id, pts: pts, hw: cfg.hw });
+      fx.push({ kind: cfg.kind, type: 'trail', owner: p.id, pts: pts, hw: cfg.hw, t: markClock });
       fxTrim(p.id, cfg.kind, 'trail', cfg.keep);
     }
     // flaque devant la voiture de tête (si elle est derrière)
@@ -1922,8 +1926,8 @@
     var blob = [];
     for (var k = 0; k < 14; k++) blob.push(0.8 + Math.random() * 0.32);
     var bhw = Math.max(10, spot.r * (cfg.blobMul || 0.6));
-    for (i = fx.length - 1; i >= 0; i--) if (fx[i].owner === p.id && fx[i].type === 'blob') fx.splice(i, 1);
-    fx.push({ kind: cfg.kind, type: 'blob', owner: p.id, pts: [[spot.x, spot.y]], hw: bhw, blob: blob });
+    fx.push({ kind: cfg.kind, type: 'blob', owner: p.id, pts: [[spot.x, spot.y]], hw: bhw, blob: blob, t: markClock });
+    fxTrim(p.id, cfg.kind, 'blob', MARK_KEEP);
   }
   // power-ups (en ligne) : une bulle restée loin derrière le dernier joueur disparaît
   var BUB_BEHIND = 180;
@@ -1933,7 +1937,14 @@
     for (i = 0; i < players.length; i++) lo = Math.min(lo, projectS(circuit, players[i].x, players[i].y));
     for (i = bubbles.length - 1; i >= 0; i--) if (projectS(circuit, bubbles[i].x, bubbles[i].y) < lo - BUB_BEHIND) bubbles.splice(i, 1);
   }
+  function ageMarks() {
+    var lim = MARK_AGE * players.length, i;
+    for (i = puddles.length - 1; i >= 0; i--) if (markClock - puddles[i].t > lim) puddles.splice(i, 1);
+    for (i = fx.length - 1; i >= 0; i--) if (markClock - fx[i].t > lim) fx.splice(i, 1);
+  }
   function startTurn(now) {
+    markClock++;
+    ageMarks();
     cleanBubbles();
     corrTurn(now);
     turnStart = null;
@@ -2010,7 +2021,10 @@
     for (var k = 0; k < 14; k++) blob.push(0.8 + Math.random() * 0.32);
     var r = circuit.puddleR, gap = null;
     if (!Array.isArray(pt)) { r = pt.r; gap = pt.gap; pt = [pt.x, pt.y]; }   // flaque posée devant l'adversaire : taille propre et passage étroit
-    puddles.push({ x: pt[0], y: pt[1], r: r, owner: p.id, blob: blob, gap: gap });
+    puddles.push({ x: pt[0], y: pt[1], r: r, owner: p.id, blob: blob, gap: gap, t: markClock });
+    var mine = 0, i;
+    for (i = 0; i < puddles.length; i++) if (puddles[i].owner === p.id) mine++;
+    for (i = 0; i < puddles.length && mine > MARK_KEEP; i++) if (puddles[i].owner === p.id) { puddles.splice(i, 1); i--; mine--; }   // la plus ancienne part en premier
   }
   // flaque posée en travers de la piste près de la progression s0 (dans un tronçon à peu près droit), avec un passage
   // étroit contre un des bords : un tir de précision passe, un tir approximatif est arrêté

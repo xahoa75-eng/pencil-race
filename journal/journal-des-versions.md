@@ -847,3 +847,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Images et textes de la campagne : à venir (cartes provisoires dans le style crayon).
 - Testé : écrans, circuit final verrouillé, voiture verrouillée non cliquable, victoire → déblocage enregistré et conservé après rechargement, nul → rien, miroir Classique bleu, réglages restaurés, en ligne 2 joueurs synchronisé.
 - Archive : pencil-race_v185_avant-campagne.html
+
+## v187 — Flaques : 2 au plus, et elles vieillissent
+- La Plume ne peut pas avoir plus de 2 flaques sur la piste : quand elle en pose une 3e, la plus ancienne disparaît.
+- La Colle et le Correcteur fonctionnent pareil : leurs taches (traînées et flaques posées devant la voiture de tête) restent tant qu'aucune voiture n'a roulé dessus, 2 au plus par voiture (la plus ancienne part en premier). Le Correcteur garde maintenant 2 traînées (avant : 1) et les deux voitures peuvent avoir 2 flaques devant la tête (avant : 1).
+- Une flaque ou traînée que personne n'a touchée disparaît toute seule au bout de 5 tours de table (valeur à régler si tu préfères plus ou moins).
+- Les textes des règles (Plume, Correcteur, Colle) sont mis à jour.
+- Testé : 4 flaques posées → 2 restent (les plus récentes) ; traînées Colle/Correcteur limitées à 2 ; tout disparaît après vieillissement ; en ligne 2 joueurs avec le pouvoir Plume, 10 tours, synchronisé.
+- Archive : pencil-race_v186_avant-flaques.html
