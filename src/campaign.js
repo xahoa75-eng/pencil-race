@@ -27,14 +27,25 @@
   try {
     if (/[?&]campagne=reset/.test(location.search)) localStorage.removeItem('pr-campaign');
     var csv = JSON.parse(localStorage.getItem('pr-campaign') || 'null');
-    if (csv && csv.won) camp.won = csv.won;
+    if (csv && csv.won) {
+      // anciennes sauvegardes : une victoire sans niveau compte pour le niveau Facile
+      for (var wc in csv.won) camp.won[wc] = csv.won[wc] === true ? { facile: true } : (csv.won[wc] || {});
+    }
     if (csv && BOT_LEVEL[csv.level]) camp.level = csv.level;
   } catch (e) {}
   function campSave() { try { localStorage.setItem('pr-campaign', JSON.stringify({ won: camp.won, level: camp.level })); } catch (e) {} }
-  function campWonCount() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && camp.won[c]) k++; return k; }
-  function carUnlocked(key) {
+  var CAMP_LEVELS = ['facile', 'normal', 'hard'];
+  function campWon(cid, lvl) { var w = camp.won[cid]; return !!(w && w[lvl]); }
+  function campWonAny(cid) { return campWon(cid, 'facile') || campWon(cid, 'normal') || campWon(cid, 'hard'); }
+  function campWonAll(cid) { return cid === CAMP_FINAL ? campWon(cid, 'hard') : CAMP_LEVELS.every(function (l) { return campWon(cid, l); }); }
+  // nombre de boss battus au moins une fois (le niveau final s'ouvre avec les 7)
+  function campWonCount() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && campWonAny(c)) k++; return k; }
+  // nombre de victoires sur les 21 (7 boss x 3 niveaux)
+  function campWinTotal() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL) CAMP_LEVELS.forEach(function (l) { if (campWon(c, l)) k++; }); return k; }
+  // lvl : niveau de l'adversaire (campagne) ; sans niveau : battue au moins une fois, à n'importe quel niveau
+  function carUnlocked(key, lvl) {
     if (CAMP_ALL || key === 'normale') return true;
-    for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && CAMP_BOSS[c] === key && camp.won[c]) return true;
+    for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && CAMP_BOSS[c] === key && (lvl ? campWon(c, lvl) : campWonAny(c))) return true;
     return false;
   }
   // ---------- L'AGRAFEUSE (boss final) ----------
@@ -128,7 +139,7 @@
       fw.className = 'fr fr-s fr-boss';
       fw.setAttribute('data-title', c.name);
       fw.appendChild(im2);
-      if (camp.won[cid]) {
+      if (campWonAll(cid)) {
         // grande coche verte dans le coin en bas à droite : boss battu
         var mk = document.createElement('div');
         mk.className = 'wonmark';
@@ -138,13 +149,15 @@
       }
       var sb = document.createElement('div');
       sb.className = 'csub';
+      var lv = CAMP_LEVELS.filter(function (l) { return campWon(cid, l); }).map(function (l) { return BOT_LEVEL[l]; });
       sb.textContent = !open ? '🔒 Bats les 7 autres' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
+      if (open && lv.length && !campWonAll(cid)) { sb.appendChild(document.createElement('br')); sb.appendChild(document.createTextNode('Battu : ' + lv.join(', '))); }
       b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);
     });
     var rc = document.getElementById('campRecap');
-    if (rc) rc.textContent = 'Voitures débloquées : ' + (1 + campWonCount()) + ' sur 8. Choisis un circuit : bats son adversaire pour gagner sa voiture.';
+    if (rc) rc.textContent = 'Victoires : ' + campWinTotal() + ' sur 21. Bats un boss pour gagner sa voiture, mais seulement au niveau où tu l\'as battu : il faut le battre en Facile, Normal et Hard pour l\'avoir partout.';
   }
   function campRefresh() {
     var el = document.getElementById('campCircuitName');
@@ -157,8 +170,15 @@
     if (lb) lb.hidden = camp.circuit === CAMP_FINAL;
     var dd = document.getElementById('diffDesc6');
     if (dd) dd.textContent = DIFF_DESC[settings.diff];
+    var lvNow = camp.circuit === CAMP_FINAL ? 'hard' : settings.botLevel;
     var cbs = document.querySelectorAll('#carsCamp .carbtn');
-    for (var i = 0; i < cbs.length; i++) cbs[i].setAttribute('aria-pressed', cbs[i].getAttribute('data-car') === campCar ? 'true' : 'false');
+    for (var i = 0; i < cbs.length; i++) {
+      var ok = carUnlocked(cbs[i].getAttribute('data-car'), lvNow);
+      cbs[i].classList.toggle('locked', !ok);
+      if (ok) cbs[i].removeAttribute('aria-disabled'); else cbs[i].setAttribute('aria-disabled', 'true');
+    }
+    if (!carUnlocked(campCar, lvNow)) campCar = 'normale';
+    for (var i2 = 0; i2 < cbs.length; i2++) cbs[i2].setAttribute('aria-pressed', cbs[i2].getAttribute('data-car') === campCar ? 'true' : 'false');
   }
   // fin de course : victoire = voiture du boss débloquée (match nul ou défaite : rien)
   function campResult(won, extraEl) {
@@ -167,11 +187,12 @@
     var base = extraEl.textContent;
     var setMsg = function (m) { extraEl.textContent = base; extraEl.appendChild(document.createElement('br')); extraEl.appendChild(document.createTextNode(m)); };
     if (won) {
-      var first = !camp.won[cid];
-      camp.won[cid] = true;
+      var lvl = campLevel(cid), first = !campWon(cid, lvl);
+      if (!camp.won[cid]) camp.won[cid] = {};
+      camp.won[cid][lvl] = true;
       campSave();
       if (cid === CAMP_FINAL) setMsg(first ? 'Niveau final gagné : la campagne est terminée !' : 'Niveau final gagné.');
-      else setMsg(first ? 'Voiture débloquée : ' + boss.name + ' !' : 'Déjà gagné : ' + boss.name + ' est à toi.');
+      else setMsg(first ? 'Voiture débloquée en ' + BOT_LEVEL[lvl] + ' : ' + boss.name + ' !' : 'Déjà gagné en ' + BOT_LEVEL[lvl] + ' : ' + boss.name + ' est à toi à ce niveau.');
       if (first) { buildCarPickers(); campBuildCards(); refresh(); }
     } else {
       setMsg('Pas de victoire : rien n\'est débloqué. Un match nul compte comme une défaite.');
@@ -184,14 +205,14 @@
       var cid = el.getAttribute('data-camp');
       if (!campOpen(cid)) return;
       camp.circuit = cid;
+      if (camp.pre == null) camp.pre = settings.botLevel;
+      settings.botLevel = camp.level;
       campCar = carUnlocked(campCar) ? campCar : 'normale';
       campRefresh();
       go('campaign2');
     } else if (el.hasAttribute('data-campcar')) {
       if (el.classList.contains('locked')) return;
       campCar = el.getAttribute('data-car');
-      if (camp.pre == null) camp.pre = settings.botLevel;
-      settings.botLevel = camp.level;
       campRefresh();
       go('campaign3');
     } else if (el.getAttribute('data-act') === 'play-campaign') {

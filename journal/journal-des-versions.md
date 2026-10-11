@@ -920,3 +920,13 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le texte « (niveau …) » sous le nom du circuit est retiré (le niveau se choisit à l'écran suivant).
 - Testé : choix du niveau pris en compte au lancement, retour en arrière qui restaure le niveau d'entraînement, niveau mémorisé après rechargement, choix caché pour le final, sans erreur.
 - Archive : pencil-race_v196_avant-niveau-campagne.html
+
+## v198 — Campagne : une voiture n'est utilisable qu'au niveau où son boss a été battu
+- Battre un boss débloque sa voiture seulement pour le niveau d'adversaire où tu l'as battu (Facile, Normal ou Hard). Pour tout avoir partout : 7 boss × 3 niveaux = 21 victoires. La Classique reste toujours disponible.
+- Le choix du niveau de l'adversaire est déplacé sur l'écran de choix de la voiture (au-dessus des voitures) : en changeant de niveau, les voitures se verrouillent ou se déverrouillent en direct ; si ta voiture n'est pas dispo à ce niveau, elle repasse sur la Classique.
+- Cartes de la campagne : la grande coche verte apparaît quand le boss est battu aux 3 niveaux ; avant ça, « Battu : Facile, Normal » est écrit sous la carte. Le texte du haut indique « Victoires : X sur 21 ». Message de fin de course : « Voiture débloquée en Normal : … ».
+- L'Agrafeuse s'ouvre toujours quand les 7 autres boss ont été battus au moins une fois (n'importe quel niveau) ; elle est toujours en Hard, sa coche demande la victoire en Hard.
+- Anciennes sauvegardes : une victoire d'avant compte pour le niveau Facile.
+- Entraînement : une voiture reste disponible si son boss a été battu au moins une fois, à n'importe quel niveau.
+- Testé : verrous corrects aux 3 niveaux (Facile / Normal / Hard), voiture verrouillée non sélectionnable, victoire enregistrée au bon niveau, affichage des cartes, sans erreur.
+- Archive : pencil-race_v197_avant-victoires-par-niveau.html

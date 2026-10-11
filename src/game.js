@@ -1296,7 +1296,7 @@
   setTimeout(fitHome, 0);
   function show(name) {
     if (camp.saved && !CAMP_SCREENS[name]) campRestore();
-    if (name !== 'campaign3' && name !== 'game') campLevelRestore();
+    if (name !== 'campaign2' && name !== 'campaign3' && name !== 'game') campLevelRestore();
     if (currentScreen === 'online4' && name !== 'game' && name !== 'online4') onlineHostCancel();
     if (name === 'online4' && currentScreen !== 'online4') onlineHostStart();
     if (name === 'main') setTimeout(fitHome, 0);
