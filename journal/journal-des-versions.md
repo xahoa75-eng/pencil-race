@@ -604,3 +604,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v138 — Power-ups : une bulle à chaque tir, près des joueurs
 - À chaque tir, une nouvelle bulle apparaît près du joueur qui va jouer, et une fois sur deux une autre près du tireur : le plus souvent devant (70 à 220 de piste), parfois derrière (50 à 110). Au départ, une bulle devant chaque joueur. Maximum de bulles sur la piste : 2 × joueurs + 1 (5 à 2 joueurs).
 - Archive : pencil-race_v137_avant-bulles-proches.html
+
+## v139 — Power-ups : les bulles oubliées loin derrière disparaissent
+- À chaque début de tour, toute bulle restée à plus de 180 de piste derrière le dernier joueur est effacée (même calcul chez tous les joueurs, rien à envoyer). Test : bulle laissée au départ pendant que les voitures sont près de l'arrivée → effacée ; bulle proche → gardée.
+- Archive : pencil-race_v138_avant-nettoyage-bulles.html

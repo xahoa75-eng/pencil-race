@@ -1771,7 +1771,16 @@
     for (i = fx.length - 1; i >= 0; i--) if (fx[i].owner === p.id && fx[i].type === 'blob') fx.splice(i, 1);
     fx.push({ kind: cfg.kind, type: 'blob', owner: p.id, pts: [[spot.x, spot.y]], hw: bhw, blob: blob });
   }
+  // power-ups (en ligne) : une bulle restée loin derrière le dernier joueur disparaît
+  var BUB_BEHIND = 180;
+  function cleanBubbles() {
+    if (!bubbles.length) return;
+    var lo = 1e9, i;
+    for (i = 0; i < players.length; i++) lo = Math.min(lo, projectS(circuit, players[i].x, players[i].y));
+    for (i = bubbles.length - 1; i >= 0; i--) if (projectS(circuit, bubbles[i].x, bubbles[i].y) < lo - BUB_BEHIND) bubbles.splice(i, 1);
+  }
   function startTurn(now) {
+    cleanBubbles();
     corrTurn(now);
     turnStart = null;
     ovHeld = false;
