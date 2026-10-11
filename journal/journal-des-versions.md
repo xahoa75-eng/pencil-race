@@ -995,3 +995,10 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - La Bille ne rebondit plus sur les gouffres (chutes mortelles) : elle tombe, comme les autres voitures. Elle continue de rebondir sur les murs et les rochers. Valable sur tous les circuits qui ont des gouffres, pour le joueur comme pour les bots.
 - Testé sur le Canyon : 400 tirs de Bille au hasard, 210 chutes contre 68 avant (les autres rebondissent encore), aucune erreur.
 - Archive : pencil-race_v208_avant-bille-gouffre.html
+
+## v210 — Icône de l'application
+- Le dessin de Mika (voiture rouge et verte sur la piste bleue, crayon, quadrillage, « PENCIL RACE ») devient l'icône du jeu : favicon (onglet, favoris), icône iPhone « écran d'accueil » (180 px, intégrées dans la page) et fichier `manifest.webmanifest` avec les icônes 192/512 px (normales et « maskable » pour Android) dans `icons/`.
+- Nom sous l'icône : « Pencil Race ». Ouverture en mode application (sans barre du navigateur) quand le jeu est ajouté à l'écran d'accueil. Le manifest et les grandes icônes ne fonctionnent que sur le site GitHub Pages, pas dans l'Artifact.
+- Image d'origine petite (≈ 400 px) : les grandes icônes sont un peu agrandies ; pour les stores il faudra l'image en 1024 px.
+- Testé : les 3 balises d'icône sont présentes, manifest valide, aucune erreur.
+- Archive : pencil-race_v209_avant-icone.html
