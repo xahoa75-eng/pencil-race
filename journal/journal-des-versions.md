@@ -819,3 +819,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v182 — Power-up : icônes centrées dans le cadre
 - Les 8 icônes des cartes Power-up étaient décalées vers la gauche (l'image était bridée en largeur). Elles sont maintenant centrées dans le cadre, horizontalement (mesuré : écart de moins de 1 px) et légèrement descendues pour être au milieu de la zone sous le bandeau.
 - Archive : pencil-race_v181_avant-centrage.html
+
+## v183 — Bouton GO : « Sans GO » par défaut partout
+- Dans tous les menus où le bouton GO se règle (Options, Jouer en local, Créer une partie), la position par défaut est « Sans GO ». Avant, le multi était sur « GO activé » par défaut.
+- L'ancien réglage multi enregistré sur un appareil (qui valait « GO activé » sans que le joueur l'ait choisi) est ignoré une seule fois ; ensuite, ton choix est de nouveau mémorisé normalement. En Hard, le GO reste obligatoire (grisé).
+- Testé : appareil avec l'ancien réglage « oui » → les trois menus sur « Sans GO » ; choix « GO activé » puis rechargement → conservé.
+- Archive : pencil-race_v182_avant-go-par-defaut.html

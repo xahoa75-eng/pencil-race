@@ -485,7 +485,7 @@
   for (var oi = 0; oi < ORDER.length; oi++) prepare(CIRCUITS[ORDER[oi]]);
 
   // ---------- réglages ----------
-  var settings = { diff: 'normal', exit: 'tol', players: 2, circuit: 'zigzag', go: 'non', goMulti: 'oui', botLevel: 'normal', playerCar: 'normale', botCar: 'none', sound: 'oui' };
+  var settings = { diff: 'normal', exit: 'tol', players: 2, circuit: 'zigzag', go: 'non', goMulti: 'non', botLevel: 'normal', playerCar: 'normale', botCar: 'none', sound: 'oui' };
   try {
     var sv = JSON.parse(localStorage.getItem('pr-settings') || 'null');
     if (sv) {
@@ -493,7 +493,7 @@
       if (sv.players >= 2 && sv.players <= 4) settings.players = sv.players;
       if (CIRCUITS[sv.circuit]) settings.circuit = sv.circuit;
       if (sv.go === 'non' || sv.go === 'oui') settings.go = sv.go;
-      if (sv.goMulti === 'non' || sv.goMulti === 'oui') settings.goMulti = sv.goMulti;
+      if (sv.goMultiV === 2 && (sv.goMulti === 'non' || sv.goMulti === 'oui')) settings.goMulti = sv.goMulti;   // v183 : l'ancien réglage (par défaut « oui ») est ignoré une fois
       if (BOT_LEVEL[sv.botLevel]) settings.botLevel = sv.botLevel;
       if (CARS[sv.playerCar]) settings.playerCar = sv.playerCar;
       if (CARS[sv.botCar] || sv.botCar === 'none') settings.botCar = sv.botCar;
@@ -503,6 +503,7 @@
   function saveSettings() {
     var o = {}, k;
     for (k in settings) o[k] = settings[k];
+    o.goMultiV = 2;
     if (online && online.saved) for (k in online.saved) o[k] = online.saved[k];   // en ligne, les réglages forcés ne sont jamais enregistrés
     try { localStorage.setItem('pr-settings', JSON.stringify(o)); } catch (e) {}
   }
