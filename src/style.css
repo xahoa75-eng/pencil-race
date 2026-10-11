@@ -347,3 +347,8 @@ canvas.carcv { width: 100%; height: auto; aspect-ratio: 120 / 70; background: #f
 .onl-warn { color: #b3261e; font-weight: 600; }
 .chip:not(.on) { opacity: 0.55; }
 body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display: none; }
+
+/* choix du nombre de joueurs : le dessin porte déjà le texte */
+.seg.imgseg[data-key="players"] button img { aspect-ratio: 431 / 513; object-fit: contain; }
+.seg.imgseg[data-key="players"] button span { display: none; }
+.seg.imgseg[data-key="players"] { gap: 6px; }
