@@ -425,7 +425,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .onl-pics { display: flex; flex-direction: column; gap: 12px; }
 .pic-btn.onl-mode { width: 80%; margin: 0 auto; flex: none; }
 .pic-btn.onl-mode.fr { --H: 34px; --fs: 22px; }
-.pic-btn.onl-mode.fr img { object-fit: fill; }
+/* le cadre dessiné garde une marge crème à l'intérieur de son trait : l'image déborde dessus pour toucher le trait */
+.pic-btn.onl-mode.fr img { object-fit: fill; width: calc(100% + 46px); max-width: none; margin: -2px -20px 0 -26px; }
 .pic-btn.onl-mode.fr[aria-label="Rejoindre une partie"] img { aspect-ratio: 425 / 452; }
 .pic-btn.onl-mode.fr[aria-label="Créer une partie"] img { aspect-ratio: 425 / 565; }
 </style>

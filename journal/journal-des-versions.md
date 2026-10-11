@@ -701,3 +701,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v160 — Créer / Rejoindre : image collée aux bords du cadre
 - Les deux images remplissent maintenant tout l'intérieur du cadre, sans aucune bande vide sur les côtés (l'image peut s'étirer légèrement plutôt que garder ses proportions d'origine).
 - Archive : pencil-race_v159_avant-image-pleine.html
+
+## v161 — Créer / Rejoindre : l'image touche vraiment le trait du cadre
+- Le cadre dessiné garde une marge crème entre son trait et le début du contenu : les deux images débordent maintenant sur cette marge (gauche, droite et bas) pour venir au contact du trait. Le damier en bas à droite et le bandeau du titre restent visibles.
+- Archive : pencil-race_v160_avant-bord-a-bord.html
