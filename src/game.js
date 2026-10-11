@@ -1116,7 +1116,8 @@
         CAR34.draw(cv, 'n_' + key, sheet);
         nameBar(f, sheet.name, null, sheet.color, sheet.on);
       }, function (b) {
-        nameBar(b, sheet.name, null, sheet.color, sheet.on);
+        b.classList.add('fr');
+        b.setAttribute('data-title', sheet.name);
         var t = document.createElement('div');
         t.className = 'fc-txt';
         t.textContent = CAR_TXT[key];
@@ -1136,7 +1137,8 @@
         drawThumb(cv, c);
         nameBar(f, c.name, c.sub, '#151515', '#ffffff');
       }, function (b) {
-        nameBar(b, c.name, null, '#151515', '#ffffff');
+        b.classList.add('fr');
+        b.setAttribute('data-title', c.name);
         var t = document.createElement('div');
         t.className = 'fc-txt';
         var h1 = document.createElement('b'); h1.textContent = 'Thème';

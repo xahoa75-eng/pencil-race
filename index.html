@@ -399,7 +399,11 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .pic-btn.onl-pic.fr img { aspect-ratio: 494 / 454; }
 .pic-btn.fr img, .launch.fr img { border-radius: 0; }
 .pic-btn.soon.fr { opacity: .85; }
-.fc-f.fr { --H: 28px; --fs: 16px; }
+.fc-f.fr, .fc-b.fr { --H: 28px; --fs: 16px; }
+.fc-f.fr, .fc-b.fr { position: absolute !important; inset: 0; margin: 0 !important; }
+.fc-b.fr { background: #f6f3ea !important; color: #222; }
+.fc-b.fr .fc-txt { padding: 4px 2px 4px; margin: 0 -9px 0 -16px; font-size: 11px; line-height: 1.25; color: #222; }
+.fc-b.fr .fc-txt b { color: #555; font-size: 10px; }
 .fc-f.fr .fc-name { display: none; }
 .pic-btn.rc-pic { width: 100%; margin: 10px auto 0; flex: none; }
 .pic-btn.rc-pic.fr { --H: 44px; --fs: 28px; }
@@ -1799,7 +1803,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
         CAR34.draw(cv, 'n_' + key, sheet);
         nameBar(f, sheet.name, null, sheet.color, sheet.on);
       }, function (b) {
-        nameBar(b, sheet.name, null, sheet.color, sheet.on);
+        b.classList.add('fr');
+        b.setAttribute('data-title', sheet.name);
         var t = document.createElement('div');
         t.className = 'fc-txt';
         t.textContent = CAR_TXT[key];
@@ -1819,7 +1824,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
         drawThumb(cv, c);
         nameBar(f, c.name, c.sub, '#151515', '#ffffff');
       }, function (b) {
-        nameBar(b, c.name, null, '#151515', '#ffffff');
+        b.classList.add('fr');
+        b.setAttribute('data-title', c.name);
         var t = document.createElement('div');
         t.className = 'fc-txt';
         var h1 = document.createElement('b'); h1.textContent = 'Thème';

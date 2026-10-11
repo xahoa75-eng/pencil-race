@@ -638,3 +638,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v146 — Icône « Voitures » dans Règles
 - Dans Règles, le bouton « Voitures » est remplacé par ton dessin des 3 voitures (rouge, verte, violette, drapeau VOITURES), dans le cadre crayon commun avec « VOITURES » dans le bandeau. Il ouvre toujours les cartes des voitures. Image : `assets/images/regles-voitures.jpg`.
 - Archive : pencil-race_v145_avant-icone-voitures.html
+
+## v147 — Cartes des Règles : recto et verso de même taille
+- Dans Règles (Voitures et Circuits), le dos des cartes qui se retournent reçoit le même cadre crayon que le recto (titre dans le bandeau, damiers), au lieu d'un simple rectangle. Recto et verso ont donc exactement la même taille ; le texte est remis en page (plus petit, marges recalées) et rentre entièrement dans chaque carte.
+- Archive : pencil-race_v146_avant-versos.html
