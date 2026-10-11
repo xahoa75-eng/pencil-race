@@ -418,6 +418,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .onl-pics { display: flex; flex-direction: column; gap: 12px; }
 .pic-btn.onl-mode { width: 80%; margin: 0 auto; flex: none; }
 .pic-btn.onl-mode.fr { --H: 34px; --fs: 22px; }
-.pic-btn.onl-mode.fr img { object-fit: contain; background: #f4f2ea; }
+.pic-btn.onl-mode.fr img { object-fit: fill; }
 .pic-btn.onl-mode.fr[aria-label="Rejoindre une partie"] img { aspect-ratio: 425 / 452; }
 .pic-btn.onl-mode.fr[aria-label="Créer une partie"] img { aspect-ratio: 425 / 565; }

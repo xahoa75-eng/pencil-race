@@ -697,3 +697,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v159 — Créer / Rejoindre : images échangées
 - Les deux dessins étaient inversés : « Créer » montre maintenant la main qui dessine le circuit, « Rejoindre » montre la voiture en réseau avec les câbles.
 - Archive : pencil-race_v158_avant-inversion.html
+
+## v160 — Créer / Rejoindre : image collée aux bords du cadre
+- Les deux images remplissent maintenant tout l'intérieur du cadre, sans aucune bande vide sur les côtés (l'image peut s'étirer légèrement plutôt que garder ses proportions d'origine).
+- Archive : pencil-race_v159_avant-image-pleine.html
