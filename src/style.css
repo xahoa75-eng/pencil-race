@@ -394,3 +394,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .pic-btn.soon.fr { opacity: .85; }
 .fc-f.fr { --H: 28px; --fs: 16px; }
 .fc-f.fr .fc-name { display: none; }
+.pic-btn.rc-pic { width: 100%; margin: 10px auto 0; flex: none; }
+.pic-btn.rc-pic.fr { --H: 44px; --fs: 28px; }
+.pic-btn.rc-pic.fr img { aspect-ratio: 770 / 694; object-fit: contain; }
