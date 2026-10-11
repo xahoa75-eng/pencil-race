@@ -616,3 +616,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v141 — Choix du nombre de joueurs en images
 - Dans Multi (même téléphone) et Multi en ligne, les trois boutons « 2 / 3 / 4 joueurs » sont remplacés par les trois dessins des pilotes (le texte « 2 JOUEURS »… est déjà dans l'image). Le choix sélectionné est cerclé de noir, les autres légèrement estompés. Images : `assets/images/joueurs-2/3/4.jpg`.
 - Archive : pencil-race_v140_avant-image-joueurs.html
+
+## v142 — Bouton « Jouer en ligne » en image
+- Dans Multi, le bouton « Jouer en ligne (chacun son téléphone) » est remplacé par le dessin des quatre crayons branchés (câble réseau, nuage). « JOUER EN LIGNE » est écrit dans l'encadré du haut, dans le même style que « 2 JOUEURS » (lettres capitales manuscrites gris foncé, police Patrick Hand SC dessinée dans l'image). Image : `assets/images/jouer-en-ligne.jpg`.
+- Archive : pencil-race_v141_avant-icone-en-ligne.html

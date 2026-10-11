@@ -352,3 +352,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .seg.imgseg[data-key="players"] button img { aspect-ratio: 431 / 513; object-fit: contain; }
 .seg.imgseg[data-key="players"] button span { display: none; }
 .seg.imgseg[data-key="players"] { gap: 6px; }
+
+/* bouton « Jouer en ligne » : le dessin porte déjà le texte */
+.pic-btn.onl-pic { width: 50%; margin: 0 auto; flex: none; }
+.pic-btn.onl-pic img { aspect-ratio: 544 / 568; object-fit: contain; }
