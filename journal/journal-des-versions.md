@@ -747,3 +747,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - En ligne, le pilotage n'est plus forcé sur « Normal » : l'hôte choisit, et son réglage est envoyé aux invités avec le départ.
 - Testé : parcours local complet, GO grisé en Hard, partie en ligne à 2 joueurs avec GO (synchronisée).
 - Archive : pencil-race_v168_avant-pilotage-ecran2.html
+
+## v170 — Bouton « Lancer » de la même taille partout
+- Le bouton « Lancer » a la taille de celui de Solo › Entraînement dans tous les menus : Jouer en local et Créer une partie (mesuré : 278 × 266 px sur un écran de 393 px). Les réductions ajoutées aux v165 et v166 sont supprimées.
+- Archive : pencil-race_v169_avant-lancer-uniforme.html

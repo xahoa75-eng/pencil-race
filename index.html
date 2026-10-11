@@ -436,8 +436,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
    dernier écran : les 3 pilotages et le bouton Lancer aussi. */
 #s-multi2 .seg.imgseg, #s-multi4 .seg.imgseg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 #s-multi2 .seg.imgseg button.fr img, #s-multi4 .seg.imgseg button.fr img,
-#s-multi4 .launch.fr img { aspect-ratio: 421 / 430 !important; object-fit: cover; }
-#s-multi4 .launch.fr { width: calc((100% - 16px) / 3); margin: 0 auto; --H: 22px; --fs: 13px; }
 
 /* En ligne : le code et le bouton « Envoyer le lien » dans le cadre crayon habituel */
 .fr.frbox { display: block; width: 100%; box-sizing: border-box; text-align: center; --H: 30px; --fs: 19px; }
@@ -445,7 +443,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .fr.frlink { cursor: pointer; }
 .fr.frlink .frlink-txt { display: block !important; font: 400 19px/1.25 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; color: #3a3a3e; padding: 12px 14px 14px; }
 .fr.frlink:active { transform: translateY(1px); }
-#s-online4 .launch.fr { width: 46%; margin: 4px auto 0; --H: 26px; --fs: 16px; }
 /* En ligne : les icônes du nombre de joueurs et du GO ont la même taille (comme en local) */
 #s-online2 .seg.imgseg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 #s-online2 .seg.imgseg button.fr img { aspect-ratio: 421 / 430 !important; object-fit: cover; }
