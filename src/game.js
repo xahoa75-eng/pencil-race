@@ -4398,13 +4398,6 @@
 
     checker(G[0], G[1], dirEnd, circuit.bandF);
 
-    ctx.fillStyle = '#111';
-    ctx.font = 'bold 12px "Trebuchet MS", sans-serif';
-    var ls = circuit.labels.start, lf = circuit.labels.finish;
-    ctx.textAlign = ls[2];
-    ctx.fillText('DÉPART', ls[0], ls[1]);
-    ctx.textAlign = lf[2];
-    ctx.fillText('ARRIVÉE', lf[0], lf[1]);
       } finally {
         PEN_ON = false;
         ctx = main;

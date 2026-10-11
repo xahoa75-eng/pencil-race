@@ -825,3 +825,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - L'ancien réglage multi enregistré sur un appareil (qui valait « GO activé » sans que le joueur l'ait choisi) est ignoré une seule fois ; ensuite, ton choix est de nouveau mémorisé normalement. En Hard, le GO reste obligatoire (grisé).
 - Testé : appareil avec l'ancien réglage « oui » → les trois menus sur « Sans GO » ; choix « GO activé » puis rechargement → conservé.
 - Archive : pencil-race_v182_avant-go-par-defaut.html
+
+## v184 — Plus de mots « DÉPART » et « ARRIVÉE » sur les circuits
+- Les mots « DÉPART » et « ARRIVÉE » écrits à côté des lignes de départ et d'arrivée sont supprimés sur les 8 circuits (les damiers restent).
+- Archive : pencil-race_v183_avant-sans-mots.html
