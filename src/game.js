@@ -2016,11 +2016,29 @@
     }
     return [path[0][0], path[0][1]];
   }
+  // flaques qui resteront sur la piste après la prochaine pose de `owner` (la plus ancienne de ses flaques part si elle en a déjà MARK_KEEP)
+  function puddleSurvivors(owner) {
+    var out = [], mine = 0, i;
+    for (i = 0; i < puddles.length; i++) if (puddles[i].owner === owner) mine++;
+    var skip = mine >= MARK_KEEP;
+    for (i = 0; i < puddles.length; i++) {
+      if (skip && puddles[i].owner === owner) { skip = false; continue; }
+      out.push(puddles[i]);
+    }
+    return out;
+  }
+  // deux flaques ne se superposent jamais : il reste toujours de la place (et donc un passage) entre elles
+  function puddleOK(x, y, r, owner) {
+    var sv = puddleSurvivors(owner);
+    for (var i = 0; i < sv.length; i++) if (Math.hypot(x - sv[i].x, y - sv[i].y) < r + sv[i].r + 12) return false;
+    return true;
+  }
   function dropPuddle(p, pt) {
     var blob = [];
     for (var k = 0; k < 14; k++) blob.push(0.8 + Math.random() * 0.32);
     var r = circuit.puddleR, gap = null;
     if (!Array.isArray(pt)) { r = pt.r; gap = pt.gap; pt = [pt.x, pt.y]; }   // flaque posée devant l'adversaire : taille propre et passage étroit
+    if (!puddleOK(pt[0], pt[1], r, p.id)) return;   // elle toucherait une autre flaque : pas de pose
     puddles.push({ x: pt[0], y: pt[1], r: r, owner: p.id, blob: blob, gap: gap, t: markClock });
     var mine = 0, i;
     for (i = 0; i < puddles.length; i++) if (puddles[i].owner === p.id) mine++;
@@ -2029,7 +2047,7 @@
   // flaque posée en travers de la piste près de la progression s0 (dans un tronçon à peu près droit), avec un passage
   // étroit contre un des bords : un tir de précision passe, un tir approximatif est arrêté
   var gapSide = 1;
-  function forwardPuddle(s0, minS) {
+  function forwardPuddle(s0, minS, owner) {
     function bend(sx, hw) {
       var a = posAtS(sx - hw), m = posAtS(sx), b = posAtS(sx + hw);
       var d = Math.abs(Math.atan2(b[1] - m[1], b[0] - m[0]) - Math.atan2(m[1] - a[1], m[0] - a[0]));
@@ -2047,7 +2065,20 @@
         }
       }
     }
-    return crossPuddle(posAtS(s), posAtS(Math.max(0, s - 3)), posAtS(s + 3));
+    if (owner == null) return crossPuddle(posAtS(s), posAtS(Math.max(0, s - 3)), posAtS(s + 3));
+    // on décale la flaque le long de la piste jusqu'à trouver une place qui ne touche aucune autre flaque
+    var offs = [0];
+    for (var d = 12; d <= 156; d += 12) offs.push(d, -d);
+    for (var oi = 0; oi < offs.length; oi++) {
+      var sx2 = s + offs[oi];
+      if (sx2 < (minS || 0) || sx2 > top) continue;
+      if (offs[oi] && bend(sx2, 28) >= 0.25) continue;
+      var g0 = gapSide;
+      var spot = crossPuddle(posAtS(sx2), posAtS(Math.max(0, sx2 - 3)), posAtS(sx2 + 3));
+      if (puddleOK(spot.x, spot.y, spot.r, owner)) return spot;
+      gapSide = g0;
+    }
+    return null;
   }
   // flaque en travers de la piste en c, dans la direction a1 -> b1, avec un passage étroit contre un bord
   function crossPuddle(c, a1, b1) {
@@ -2085,15 +2116,22 @@
       if (circuit.field) {
         var oppF = null;
         for (var oi2 = 0; oi2 < players.length; oi2++) if (players[oi2] !== p) oppF = players[oi2];
-        return crossPuddle(fieldAhead(oppF.x, oppF.y, 110), fieldAhead(oppF.x, oppF.y, 104), fieldAhead(oppF.x, oppF.y, 116));
+        var dists = [110, 150, 190, 230, 80];
+        for (var di = 0; di < dists.length; di++) {
+          var dd = dists[di], g1 = gapSide;
+          var sf = crossPuddle(fieldAhead(oppF.x, oppF.y, dd), fieldAhead(oppF.x, oppF.y, dd - 6), fieldAhead(oppF.x, oppF.y, dd + 6));
+          if (puddleOK(sf.x, sf.y, sf.r, p.id)) return sf;
+          gapSide = g1;
+        }
+        return null;
       }
       var ahead = null;
       for (var q = 0; q < fs.length; q++) {
         var fa = fs[q];
         if (!fa.used && fa.s >= so + 30 && fa.s <= so + 260 && (!ahead || fa.s < ahead.s)) ahead = fa;
       }
-      if (ahead) { ahead.used = true; return forwardPuddle(ahead.s, so + 30); }
-      return forwardPuddle(Math.min(so + 120, circuit.finishS - 40), so + 40);
+      if (ahead) { ahead.used = true; return forwardPuddle(ahead.s, so + 30, p.id); }
+      return forwardPuddle(Math.min(so + 120, circuit.finishS - 40), so + 40, p.id);
     }
     if (!fs.length) return behind;
     var best = null;

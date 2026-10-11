@@ -855,3 +855,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les textes des règles (Plume, Correcteur, Colle) sont mis à jour.
 - Testé : 4 flaques posées → 2 restent (les plus récentes) ; traînées Colle/Correcteur limitées à 2 ; tout disparaît après vieillissement ; en ligne 2 joueurs avec le pouvoir Plume, 10 tours, synchronisé.
 - Archive : pencil-race_v186_avant-flaques.html
+
+## v188 — Flaques de la Plume : jamais superposées
+- Deux flaques de la Plume ne peuvent plus se toucher ni se recouvrir : sinon le passage laissé dans l'une était bouché par l'autre. Maintenant, une nouvelle flaque est décalée le long de la piste jusqu'à trouver une place libre (au moins 12 d'écart avec l'autre flaque) ; s'il n'y a aucune place, elle n'est pas posée ce tour-là.
+- Même règle pour la flaque posée juste derrière la Plume, et pour les circuits à champ ouvert (Jardin).
+- Testé sur les 8 circuits (Plume contre Classique et Colle, 6 parties par circuit, toutes terminées) : écart minimum entre deux flaques de 12,2 ; jamais plus de 2 flaques ; en ligne 2 joueurs avec Plume, synchronisé.
+- Archive : pencil-race_v187_avant-sans-superposition.html
