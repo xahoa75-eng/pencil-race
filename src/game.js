@@ -25,9 +25,9 @@
                power: 'cross', crossLoss: 0 },
     portemine: { id: 'portemine', name: 'Le Porte-mine', short: 'Porte-mine', color: '#6a2fa8', car: '#a45be0', on: '#ffffff',
                power: null, shotsPerTurn: 3, rangeMul: 1 / 3 },
-    // le Compas : on choisit la direction et la force, puis la trajectoire épouse la courbe du circuit (portée à 105 %)
+    // le Compas : on choisit la direction et la force, puis la trajectoire épouse la courbe du circuit (portée à 90 %)
     compas:  { id: 'compas', name: 'Le Compas', short: 'Compas', color: '#5d636b', car: '#a3a8af', on: '#ffffff',
-               power: 'follow', rangeMul: 1.05, follow: { lookahead: 70, rMin: 60 } },
+               power: 'follow', rangeMul: 0.9, follow: { lookahead: 70, rMin: 60 } },
     // le Correcteur : il laisse une traînée blanche (courte mais deux fois plus large que celle de la Colle) ;
     // la voiture qui la traverse a son pouvoir annulé au tour suivant
     correcteur: { id: 'correcteur', name: 'Le Correcteur', short: 'Correcteur', color: '#9a9ea6', car: '#ffffff', on: '#111111',
@@ -1054,7 +1054,7 @@
     plume: "Après chaque tir, elle pose une flaque d'encre : la voiture qui roule dedans s'arrête net. Si elle est devant, la flaque reste derrière elle ; si elle est derrière, elle la pose devant la voiture de tête. Il n'y en a jamais plus de 2 sur la piste : la plus ancienne disparaît.",
     gomme: "Elle traverse les murs sans rien perdre de sa force.",
     portemine: "Trois petits tirs par tour, chacun trois fois moins fort qu'un tir normal.",
-    compas: "Sa trajectoire suit la courbe de la piste, et elle porte un peu plus loin que les autres.",
+    compas: "Sa trajectoire suit la courbe de la piste, mais elle porte un peu moins loin que les autres (90 % de la force).",
     correcteur: "Son dernier tir laisse une traînée blanche : la voiture qui la traverse perd son pouvoir au tour suivant. Derrière, il peut aussi poser une flaque devant la voiture de tête. Ses taches restent tant qu'aucune voiture n'a roulé dessus, mais il n'y en a jamais plus de 2 et elles finissent par s'effacer.",
     colle: "Son tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant. Derrière, elle peut aussi poser une flaque devant la voiture de tête. Ses taches restent tant qu'aucune voiture n'a roulé dessus, mais il n'y en a jamais plus de 2 et elles finissent par s'effacer."
   };
@@ -1112,7 +1112,7 @@
     { name: 'La Gomme', img: 'data:image/webp;base64,@@A:pu-gomme.webp@@', txt: "Au prochain tour, ta voiture traverse les murs sans rien perdre de sa force." },
     { name: 'La Plume', img: 'data:image/webp;base64,@@A:pu-plume.webp@@', txt: "Après ton prochain tir, tu poses une flaque d'encre : la voiture qui roule dedans s'arrête net." },
     { name: 'Le Porte-mine', img: 'data:image/webp;base64,@@A:pu-portemine.webp@@', txt: "Au prochain tour, trois petits tirs, chacun trois fois moins fort qu'un tir normal." },
-    { name: 'Le Compas', img: 'data:image/webp;base64,@@A:pu-compas.webp@@', txt: "Au prochain tour, ta trajectoire suit la courbe de la piste, et ta voiture porte un peu plus loin." },
+    { name: 'Le Compas', img: 'data:image/webp;base64,@@A:pu-compas.webp@@', txt: "Au prochain tour, ta trajectoire suit la courbe de la piste, mais ta voiture porte un peu moins loin (90 % de la force)." },
     { name: "L'Agrafeuse", img: 'data:image/webp;base64,@@A:pu-agrafeuse.webp@@', txt: "Au prochain tour, ta voiture échange sa place avec celle du premier. Le premier ne peut jamais l'avoir." },
     { name: 'La Colle', img: 'data:image/webp;base64,@@A:pu-colle.webp@@', txt: "Ton prochain tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant." }
   ];

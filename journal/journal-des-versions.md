@@ -889,3 +889,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Attention : les objectifs de coups des bots (calculés avec l'ancienne Gomme) ne sont pas recalculés ; la Gomme jouée par un bot ou face à toi peut maintenant être plus forte qu'avant (à revoir avec un nouveau tournoi si tu veux).
 - Testé : 4 parties de bots Gomme contre Classique sur Zigzag, Canyon, Serpentin et Escalier, toutes terminées, sans erreur.
 - Archive : pencil-race_v192_avant-gomme.html
+
+## v194 — Compas : force à 90 %
+- La force (portée) du Compas passe de 105 % à 90 % de celle d'une voiture normale, voiture et power-up en ligne. Sa trajectoire qui suit la courbe de la piste ne change pas. Textes des règles mis à jour.
+- Comme pour la Gomme, les objectifs de coups des bots ne sont pas recalculés : le Compas joué par un bot (boss du Jardin) peut être un peu plus lent qu'avant.
+- Testé : parties de bots Compas contre Classique sur 4 circuits, toutes terminées, sans erreur.
+- Archive : pencil-race_v193_avant-compas.html
