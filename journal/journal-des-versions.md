@@ -654,3 +654,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v150 — Nouvelles voitures adversaires (tête de mort)
 - L'écran « Choisis l'adversaire » utilise maintenant les nouvelles voitures (même dessin, même taille agrandie que « Ma voiture »), avec une tête de mort blanche cerclée de gris dessinée sur le capot de chacune, au même endroit et inclinée comme le capot. Les anciennes images adversaire restent dans le dépôt. Images : `assets/images/voiture-*-adversaire.jpg`.
 - Archive : pencil-race_v149_avant-adversaires.html
+
+## v151 — Tête de mort alignée sur la bande du capot
+- Sur les 8 voitures adversaires, la tête de mort est maintenant centrée sur la bande du capot et posée « à plat » sur le capot (orientée dans le sens de la bande, déformée en perspective comme le capot). La bande dépasse devant et derrière, dans le prolongement.
+- Archive : pencil-race_v150_avant-tete-de-mort-alignee.html
