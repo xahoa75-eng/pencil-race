@@ -973,3 +973,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les objectifs de coups des bots (« coups parfaits ») ne sont pas recalculés : le boss Bille est maintenant plus fort que ce que ses objectifs prévoient.
 - Testé : tir avec rebond plus long (348 contre 315) et identique face à la Classique, à la Plume, à la Bille, seule et dans la campagne contre l'Agrafeuse (339), sans erreur.
 - Archive : pencil-race_v204_avant-bille.html
+
+## v206 — Campagne : une coche par niveau gagné
+- Sur chaque carte de boss, une coche par niveau où il a été battu, côte à côte en bas à droite : verte = Facile, bleue = Normal, rouge = Hard (toujours dans cet ordre, de gauche à droite). Elles remplacent la grande coche verte unique et la ligne « Battu : … » sous la carte.
+- Testé : captures avec 0 à 3 coches selon les cartes, sans erreur.
+- Archive : pencil-race_v205_avant-coches-niveaux.html

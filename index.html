@@ -484,7 +484,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .fr-boss img.bossimg { display: block; width: calc(100% + 34px); margin-left: -20px; height: auto; aspect-ratio: 340 / 360; max-width: none; }
 
 /* Campagne : grande coche verte (boss battu), en bas à droite du cadre */
-.fr-boss .wonmark { position: absolute; z-index: 3; right: -21px; bottom: -22px; width: 60px; height: 60px; pointer-events: none; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+.fr-boss .wonmarks { position: absolute; z-index: 3; right: -18px; bottom: -20px; display: flex; flex-direction: row; pointer-events: none; }
+.fr-boss .wonmark { width: 44px; height: 44px; margin-left: -9px; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
 .fr-boss .wonmark svg { display: block; width: 100%; height: 100%; }
 
 /* campagne : remise à zéro */
@@ -1567,19 +1568,22 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       fw.className = 'fr fr-s fr-boss';
       fw.setAttribute('data-title', c.name);
       fw.appendChild(im2);
-      if (campWonAll(cid)) {
-        // grande coche verte dans le coin en bas à droite : boss battu
+      // une coche par niveau gagné, côte à côte en bas à droite : verte = Facile, bleue = Normal, rouge = Hard
+      var CK = { facile: ['#1d4d1d', '#2fa84f'], normal: ['#1b3f7a', '#2f6fd0'], hard: ['#7a1b1b', '#d63a3a'] };
+      var wm = document.createElement('div');
+      wm.className = 'wonmarks';
+      CAMP_LEVELS.forEach(function (l) {
+        if (!campWon(cid, l)) return;
         var mk = document.createElement('div');
         mk.className = 'wonmark';
-        mk.setAttribute('aria-label', 'Gagné');
-        mk.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M9 34 L25 51 L56 11" fill="none" stroke="#1d4d1d" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 34 L25 51 L56 11" fill="none" stroke="#2fa84f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        fw.appendChild(mk);
-      }
+        mk.setAttribute('aria-label', 'Gagné en ' + BOT_LEVEL[l]);
+        mk.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M9 34 L25 51 L56 11" fill="none" stroke="' + CK[l][0] + '" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 34 L25 51 L56 11" fill="none" stroke="' + CK[l][1] + '" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        wm.appendChild(mk);
+      });
+      if (wm.children.length) fw.appendChild(wm);
       var sb = document.createElement('div');
       sb.className = 'csub';
-      var lv = CAMP_LEVELS.filter(function (l) { return campWon(cid, l); }).map(function (l) { return BOT_LEVEL[l]; });
       sb.textContent = !open ? '🔒 Bats les 7 autres en Facile' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
-      if (open && lv.length && !campWonAll(cid)) { sb.appendChild(document.createElement('br')); sb.appendChild(document.createTextNode('Battu : ' + lv.join(', '))); }
       b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);
