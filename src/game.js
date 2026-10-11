@@ -485,7 +485,7 @@
   for (var oi = 0; oi < ORDER.length; oi++) prepare(CIRCUITS[ORDER[oi]]);
 
   // ---------- réglages ----------
-  var settings = { diff: 'normal', exit: 'tol', players: 2, circuit: 'zigzag', go: 'non', botLevel: 'normal', playerCar: 'normale', botCar: 'none', sound: 'oui' };
+  var settings = { diff: 'normal', exit: 'tol', players: 2, circuit: 'zigzag', go: 'non', goMulti: 'oui', botLevel: 'normal', playerCar: 'normale', botCar: 'none', sound: 'oui' };
   try {
     var sv = JSON.parse(localStorage.getItem('pr-settings') || 'null');
     if (sv) {
@@ -493,6 +493,7 @@
       if (sv.players >= 2 && sv.players <= 4) settings.players = sv.players;
       if (CIRCUITS[sv.circuit]) settings.circuit = sv.circuit;
       if (sv.go === 'non' || sv.go === 'oui') settings.go = sv.go;
+      if (sv.goMulti === 'non' || sv.goMulti === 'oui') settings.goMulti = sv.goMulti;
       if (BOT_LEVEL[sv.botLevel]) settings.botLevel = sv.botLevel;
       if (CARS[sv.playerCar]) settings.playerCar = sv.playerCar;
       if (CARS[sv.botCar] || sv.botCar === 'none') settings.botCar = sv.botCar;
@@ -1405,7 +1406,8 @@
     if (online) return false;   // en ligne : pas de bouton GO (seul ton tour te laisse viser)
     var soloGo = settings.diff === 'hard' || settings.go === 'oui';
     if (botMode) return !(players[cur] && players[cur].bot) && soloGo;
-    return n > 1 || soloGo;
+    if (n > 1) return settings.goMulti !== 'non' || settings.diff === 'hard';   // multi : bouton GO au choix (toujours là en Hard pour le chrono)
+    return soloGo;
   }
 
   function clampCenter(x, y, z) {

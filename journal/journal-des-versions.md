@@ -678,3 +678,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v155 — Bouton « Valider » au choix du nombre de joueurs
 - Jouer en local, écran du nombre de joueurs : toucher 2/3/4 sélectionne seulement (les pastilles de couleur des joueurs se mettent à jour) ; un bouton noir « Valider » en dessous passe au choix du circuit.
 - Archive : pencil-race_v154_avant-valider.html
+
+## v156 — Option « Bouton GO en multi »
+- Jouer en local, écran du nombre de joueurs : nouvelle option « Bouton GO en multi » avec les deux drapeaux (GO activé / Sans GO), au-dessus de « Valider ». Le choix est mémorisé.
+- Sans GO, chaque joueur vise directement à son tour, sans appuyer sur GO. En Hard, le GO reste toujours là (il lance le chrono). Par défaut : GO activé (comme avant).
+- Options : la note sous « Bouton GO en solo » est mise à jour. Le multi en ligne ne change pas (toujours sans GO).
+- Archive : pencil-race_v155_avant-go-multi.html
