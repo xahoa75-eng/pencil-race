@@ -684,3 +684,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Sans GO, chaque joueur vise directement à son tour, sans appuyer sur GO. En Hard, le GO reste toujours là (il lance le chrono). Par défaut : GO activé (comme avant).
 - Options : la note sous « Bouton GO en solo » est mise à jour. Le multi en ligne ne change pas (toujours sans GO).
 - Archive : pencil-race_v155_avant-go-multi.html
+
+## v157 — Icônes « Créer » et « Rejoindre » (en ligne)
+- Écran En ligne : les boutons texte « Créer une partie » et « Rejoindre une partie » sont remplacés par deux icônes encadrées côte à côte. CRÉER = la voiture rouge en réseau avec les câbles de couleur ; REJOINDRE = la main qui dessine le circuit sur le téléphone. Elles ouvrent les mêmes écrans qu'avant. Images : `assets/images/creer-partie.jpg`, `rejoindre-partie.jpg`.
+- Archive : pencil-race_v156_avant-creer-rejoindre.html

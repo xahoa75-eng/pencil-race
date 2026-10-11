@@ -147,8 +147,10 @@
     <button class="back" type="button" data-act="onl-back">‹ Retour</button>
     <h2>En ligne</h2>
     <div class="onl" id="onl-choose">
-      <button class="big primary" type="button" data-act="onl-host">Créer une partie</button>
-      <button class="big" type="button" data-act="onl-join">Rejoindre une partie</button>
+      <div class="onl-pics">
+        <button class="pic-btn onl-mode" type="button" data-act="onl-host" aria-label="Créer une partie"><img alt="" src="data:image/jpeg;base64,@@A:creer-partie.jpg@@"><span>Créer</span></button>
+        <button class="pic-btn onl-mode" type="button" data-act="onl-join" aria-label="Rejoindre une partie"><img alt="" src="data:image/jpeg;base64,@@A:rejoindre-partie.jpg@@"><span>Rejoindre</span></button>
+      </div>
       <p class="note">Un joueur crée la partie et envoie le lien (ou le code) à ses amis. Chacun joue sur son propre téléphone.</p>
       <p class="note onl-warn" id="onlNo" hidden></p>
     </div>

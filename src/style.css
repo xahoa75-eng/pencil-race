@@ -413,3 +413,9 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .pic-btn.mode-pic.fr { --H: 34px; --fs: 22px; }
 .pic-btn.mode-pic.fr img { aspect-ratio: 494 / 454; object-fit: contain; }
 .pic-btn.mode-pic.loc.fr img { aspect-ratio: 894 / 839; }
+
+/* En ligne : Créer / Rejoindre en icônes */
+.onl-pics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pic-btn.onl-mode { width: 100%; flex: none; }
+.pic-btn.onl-mode.fr { --H: 28px; --fs: 17px; }
+.pic-btn.onl-mode.fr img { aspect-ratio: 421 / 560; object-fit: contain; background: #f4f2ea; }
