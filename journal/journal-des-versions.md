@@ -829,3 +829,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v184 — Plus de mots « DÉPART » et « ARRIVÉE » sur les circuits
 - Les mots « DÉPART » et « ARRIVÉE » écrits à côté des lignes de départ et d'arrivée sont supprimés sur les 8 circuits (les damiers restent).
 - Archive : pencil-race_v183_avant-sans-mots.html
+
+## v185 — Taches de la Plume, de la Colle et du Correcteur dessinées au crayon
+- Les flaques d'encre (Plume), les taches et traînées de Colle et de Correcteur, et les petites taches au-dessus des voitures collées ou effacées ne sont plus des aplats à contour noir : fond de couleur, hachures de crayon, contour gris repassé plusieurs fois et petit reflet au trait, comme les lignes des voitures.
+- L'encre reste bleu nuit, la colle jaune orangé, le correcteur blanc cassé avec hachures grises.
+- Archive : pencil-race_v184_avant-taches-dessinees.html

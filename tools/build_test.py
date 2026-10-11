@@ -6,7 +6,7 @@ hook = """
   /*TEST_HOOK*/
   window.__T = {
     settings: settings, CIRCUITS: CIRCUITS, CARS: CARS, ORDER: ORDER,
-    startGame: startGame, corrTurn: corrTurn, projectS: projectS, tick: tick, fire: fire, useCircuit: useCircuit, applyDoors: applyDoors,
+    startGame: startGame, PU: function () { return puddles; }, FX: function () { return fx; }, corrTurn: corrTurn, projectS: projectS, tick: tick, fire: fire, useCircuit: useCircuit, applyDoors: applyDoors,
     S: function () { return { players: players, finished: finished, finishers: finishers, anim: anim, cur: cur, phase: phase }; },
     circuitNow: function () { return circuit; },
     inTrack: inTrack, progressOf: progressOf, simulateShot: simulateShot, botPlan: botPlan,

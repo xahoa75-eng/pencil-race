@@ -4151,33 +4151,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     ctx.stroke();
   }
   // pouvoir effacé par le Correcteur : une tache de correcteur blanc sur la voiture
-  function drawErased(x, y) {
-    ctx.save();
-    ctx.translate(x, y - 17);
-    ctx.lineJoin = 'round';
-    ctx.fillStyle = '#ffffff';
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = 1.6;
-    ctx.beginPath();
-    ctx.moveTo(-9, 1);
-    ctx.quadraticCurveTo(-11, -6, -3, -7);
-    ctx.quadraticCurveTo(2, -10, 7, -6);
-    ctx.quadraticCurveTo(12, -2, 8, 3);
-    ctx.quadraticCurveTo(3, 6, -2, 4);
-    ctx.quadraticCurveTo(-6, 6, -9, 1);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(-7, 9, 2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(160,170,190,0.55)';
-    ctx.beginPath();
-    ctx.ellipse(-2, -3, 3.5, 2, -0.5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
+  function drawErased(x, y) { smallBlot(x, y - 17, false); }
   // le jardin à la française : fontaine (dans un rond-point), parterres (entre quatre ronds-points) et décors du pourtour
   function drawFontaine() {
     ctx.lineJoin = 'round';
@@ -4786,33 +4760,73 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       }
     }
   }
+  // taches dessinées au crayon de couleur : fond de couleur, hachures, double trait de crayon gris autour
+  function penBlot(pathFn, o) {
+    // o : {col, base, baseA, hatch, hatchA, line, cx, cy, r, bb:[x0,y0,x1,y1], seed}
+    ctx.save();
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    pathFn();
+    ctx.globalAlpha = o.baseA == null ? 0.78 : o.baseA;
+    ctx.fillStyle = o.base;
+    ctx.fill();
+    ctx.globalAlpha = 0.88;
+    ctx.fillStyle = pencilPattern(o.col);
+    ctx.fill();
+    // hachures dans le sens du crayon
+    ctx.save();
+    pathFn();
+    ctx.clip();
+    var bb = o.bb || [o.cx - o.r, o.cy - o.r, o.cx + o.r, o.cy + o.r];
+    var seed = (o.seed | 0) % 2147483647 || 17;
+    function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var w = bb[2] - bb[0], h = bb[3] - bb[1], sp = 3.4, ang = -0.9;
+    var cxx = (bb[0] + bb[2]) / 2, cyy = (bb[1] + bb[3]) / 2, R = Math.hypot(w, h) / 2 + 2;
+    var ux = Math.cos(ang), uy = Math.sin(ang), nx = -uy, ny = ux;
+    ctx.strokeStyle = o.hatch;
+    ctx.globalAlpha = o.hatchA == null ? 0.3 : o.hatchA;
+    ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    for (var t = -R; t < R; t += sp) {
+      var j = (rnd() - 0.5) * 1.6, a0 = -R * (0.55 + rnd() * 0.45), a1 = R * (0.55 + rnd() * 0.45);
+      ctx.moveTo(cxx + nx * (t + j) + ux * a0, cyy + ny * (t + j) + uy * a0);
+      ctx.lineTo(cxx + nx * (t + j) + ux * a1 + nx * (rnd() - 0.5) * 1.4, cyy + ny * (t + j) + uy * a1 + ny * (rnd() - 0.5) * 1.4);
+    }
+    ctx.stroke();
+    ctx.restore();
+    // contour : crayon gris qui repasse trois fois, légèrement décalé
+    ctx.strokeStyle = o.line || '#3b3b40';
+    pathFn(); ctx.globalAlpha = 0.85; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.translate(0.7, -0.5); pathFn(); ctx.globalAlpha = 0.45; ctx.lineWidth = 1; ctx.stroke();
+    ctx.translate(-1.3, 1); pathFn(); ctx.globalAlpha = 0.35; ctx.lineWidth = 0.9; ctx.stroke();
+    ctx.restore();
+  }
+  // reflet : un petit trait de crayon clair
+  function penGloss(x, y, r, a) {
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(255,255,255,' + (a || 0.6) + ')';
+    ctx.lineWidth = Math.max(1.6, r * 0.12);
+    ctx.beginPath();
+    ctx.arc(x, y, r, Math.PI * 1.05, Math.PI * 1.45);
+    ctx.stroke();
+    ctx.restore();
+  }
   function drawPuddles() {
     for (var k = 0; k < puddles.length; k++) {
-      var q = puddles[k], N = q.blob.length, pts = [];
-      for (var i = 0; i < N; i++) {
-        var a = i * Math.PI * 2 / N, r = q.r * q.blob[i];
-        pts.push([q.x + Math.cos(a) * r, q.y + Math.sin(a) * r]);
-      }
-      ctx.beginPath();
-      ctx.moveTo((pts[N - 1][0] + pts[0][0]) / 2, (pts[N - 1][1] + pts[0][1]) / 2);
-      for (var j = 0; j < N; j++) {
-        var nx = pts[(j + 1) % N];
-        ctx.quadraticCurveTo(pts[j][0], pts[j][1], (pts[j][0] + nx[0]) / 2, (pts[j][1] + nx[1]) / 2);
-      }
-      ctx.closePath();
-      ctx.fillStyle = '#23275a';
-      ctx.fill();
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.beginPath();
-      ctx.arc(q.x - q.r * 0.28, q.y - q.r * 0.28, q.r * 0.2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#23275a';
-      for (var d = 0; d < 3; d++) {
-        var ad = q.blob[d] * 9 + d * 2.1, rd = q.r * (1.25 + q.blob[d + 3] * 0.5);
-        ctx.beginPath();
-        ctx.arc(q.x + Math.cos(ad) * rd, q.y + Math.sin(ad) * rd, q.r * (0.12 + q.blob[d + 6] * 0.1), 0, Math.PI * 2);
-        ctx.fill();
-      }
+      var q = puddles[k], N = q.blob.length;
+      var seed0 = Math.floor(q.x * 13 + q.y * 7) + 11;
+      (function (q) {
+        var path = function () { blobShape(q.x, q.y, q.r, q.blob); };
+        penBlot(path, { col: '#23275a', base: '#1c2150', baseA: 0.8, hatch: '#5a63b8', hatchA: 0.38, line: '#15183c', cx: q.x, cy: q.y, r: q.r * 1.3, seed: seed0 });
+        penGloss(q.x, q.y, q.r * 0.55, 0.5);
+        // éclaboussures
+        for (var d = 0; d < 3; d++) {
+          var ad = q.blob[d] * 9 + d * 2.1, rd = q.r * (1.25 + q.blob[d + 3] * 0.5), rr = q.r * (0.12 + q.blob[d + 6] * 0.1);
+          var dx = q.x + Math.cos(ad) * rd, dy = q.y + Math.sin(ad) * rd;
+          penBlot(function () { ctx.beginPath(); ctx.arc(dx, dy, rr, 0, Math.PI * 2); }, { col: '#23275a', base: '#1c2150', baseA: 0.85, hatch: '#5a63b8', hatchA: 0.3, line: '#15183c', cx: dx, cy: dy, r: rr, seed: seed0 + d });
+        }
+      })(q);
     }
   }
 
@@ -4878,12 +4892,13 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
   }
   function drawBrush(z, glue) {
     if (!z.brush) brushBuild(z);
-    brushPoly(z.brush);
-    ctx.fillStyle = glue ? '#ffae00' : '#fffdf6';
-    ctx.fill();
-    ctx.strokeStyle = glue ? 'rgba(110,62,0,0.85)' : 'rgba(95,88,70,0.75)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+    var b = z.brush, xs = [], ys = [], u;
+    var P = b.L.concat(b.R);
+    var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (u = 0; u < P.length; u++) { x0 = Math.min(x0, P[u][0]); y0 = Math.min(y0, P[u][1]); x1 = Math.max(x1, P[u][0]); y1 = Math.max(y1, P[u][1]); }
+    var seed = Math.floor(z.pts[0][0] * 13 + z.pts[0][1] * 7) + 5;
+    if (glue) penBlot(function () { brushPoly(b); }, { col: '#ffae00', base: '#ffc21a', baseA: 0.75, hatch: '#b86e00', hatchA: 0.35, line: '#6e3e00', bb: [x0, y0, x1, y1], seed: seed });
+    else penBlot(function () { brushPoly(b); }, { col: '#fffdf6', base: '#fffdf6', baseA: 0.95, hatch: '#9aa0b0', hatchA: 0.32, line: '#5f5846', bb: [x0, y0, x1, y1], seed: seed });
   }
   function drawFx() {
     ctx.lineCap = 'round';
@@ -4894,16 +4909,12 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       var fill = glue ? '#ffae00' : '#ffffff';
       if (z.type === 'blob') {
         var bx = z.pts[0][0], by = z.pts[0][1];
-        blobShape(bx, by, z.hw, z.blob);
-        ctx.fillStyle = fill;
-        ctx.fill();
-        ctx.lineWidth = 2.4;
-        ctx.strokeStyle = '#111';
-        ctx.stroke();
-        ctx.fillStyle = glue ? 'rgba(255,255,255,0.55)' : 'rgba(150,160,180,0.35)';
-        ctx.beginPath();
-        ctx.arc(bx - z.hw * 0.28, by - z.hw * 0.28, z.hw * 0.2, 0, Math.PI * 2);
-        ctx.fill();
+        (function (z, bx, by) {
+          var path = function () { blobShape(bx, by, z.hw, z.blob); }, sd = Math.floor(bx * 13 + by * 7) + 3;
+          if (glue) penBlot(path, { col: '#ffae00', base: '#ffc21a', baseA: 0.78, hatch: '#b86e00', hatchA: 0.35, line: '#6e3e00', cx: bx, cy: by, r: z.hw * 1.3, seed: sd });
+          else penBlot(path, { col: '#fffdf6', base: '#fffdf6', baseA: 0.95, hatch: '#9aa0b0', hatchA: 0.32, line: '#5f5846', cx: bx, cy: by, r: z.hw * 1.3, seed: sd });
+          penGloss(bx, by, z.hw * 0.55, glue ? 0.7 : 0.9);
+        })(z, bx, by);
         continue;
       }
       drawBrush(z, glue);
@@ -4925,30 +4936,30 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       ctx.setLineDash([]);
     }
   }
-  // petite goutte de colle au-dessus de la voiture collée (son tir est réduit de moitié)
-  function drawGlued(x, y, off) {
+  function smallBlot(x, y, glue) {
+    // petite tache dessinée au crayon au-dessus d'une voiture (colle jaune ou correcteur blanc)
     ctx.save();
-    ctx.translate(x + off, y - 17);
-    ctx.lineJoin = 'round';
-    ctx.fillStyle = '#ffae00';
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = 1.6;
-    ctx.beginPath();
-    ctx.moveTo(-9, 1);
-    ctx.quadraticCurveTo(-11, -6, -3, -7);
-    ctx.quadraticCurveTo(2, -10, 7, -6);
-    ctx.quadraticCurveTo(12, -2, 8, 3);
-    ctx.quadraticCurveTo(3, 6, -2, 4);
-    ctx.quadraticCurveTo(-6, 6, -9, 1);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(6, 9, 2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
+    ctx.translate(x, y);
+    var blob = function () {
+      ctx.beginPath();
+      ctx.moveTo(-9, 1);
+      ctx.quadraticCurveTo(-11, -6, -3, -7);
+      ctx.quadraticCurveTo(2, -10, 7, -6);
+      ctx.quadraticCurveTo(12, -2, 8, 3);
+      ctx.quadraticCurveTo(3, 6, -2, 4);
+      ctx.quadraticCurveTo(-6, 6, -9, 1);
+      ctx.closePath();
+    };
+    var dx = glue ? 6 : -7, o = glue
+      ? { col: '#ffae00', base: '#ffc21a', baseA: 0.85, hatch: '#b86e00', hatchA: 0.35, line: '#6e3e00', cx: 0, cy: 0, r: 12, seed: 5 }
+      : { col: '#fffdf6', base: '#fffdf6', baseA: 0.97, hatch: '#9aa0b0', hatchA: 0.35, line: '#5f5846', cx: 0, cy: 0, r: 12, seed: 9 };
+    penBlot(blob, o);
+    penBlot(function () { ctx.beginPath(); ctx.arc(dx, 9, 2.2, 0, Math.PI * 2); }, { col: o.col, base: o.base, baseA: 0.9, hatch: o.hatch, hatchA: 0.2, line: o.line, cx: dx, cy: 9, r: 3, seed: 3 });
+    penGloss(-2, -2, 3.6, 0.8);
     ctx.restore();
   }
+  // petite goutte de colle au-dessus de la voiture collée (son tir est réduit de moitié)
+  function drawGlued(x, y, off) { smallBlot(x + off, y - 17, true); }
 
   function tracePath() {
     ctx.beginPath();
