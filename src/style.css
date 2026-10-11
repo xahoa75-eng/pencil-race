@@ -1,0 +1,340 @@
+
+:root {
+  --bg: #e9e7e2;
+  --fg: #151515;
+  --muted: #6b6b6b;
+  --line: #151515;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1c1c; --fg: #f0f0f0; --muted: #a0a0a0; --line: #f0f0f0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1c1c; --fg: #f0f0f0; --muted: #a0a0a0; --line: #f0f0f0;
+}
+[hidden] { display: none !important; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+button {
+  font: inherit;
+  font-weight: 700;
+  background: var(--fg);
+  color: var(--bg);
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+button:focus-visible { outline: 3px solid #888; outline-offset: 2px; }
+
+.screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
+.screen.on { display: flex; }
+.panel {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 14px 18px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+h1 { margin: 6px 0 0; text-align: center; font-size: 38px; letter-spacing: 2px; text-transform: uppercase; }
+.sub { text-align: center; color: var(--muted); margin: -6px 0 4px; font-size: 14px; }
+h2 { margin: 0; font-size: 24px; }
+h3 { margin: 6px 0 0; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+p.note { margin: 0; font-size: 13px; color: var(--muted); }
+#ban {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 320 / 110;
+  align-self: center;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+}
+.big {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 18px;
+  font-size: 19px;
+  border-radius: 10px;
+  border: 3px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+}
+.big.primary { background: var(--fg); color: var(--bg); justify-content: center; }
+.big[disabled] { opacity: 0.45; border-style: dashed; cursor: not-allowed; }
+.soon { font-size: 12px; font-weight: 400; }
+.back { align-self: flex-start; background: transparent; color: var(--fg); padding: 4px 0; }
+.seg { display: flex; width: 100%; }
+.seg button {
+  flex: 1;
+  background: transparent;
+  color: var(--fg);
+  border: 2px solid var(--fg);
+  padding: 10px 6px;
+  border-radius: 0;
+  margin-left: -2px;
+}
+.seg button:first-child { border-radius: 8px 0 0 8px; margin-left: 0; }
+.seg button:last-child { border-radius: 0 8px 8px 0; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.seg.imgseg { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 8px; }
+.seg.imgseg button, .seg.imgseg button:first-child, .seg.imgseg button:last-child { margin: 0; padding: 0; border: 3px solid var(--muted); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: stretch; background: #fff; }
+.seg.imgseg button img { width: 100%; height: auto; display: block; aspect-ratio: 360 / 340; object-fit: cover; }
+.seg.imgseg[data-key="botLevel"] button img { aspect-ratio: 360 / 392; }
+.seg.imgseg[data-key="sound"] button img, .seg.imgseg[data-key="go"] button img { aspect-ratio: 460 / 434; }
+.seg.imgseg button span { padding: 5px 2px 6px; font-size: 13px; font-weight: 700; text-align: center; color: var(--fg); background: #fff; }
+.seg.imgseg button[aria-pressed="true"] { background: #fff; color: var(--fg); border-color: var(--fg); box-shadow: inset 0 0 0 2px var(--fg); }
+.seg.imgseg button[aria-pressed="false"] img { opacity: .72; }
+.launch { position: relative; display: block; width: 100%; padding: 0; border: 3px solid var(--fg); border-radius: 14px; overflow: hidden; background: #fff; }
+.launch img { width: 100%; height: auto; display: block; aspect-ratio: 480 / 270; object-fit: cover; object-position: 50% 10%; }
+.launch span { position: absolute; left: 0; right: 0; bottom: 14%; text-align: center; font-weight: 800; font-size: 34px; letter-spacing: 1px; color: #fff; text-shadow: 0 0 3px #000, 0 0 6px #000, 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; pointer-events: none; }
+.launch:active { transform: translateY(1px); }
+.pic-btn { position: relative; display: block; width: 100%; padding: 0; border: 3px solid var(--fg); border-radius: 14px; overflow: hidden; background: #fff; cursor: pointer; }
+.pic-btn img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 11; object-fit: cover; object-position: 50% 55%; }
+.pic-btn span { position: absolute; left: 0; right: 0; bottom: 7%; text-align: center; font-weight: 800; font-size: 32px; letter-spacing: 1px; color: #fff; text-shadow: 0 0 3px #000, 0 0 6px #000, 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; pointer-events: none; }
+.pic-btn span small { display: block; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+.pic-btn:active { transform: translateY(1px); }
+.pic-btn.soon { cursor: default; border-color: var(--muted); }
+.pic-btn.soon img { filter: grayscale(.55); opacity: .8; }
+.pic-btn.soon:active { transform: none; }
+.reminder {
+  background: transparent;
+  color: var(--fg);
+  border: 2px dashed var(--muted);
+  font-weight: 400;
+  font-size: 14px;
+  width: 100%;
+}
+.cards { display: flex; flex-shrink: 0; gap: 10px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.card {
+  flex: 0 0 100px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 6px;
+  background: transparent;
+  color: var(--fg);
+  border: 3px solid var(--muted);
+  border-radius: 10px;
+  font-weight: 400;
+}
+.card[aria-pressed="true"] { border-color: var(--fg); box-shadow: inset 0 0 0 2px var(--fg); }
+.card .cname { font-weight: 700; font-size: 16px; }
+.card .csub { font-size: 12px; color: var(--muted); }
+canvas.thumb {
+  height: 150px;
+  width: auto;
+  aspect-ratio: 190 / 340;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+#cirSolo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
+#cirSolo .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
+#cirSolo canvas.thumb { width: 100%; height: auto; }
+#cirSolo .card .cname { font-size: 17px; }
+.cars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.carbtn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px 6px;
+  background: transparent; color: var(--fg); border: 3px solid var(--muted); border-radius: 10px; font-weight: 400;
+}
+.carbtn[aria-pressed="true"] { border-color: var(--fg); box-shadow: inset 0 0 0 2px var(--fg); }
+.carbtn .carname { font-weight: 700; font-size: 11px; line-height: 1.15; text-align: center; }
+.cars .carbtn { padding-left: 2px; padding-right: 2px; }
+.carbtn.none { grid-column: 1 / -1; flex-direction: row; justify-content: center; padding: 10px 6px; }
+canvas.carcv { width: 100%; height: auto; aspect-ratio: 120 / 70; background: #fff; border-radius: 6px; }
+#trBotBox { display: flex; flex-direction: column; gap: 12px; }
+#trBotBox[hidden] { display: none !important; }
+#carsMine, #carsBot { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.carbtn.pic { padding: 0; overflow: hidden; gap: 0; }
+.carbtn.pic .carpic { width: 100%; aspect-ratio: 448 / 400; background: #e2e4e8; }
+.carbtn.pic canvas.carcv { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; background: transparent; display: block; }
+.carbtn.pic .carname { width: 100%; box-sizing: border-box; padding: 7px 6px; font-size: 16px; }
+.carbtn.none { padding: 14px 6px; font-size: 16px; }
+.chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.chip {
+  --c: #151515;
+  --t: #ffffff;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 2px solid var(--c);
+  color: var(--c);
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.chip.on { background: var(--c); color: var(--t); }
+.rules li { margin-bottom: 8px; line-height: 1.35; }
+.rules { padding-left: 20px; margin: 0; }
+
+/* écran de jeu */
+#gh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 4px;
+}
+#gh .info { flex: 1; display: flex; justify-content: center; min-height: 30px; align-items: center; }
+.stats { display: flex; gap: 16px; font-weight: 700; font-size: 15px; }
+.stats span { font-weight: 400; color: var(--muted); }
+#ovBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #151515;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  touch-action: none;
+  z-index: 2;
+}
+#ovBtn svg { width: 30px; height: 30px; display: block; pointer-events: none; }
+#ovBtn.held { background: #e2e2e2; transform: scale(1.12); }
+#ovBtn:disabled { opacity: 0.4; }
+.cwrap { position: relative; height: 100%; aspect-ratio: 360 / 640; max-width: 100%; }
+#goBtn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 42%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.92);
+  color: #d62828;
+  border: 5px solid #151515;
+  border-radius: 28px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  touch-action: manipulation;
+}
+#goBtn:active { transform: translate(-50%, -50%) scale(0.97); }
+#goBtn.peek { opacity: 0; pointer-events: none; }
+#goBtn .gtxt { font-size: min(34vw, 17vh, 130px); font-weight: 900; line-height: 1; letter-spacing: 3px; }
+#goBtn .gsub { font-size: 17px; font-weight: 700; color: #151515; }
+#hint {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  padding: 0 14px 6px;
+  min-height: 17px;
+}
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 10px 10px;
+}
+#c {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  touch-action: none;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+.overlay.show { display: flex; }
+.overlay .box {
+  background: #fff;
+  color: #151515;
+  border: 3px solid #151515;
+  border-radius: 10px;
+  padding: 22px 26px;
+  text-align: center;
+  width: 78%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.overlay h2 { margin: 0; font-size: 24px; }
+.overlay p { margin: 0; font-size: 16px; }
+.overlay button { background: #151515; color: #fff; padding: 11px 14px; }
+.overlay button.alt { background: #fff; color: #151515; border: 2px solid #151515; }
+
+/* ---------- Règles : cartes qui se retournent ---------- */
+.rgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fc { position: relative; cursor: pointer; aspect-ratio: 187 / 205; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.fc.tall { aspect-ratio: 187 / 372; }
+.fc-in { position: absolute; inset: 0; transform: perspective(700px) rotateY(0deg); transition: transform .18s ease-in; }
+.fc-in.half { transform: perspective(700px) rotateY(90deg); }
+.fc-in.half2 { transform: perspective(700px) rotateY(-90deg); transition: none; }
+.fc-f, .fc-b {
+  position: absolute; inset: 0; box-sizing: border-box; border: 3px solid var(--fg); border-radius: 12px; overflow: hidden;
+  display: flex; flex-direction: column; box-shadow: 0 3px 0 rgba(0,0,0,.18);
+}
+.fc-f { background: #fff; color: #111; }
+.fc-b { background: var(--bg); color: var(--fg); display: none; }
+.fc.on .fc-f { display: none; }
+.fc.on .fc-b { display: flex; }
+.fc-f canvas { width: 100%; flex: 1; min-height: 0; object-fit: contain; display: block; }
+.fc-name { padding: 6px 8px; font-weight: 700; font-size: 15px; text-align: center; line-height: 1.15; }
+.fc-name small { display: block; font-weight: 400; font-size: 11px; opacity: .85; margin-top: 1px; }
+.fc-txt { padding: 9px 10px 10px; font-size: 12.5px; line-height: 1.32; overflow-y: auto; flex: 1; }
+.fc-txt b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 8px 0 2px; }
+.fc-txt b:first-child { margin-top: 0; }
+.fc-hint { text-align: center; font-size: 12px; color: var(--muted); margin: -4px 0 0; }
+
+
+/* ---------- écran d'accueil : image de Mika avec les boutons dessinés ---------- */
+#s-main .home { flex: 1; min-height: 0; position: relative; overflow: hidden; background-color: #e6e6e7;
+  background-image: linear-gradient(rgba(70,90,150,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(70,90,150,.16) 1px, transparent 1px); background-size: 16px 16px; background-position: center center; }
+/* le cahier remplit tout l'écran (zoom), en rognant un peu les bords ; les zones des boutons suivent l'image */
+#s-main .hwrap { position: absolute; }
+#s-main .hpic { position: absolute; inset: 0; width: 100%; height: 100%; display: block; -webkit-user-drag: none; }
+#s-main .hbtn { position: absolute; background: transparent; border: 0; padding: 0; border-radius: 18px; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+#s-main .hbtn:active { background: rgba(0, 0, 0, 0.14); transform: translateY(1px); }
+#s-main .hbtn:focus-visible { outline: 3px solid #23305e; outline-offset: 2px; }
+
+/* ---------- fond de tous les menus et de l'accueil : feuille de cahier à grands carreaux (image de Mika) ---------- */
+.screen:not(#s-game) { background: #fff url("data:image/jpeg;base64,@@A:bg-feuille.jpg@@") left top / 914px auto repeat; }
+.screen:not(#s-game) { --bg: #ffffff; --fg: #151515; --muted: #5d5d66; --line: #151515; color: #151515; }
+#s-main .home { background: transparent !important; }
+.screen:not(#s-game) .big:not(.primary), .screen:not(#s-game) .card, .screen:not(#s-game) .carbtn, .screen:not(#s-game) .reminder,
+.screen:not(#s-game) .seg button[aria-pressed="false"] { background-color: rgba(255,255,255,0.88); }

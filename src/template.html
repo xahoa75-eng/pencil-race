@@ -1,0 +1,242 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pencil Race</title>
+<style>{{CSS}}</style>
+</head>
+<body>
+
+<!-- MENU PRINCIPAL -->
+<section class="screen on" id="s-main">
+  <div class="home">
+    <div class="hwrap">
+      <img class="hpic" alt="Pencil Race" src="data:image/webp;base64,@@A:accueil.webp@@">
+      <button class="hbtn" type="button" data-go="solo" aria-label="Solo" style="left:14.58%;top:65.36%;width:31.25%;height:10.92%"></button>
+      <button class="hbtn" type="button" data-go="multi" aria-label="Multi" style="left:50.46%;top:66.18%;width:31.25%;height:11.17%"></button>
+      <button class="hbtn" type="button" data-go="options" aria-label="Options" style="left:13.54%;top:80.11%;width:32.41%;height:11.57%"></button>
+      <button class="hbtn" type="button" data-go="rules" aria-label="Règles" style="left:49.19%;top:80.77%;width:32.06%;height:11.41%"></button>
+    </div>
+    <canvas id="ban" aria-hidden="true" hidden></canvas>
+  </div>
+</section>
+
+<!-- SOLO -->
+<section class="screen" id="s-solo">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Solo</h2>
+    <button class="pic-btn" type="button" data-go="training" aria-label="Entraînement"><img alt="" src="data:image/jpeg;base64,@@A:solo-entrainement.jpg@@"><span>Entraînement</span></button>
+    <button class="pic-btn soon" type="button" disabled aria-label="Campagne, bientôt"><img alt="" src="data:image/jpeg;base64,@@A:solo-campagne.jpg@@"><span>Campagne<small>bientôt</small></span></button>
+  </div>
+</section>
+
+<!-- ENTRAÎNEMENT : 1/2 le circuit -->
+<section class="screen" id="s-training">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Entraînement</h2>
+    <h3>Choisis ton circuit</h3>
+    <div class="cards" id="cirSolo"></div>
+  </div>
+</section>
+
+<!-- ENTRAÎNEMENT : 2/3 ta voiture -->
+<section class="screen" id="s-training2">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Entraînement</h2>
+    <p class="note" id="trCircuitName"></p>
+    <h3>Choisis ta voiture</h3>
+    <div class="cars" id="carsMine"></div>
+  </div>
+</section>
+
+<!-- ENTRAÎNEMENT : 3/4 la voiture adverse -->
+<section class="screen" id="s-training3">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Entraînement</h2>
+    <p class="note" id="trRecap"></p>
+    <h3>Choisis l'adversaire</h3>
+    <div class="cars" id="carsBot"></div>
+  </div>
+</section>
+
+<!-- ENTRAÎNEMENT : 4/4 pilotage et difficulté du bot -->
+<section class="screen" id="s-training4">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Entraînement</h2>
+    <p class="note" id="trRecap2"></p>
+    <h3>Pilotage : difficulté</h3>
+    <div class="seg imgseg" data-key="diff" data-clone="diff"></div>
+    <p class="note" id="diffDesc2"></p>
+    <div id="trBotBox">
+      <h3>Bot : niveau</h3>
+      <div class="seg imgseg" data-key="botLevel" data-clone="botLevel"></div>
+      <p class="note" id="botDesc2"></p>
+    </div>
+    <button class="launch" type="button" data-act="play-training" aria-label="Lancer"><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
+    <p class="note" id="soloRecord"></p>
+  </div>
+</section>
+
+<!-- MULTI -->
+<section class="screen" id="s-multi">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Multi</h2>
+    <h3>Circuit</h3>
+    <div class="cards" id="cirMulti"></div>
+    <h3>Nombre de joueurs</h3>
+    <div class="seg" data-key="players">
+      <button type="button" data-val="2">2 joueurs</button>
+      <button type="button" data-val="3">3 joueurs</button>
+      <button type="button" data-val="4">4 joueurs</button>
+    </div>
+    <div class="chips" id="multiPreview"></div>
+    <p class="note">Chacun son tour, sur le même téléphone. Les voitures partent toutes du même point.</p>
+    <button class="reminder" type="button" data-go="options"></button>
+    <button class="big primary" type="button" data-act="play-multi">Lancer la course</button>
+  </div>
+</section>
+
+<!-- OPTIONS -->
+<section class="screen" id="s-options">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Options</h2>
+    <h3>Pilotage : difficulté</h3>
+    <div class="seg imgseg" data-key="diff" style="--n:3">
+      <button type="button" data-val="facile" aria-label="Facile"><img alt="" src="data:image/jpeg;base64,@@A:volant-facile.jpg@@"><span>Facile</span></button>
+      <button type="button" data-val="normal" aria-label="Normal"><img alt="" src="data:image/jpeg;base64,@@A:volant-normal.jpg@@"><span>Normal</span></button>
+      <button type="button" data-val="hard" aria-label="Hard"><img alt="" src="data:image/jpeg;base64,@@A:volant-hard.jpg@@"><span>Hard</span></button>
+    </div>
+    <p class="note" id="diffDesc"></p>
+    <h3>Bot : niveau</h3>
+    <div class="seg imgseg" data-key="botLevel" style="--n:3">
+      <button type="button" data-val="facile" aria-label="Facile"><img alt="" src="data:image/jpeg;base64,@@A:casque-facile.jpg@@"><span>Facile</span></button>
+      <button type="button" data-val="normal" aria-label="Normal"><img alt="" src="data:image/jpeg;base64,@@A:casque-normal.jpg@@"><span>Normal</span></button>
+      <button type="button" data-val="hard" aria-label="Hard"><img alt="" src="data:image/jpeg;base64,@@A:casque-hard.jpg@@"><span>Hard</span></button>
+    </div>
+    <p class="note" id="botDesc"></p>
+    <h3>Sons</h3>
+    <div class="seg imgseg" data-key="sound" style="--n:2">
+      <button type="button" data-val="oui" aria-label="Son activé"><img alt="" src="data:image/jpeg;base64,@@A:son-on.jpg@@"><span>Son activé</span></button>
+      <button type="button" data-val="non" aria-label="Son coupé"><img alt="" src="data:image/jpeg;base64,@@A:son-off.jpg@@"><span>Son coupé</span></button>
+    </div>
+    <h3>Bouton GO en solo</h3>
+    <div class="seg imgseg" data-key="go" style="--n:2">
+      <button type="button" data-val="oui" aria-label="GO activé"><img alt="" src="data:image/jpeg;base64,@@A:go-on.jpg@@"><span>GO activé</span></button>
+      <button type="button" data-val="non" aria-label="Sans GO"><img alt="" src="data:image/jpeg;base64,@@A:go-off.jpg@@"><span>Sans GO</span></button>
+    </div>
+    <p class="note">En multi et en Hard, le bouton GO est toujours là : il lance le tour (et le chrono du Hard).</p>
+  </div>
+</section>
+
+<!-- RÈGLES -->
+<section class="screen" id="s-rules">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Règles</h2>
+    <button class="big" type="button" data-go="rpilotage">Pilotage <span>›</span></button>
+    <button class="big" type="button" data-go="rvoitures">Voitures <span>›</span></button>
+    <button class="big" type="button" data-go="rcircuits">Circuits <span>›</span></button>
+  </div>
+</section>
+
+<!-- RÈGLES : PILOTAGE -->
+<section class="screen" id="s-rpilotage">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Pilotage</h2>
+    <ul class="rules">
+      <li>Pose ton doigt sur l'écran et <b>tire vers l'arrière</b>, comme une fronde. Au relâché, ta voiture part dans l'autre sens.</li>
+      <li>Plus tu tires loin, plus elle va loin. Il y a un peu de hasard, comme avec une vraie pichenette.</li>
+      <li>Chaque coup laisse un trait. Tu repars de là où ta voiture s'est arrêtée.</li>
+      <li><b>Sortie de piste :</b> tu repars du bord, au point où ta voiture est sortie. Le coup est compté.</li>
+      <li><b>GO :</b> avant chaque tour, appuie sur GO quand tu es prêt. Sur les grands circuits, maintiens le bouton carte (en bas à droite de l'écran de jeu) pour voir toute la piste. Après le GO, la vue est verrouillée.</li>
+      <li>Le premier à franchir la ligne d'arrivée gagne. En multi, les joueurs qui jouent après lui ont un dernier coup : s'ils arrivent aussi, c'est égalité.</li>
+      <li><b>Hard :</b> 5 secondes par coup, à partir du GO. Temps écoulé, le coup est perdu.</li>
+      <li><b>Entraînement :</b> choisis ton circuit, ta voiture et ton adversaire, ou joue sans adversaire pour battre ton record. À toi de découvrir comment battre les autres !</li>
+    </ul>
+  </div>
+</section>
+
+<!-- RÈGLES : VOITURES -->
+<section class="screen" id="s-rvoitures">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Voitures</h2>
+    <p class="fc-hint">Touche une carte pour la retourner.</p>
+    <div class="rgrid" id="rgCars"></div>
+  </div>
+</section>
+
+<!-- RÈGLES : CIRCUITS -->
+<section class="screen" id="s-rcircuits">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Circuits</h2>
+    <p class="fc-hint">Touche une carte pour la retourner.</p>
+    <div class="rgrid" id="rgCircuits"></div>
+  </div>
+</section>
+
+<!-- JEU -->
+<section class="screen" id="s-game">
+  <div id="gh">
+    <button type="button" id="pauseBtn">☰ Menu</button>
+    <div class="info">
+      <div id="stats1" class="stats">
+        <div><span>Coups</span> <b id="shots">0</b></div>
+        <div><span>Record</span> <b id="best">–</b></div>
+      </div>
+      <div id="stats2" class="chips" hidden></div>
+    </div>
+  </div>
+  <div id="hint"></div>
+  <div class="stage">
+    <div class="cwrap">
+      <canvas id="c" aria-label="Circuit de course au crayon"></canvas>
+      <button type="button" id="goBtn" hidden><span class="gtxt" id="goTxt">GO</span><span class="gsub" id="goSub"></span></button>
+      <button type="button" id="ovBtn" hidden aria-label="Vue d'ensemble : maintenir pour voir tout le circuit">
+        <svg viewBox="0 0 32 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 31 C8 24 26 26 26 19 C26 13 9 16 9 12" fill="none" stroke="#151515" stroke-width="6.5" stroke-linecap="round"/>
+          <path d="M8 31 C8 24 26 26 26 19 C26 13 9 16 9 12" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.4 2.8"/>
+          <path d="M9 14 C9 14 3 9.5 3 6.2 A6 6 0 0 1 15 6.2 C15 9.5 9 14 9 14 Z" fill="#d62828" stroke="#151515" stroke-width="1.3" stroke-linejoin="round"/>
+          <circle cx="9" cy="6.2" r="2.2" fill="#fff"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="overlay" id="pause" role="dialog">
+  <div class="box">
+    <h2>Pause</h2>
+    <button type="button" data-act="resume">Reprendre</button>
+    <button type="button" class="alt" data-act="restart">Rejouer</button>
+    <button type="button" class="alt" data-act="sound" id="soundBtn">Sons : oui</button>
+    <button type="button" class="alt" data-act="quit">Quitter vers le menu</button>
+  </div>
+</div>
+
+<div class="overlay" id="win" role="dialog" aria-live="polite">
+  <div class="box">
+    <h2 id="winTitle">Arrivée !</h2>
+    <p id="winText"></p>
+    <p id="winBest"></p>
+    <button type="button" data-act="restart">Rejouer</button>
+    <button type="button" class="alt" data-act="quit">Menu</button>
+  </div>
+</div>
+
+<script>{{JS}}</script>
+</body>
+</html>
+
+</body></html>

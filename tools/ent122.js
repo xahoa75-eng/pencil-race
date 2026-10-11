@@ -1,0 +1,21 @@
+const {chromium}=require('playwright');
+(async()=>{
+const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
+const p=await b.newPage({viewport:{width:393,height:851},deviceScaleFactor:2});
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+await p.goto('file:///home/claude/w/v122.html');await p.waitForTimeout(1200);
+const on=()=>p.evaluate(()=>[...document.querySelectorAll('.screen.on')].map(s=>s.id).join());
+await p.evaluate(()=>document.querySelector('[data-go="solo"]').click());
+await p.click('#s-solo [data-go="training"]');
+await p.click('#cirSolo [data-circuit="canyon"]');await p.waitForTimeout(600);console.log(await on());
+await p.screenshot({path:'v122a.png'});
+await p.click('#carsMine [data-car="bille"]');await p.waitForTimeout(500);console.log(await on());
+await p.screenshot({path:'v122b.png'});
+await p.click('#carsBot [data-car="gomme"]');await p.waitForTimeout(300);
+await p.evaluate(()=>{document.querySelector('#s-training3 .panel').scrollTop=9999});await p.waitForTimeout(200);
+await p.screenshot({path:'v122c.png'});
+console.log(await p.textContent('#trRecap'),await p.textContent('#botNote'));
+await p.click('#s-training3 [data-back]');console.log(await on());
+await p.click('#s-training2 [data-back]');console.log(await on());
+await p.click('#cirSolo [data-circuit="zigzag"]');await p.click('#carsMine [data-car="normale"]');await p.click('#s-training3 [data-act="play-training"]');await p.waitForTimeout(600);console.log(await on(),errs);
+await b.close();})();
