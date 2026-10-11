@@ -642,3 +642,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v147 — Cartes des Règles : recto et verso de même taille
 - Dans Règles (Voitures et Circuits), le dos des cartes qui se retournent reçoit le même cadre crayon que le recto (titre dans le bandeau, damiers), au lieu d'un simple rectangle. Recto et verso ont donc exactement la même taille ; le texte est remis en page (plus petit, marges recalées) et rentre entièrement dans chaque carte.
 - Archive : pencil-race_v146_avant-versos.html
+
+## v148 — Nouvelles icônes de voitures
+- Les 8 icônes de voitures (Classique, Bille, Plume, Gomme, Porte-mine, Compas, Correcteur, Colle) sont remplacées par ta nouvelle planche, découpée carte par carte et débarrassée de ses anciens cadres/titres (le cadre crayon commun les entoure). Elles s'affichent dans « Ma voiture » (Entraînement) et dans Règles › Voitures. Les cartes de l'écran « Adversaire » ne changent pas. Images : `assets/images/voiture-*.jpg`.
+- Archive : pencil-race_v147_avant-voitures.html
