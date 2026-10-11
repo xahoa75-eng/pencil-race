@@ -4796,6 +4796,13 @@
           ev.push({ i: li, t: 'splash' });
         }
         return { bn: bounced, path: path, ev: ev, cut: li, res: { type: 'exit', x: lx, y: ly } };
+      } else if (power === 'bounce' && circuit.holes && circuit.rockMask && circuit.rockMask[(ny | 0) * circuit.mw + (nx | 0)] === 3) {
+        // un gouffre : la Bille ne rebondit pas dessus, elle tombe (chute mortelle)
+        if (!lite) {
+          path.push([nx, ny]);
+          ev.push({ i: li, t: 'splash', m: 'Chute mortelle !' });
+        }
+        return { bn: bounced, path: path, ev: ev, cut: li, res: { type: 'exit', x: lx, y: ly } };
       } else if (power === 'bounce' && nb < 3) {
         // jusqu'à 3 rebonds : chacun fait gagner de la force (+15 %, +20 %, +25 % de la distance restante) ;
         // si une perte est imposée (paramètre caché), elle remplace le gain

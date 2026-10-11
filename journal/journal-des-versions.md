@@ -990,3 +990,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les objectifs de coups des bots sur le Canyon ne sont pas recalculés.
 - Testé : image du circuit avant/après ; un tir de Gomme qui traversait l'espace (jusqu'au mur d'en face) est maintenant arrêté par le rocher ; aucune erreur.
 - Archive : pencil-race_v207_avant-rochers-canyon.html
+
+## v209 — Bille : plus de rebond sur les gouffres
+- La Bille ne rebondit plus sur les gouffres (chutes mortelles) : elle tombe, comme les autres voitures. Elle continue de rebondir sur les murs et les rochers. Valable sur tous les circuits qui ont des gouffres, pour le joueur comme pour les bots.
+- Testé sur le Canyon : 400 tirs de Bille au hasard, 210 chutes contre 68 avant (les autres rebondissent encore), aucune erreur.
+- Archive : pencil-race_v208_avant-bille-gouffre.html
