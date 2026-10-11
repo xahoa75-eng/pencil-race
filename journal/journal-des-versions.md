@@ -778,3 +778,10 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - La zone de ramassage ne change pas.
 - Testé : partie en ligne à 2 joueurs avec bulles forcées (pouvoirs ramassés et synchronisés).
 - Archive : pencil-race_v174_avant-bulle-taille-crayon.html
+
+## v176 — Rejoindre : connexion plus robuste
+- Signalement : « Pas de réponse… » en rejoignant avec un code juste (site GitHub Pages, vrais téléphones). Non reproduit en essai local (le bouton et la connexion marchent) ; la v172 n'a changé que l'habillage de l'écran.
+- Corrections probables : l'hôte rétablit tout seul sa liaison avec le serveur si elle tombe (téléphone passé en arrière-plan pour envoyer le code) ; plus de serveurs de connexion (STUN + relais TURN de secours) pour les réseaux 4G/box stricts.
+- « Rejoindre » se déclenche dès l'appui (avant la fermeture du clavier) et aussi avec la touche Entrée.
+- Testé : rejoindre par code avec appuis tactiles, parties en ligne à 2 et 3 joueurs (synchronisées). Les vrais réseaux ne sont pas testables d'ici.
+- Archive : pencil-race_v175_avant-rejoindre-robuste.html

@@ -6146,7 +6146,11 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 
   function onlSupported() { return typeof Peer !== 'undefined' && typeof RTCPeerConnection !== 'undefined'; }
   function onlPeerOpts() {
-    var o = { debug: 0 };
+    var o = { debug: 0, config: { iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478' }, { urls: 'stun:stun.cloudflare.com:3478' },
+      { urls: ['turn:eu-0.turn.peerjs.com:3478', 'turn:us-0.turn.peerjs.com:3478'], username: 'peerjs', credential: 'peerjsp' },
+      { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp'], username: 'openrelayproject', credential: 'openrelayproject' }
+    ] } };
     var m = /[?&]peerserver=([^&]+)/.exec(location.search);      // pour les essais : ?peerserver=localhost:9000
     if (m) { var hp = decodeURIComponent(m[1]).split(':'); o.host = hp[0]; o.port = parseInt(hp[1], 10) || 9000; o.path = '/'; o.secure = false; }
     return o;
@@ -6200,6 +6204,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
         onlineRefresh();
       });
       pr.on('connection', function (conn) { if (online === o) onlHostConn(o, conn); });
+      // si le téléphone de l'hôte est passé en arrière-plan, la liaison avec le serveur peut tomber : on la rétablit
+      pr.on('disconnected', function () { if (online === o && !pr.destroyed) setTimeout(function () { try { if (online === o && pr.disconnected && !pr.destroyed) pr.reconnect(); } catch (e) {} }, 800); });
     }
     open(0);
     onlineRefresh();
@@ -6516,7 +6522,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     var act = el.getAttribute('data-act');
     if (act === 'onl-host') onlineHost();
     else if (act === 'onl-join') { onlineLeave(); onlView = 'join'; onlStatus2Text = ''; onlineRefresh(); }
-    else if (act === 'onl-connect') onlineJoin(document.getElementById('onlInput').value);
+    else if (act === 'onl-connect') onlConnectNow();
     else if (act === 'onl-share') onlineShare();
     else if (act === 'onl-start') onlineStart();
     else if (act === 'onl-back') {
@@ -6524,6 +6530,20 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       else back();
     }
   });
+  // « Rejoindre » : déclenché dès l'appui (avant que le clavier ne se ferme et ne décale la page), ou avec la touche Entrée
+  document.addEventListener('visibilitychange', function () {
+    var o = online;
+    if (!document.hidden && o && o.role === 'host' && o.peer && o.peer.disconnected && !o.peer.destroyed) { try { o.peer.reconnect(); } catch (e) {} }
+  });
+  var onlLastConnect = 0;
+  function onlConnectNow() {
+    var t = Date.now();
+    if (t - onlLastConnect < 700) return;
+    onlLastConnect = t;
+    onlineJoin(document.getElementById('onlInput').value);
+  }
+  document.getElementById('onlConnect').addEventListener('pointerdown', function (e) { e.preventDefault(); onlConnectNow(); });
+  document.getElementById('onlInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); onlConnectNow(); } });
   document.getElementById('onlInput').addEventListener('input', function () { this.value = this.value.toUpperCase().replace(/[^A-Z]/g, ''); });
 
   onlReady = true;
