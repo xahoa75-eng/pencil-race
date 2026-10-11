@@ -154,10 +154,10 @@ canvas.thumb {
   border: 1px solid #bbb;
   border-radius: 4px;
 }
-#cirSolo, #cirMulti, #cirOnline { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
-#cirSolo .card, #cirMulti .card, #cirOnline .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
-#cirSolo canvas.thumb, #cirMulti canvas.thumb, #cirOnline canvas.thumb { width: 100%; height: auto; }
-#cirSolo .card .cname, #cirMulti .card .cname, #cirOnline .card .cname { font-size: 17px; }
+#cirSolo, #cirMulti, #cirOnline, #cirCamp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
+#cirSolo .card, #cirMulti .card, #cirOnline .card, #cirCamp .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
+#cirSolo canvas.thumb, #cirMulti canvas.thumb, #cirOnline canvas.thumb, #cirCamp canvas.thumb { width: 100%; height: auto; }
+#cirSolo .card .cname, #cirMulti .card .cname, #cirOnline .card .cname, #cirCamp .card .cname { font-size: 17px; }
 .cars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
 .carbtn {
   display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px 6px;
@@ -170,7 +170,7 @@ canvas.thumb {
 canvas.carcv { width: 100%; height: auto; aspect-ratio: 120 / 70; background: #fff; border-radius: 6px; }
 #trBotBox { display: flex; flex-direction: column; gap: 12px; }
 #trBotBox[hidden] { display: none !important; }
-#carsMine, #carsBot { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+#carsMine, #carsBot, #carsCamp { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .carbtn.pic { padding: 0; overflow: hidden; gap: 0; }
 .carbtn.pic .carpic { width: 100%; aspect-ratio: 448 / 400; background: #e2e4e8; }
 .carbtn.pic canvas.carcv { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; background: transparent; display: block; }
@@ -383,7 +383,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .seg.imgseg[data-key="players"] button.fr img { aspect-ratio: 421 / 430; object-fit: cover; }
 .fr-s { --H: 20px; --fs: 12px; align-self: stretch; }
 .fr-s canvas.thumb { display: block; width: 100%; height: auto; border: 0 !important; border-radius: 0 !important; aspect-ratio: 190 / 340; }
-#cirSolo .fr-s, #cirMulti .fr-s, #cirOnline .fr-s { --H: 28px; --fs: 17px; }
+#cirSolo .fr-s, #cirMulti .fr-s, #cirOnline .fr-s, #cirCamp .fr-s { --H: 28px; --fs: 17px; }
 .card:not([aria-pressed="true"]) { border-color: transparent; }
 .card { padding-top: 6px; }
 .carbtn.pic.fr { --H: 28px; --fs: 17px; }
@@ -465,3 +465,9 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 
 /* cartes Power-up */
 .fc-f.fr .pu-img { display: block; flex: 1; min-height: 0; width: calc(100% + 34px); max-width: none; margin-left: -20px; margin-top: 8px; object-fit: contain; }
+
+/* Campagne : circuits verrouillés / voitures verrouillées */
+.card.locked { opacity: .5; }
+.carbtn.locked { opacity: .45; cursor: not-allowed; }
+.carbtn.locked .carpic { position: relative; }
+.carbtn.locked .carpic::after { content: '🔒'; position: absolute; right: 4px; top: 2px; font-size: 18px; }

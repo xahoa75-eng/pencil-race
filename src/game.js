@@ -505,8 +505,10 @@
     for (k in settings) o[k] = settings[k];
     o.goMultiV = 2;
     if (online && online.saved) for (k in online.saved) o[k] = online.saved[k];   // en ligne, les réglages forcés ne sont jamais enregistrés
+    if (camp.saved) for (k in camp.saved) o[k] = camp.saved[k];   // idem en campagne
     try { localStorage.setItem('pr-settings', JSON.stringify(o)); } catch (e) {}
   }
+  //@@INCLUDE campaign.js@@
   // ---------- sons (vrais fichiers audio, intégrés dans la page ; WebAudio) ----------
   var Snd = (function () {
     var ac = null, master = null, bufs = {};
@@ -596,6 +598,7 @@
   }
   function oppKey() {
     if (settings.botCar === 'none') return 'none';
+    if (camp.active) return settings.botCar;      // campagne : le boss est toujours sa voiture, même face à la même
     if (settings.botCar !== settings.playerCar) return settings.botCar;
     return settings.playerCar === 'bille' ? 'normale' : 'bille';
   }
@@ -738,6 +741,7 @@
   buildCards('cirSolo');
   buildCards('cirMulti');
   buildCards('cirOnline');
+  campBuildCards();
 
   // ---------- voitures en 3/4 face (illustrations pour la fiche « Voitures ») ----------
   var CAR34 = (function () {
@@ -1190,7 +1194,7 @@
     car(g, cvs.width / 2, cvs.height / 2, -0.35, sheet.car, 1.9);
   }
   function buildCarPickers() {
-    [['carsMine', 'mine'], ['carsBot', 'bot']].forEach(function (cfg) {
+    [['carsMine', 'mine'], ['carsBot', 'bot'], ['carsCamp', 'camp']].forEach(function (cfg) {
       var box = document.getElementById(cfg[0]);
       box.innerHTML = '';
       if (cfg[1] === 'bot') {
@@ -1211,9 +1215,10 @@
         var b = document.createElement('button');
         b.type = 'button';
         b.className = 'carbtn';
-        b.setAttribute('data-carpick', cfg[1]);
+        if (cfg[1] === 'camp') b.setAttribute('data-campcar', key); else b.setAttribute('data-carpick', cfg[1]);
         b.setAttribute('data-car', key);
         b.classList.add('pic', 'fr');
+        if (cfg[1] !== 'bot' && !carUnlocked(key)) { b.classList.add('locked'); b.setAttribute('aria-disabled', 'true'); }
         b.setAttribute('data-title', sheet.name);
         var cvs = document.createElement('canvas');
         cvs.className = 'carcv';
@@ -1223,7 +1228,7 @@
         wrap.className = 'carpic';
         wrap.appendChild(cvs);
         b.appendChild(wrap);
-        CAR34.draw(cvs, (cfg[1] === 'mine' ? 'n_' : 'o_') + key, sheet);
+        CAR34.draw(cvs, (cfg[1] === 'bot' ? 'o_' : 'n_') + key, sheet);
         box.appendChild(b);
       });
     });
@@ -1269,7 +1274,7 @@
   frameIcons();
 
   // ---------- navigation ----------
-  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'rpowerup', 'game'];
+  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'rpowerup', 'campaign', 'campaign2', 'campaign3', 'game'];
   var stack = [], currentScreen = 'main';
 
   // écran d'accueil : le cahier remplit l'écran (zoom limité pour ne pas trop rogner sur un écran large)
@@ -1290,6 +1295,7 @@
   window.addEventListener('orientationchange', function () { setTimeout(fitHome, 200); });
   setTimeout(fitHome, 0);
   function show(name) {
+    if (camp.saved && !CAMP_SCREENS[name]) campRestore();
     if (currentScreen === 'online4' && name !== 'game' && name !== 'online4') onlineHostCancel();
     if (name === 'online4' && currentScreen !== 'online4') onlineHostStart();
     if (name === 'main') setTimeout(fitHome, 0);
@@ -1315,7 +1321,7 @@
     var cbs = document.querySelectorAll('.carbtn');
     for (var cb = 0; cb < cbs.length; cb++) {
       var ck = cbs[cb].getAttribute('data-car');
-      var on = cbs[cb].getAttribute('data-carpick') === 'mine' ? ck === settings.playerCar : ck === oppKey();
+      var on = cbs[cb].hasAttribute('data-campcar') ? ck === campCar : (cbs[cb].getAttribute('data-carpick') === 'mine' ? ck === settings.playerCar : ck === oppKey());
       cbs[cb].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
     var cards = document.querySelectorAll('.card');
@@ -1353,6 +1359,7 @@
     document.getElementById('oRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
     document.getElementById('diffDesc4').textContent = DIFF_DESC[settings.diff];
     document.getElementById('diffDesc5').textContent = DIFF_DESC[settings.diff];
+    campRefresh();
     // en Hard, le bouton GO est obligatoire (il lance le chrono) : l'option est grisée et bloquée sur « GO activé »
     var hard = settings.diff === 'hard';
     Array.prototype.forEach.call(document.querySelectorAll('.seg[data-key="goMulti"] button'), function (b) {
@@ -1647,6 +1654,8 @@
         });
       }
     }
+    // face à la même voiture (campagne) : l'adversaire prend une couleur différente
+    if (botMode && players[0].carKey === players[1].carKey) { players[1].car = '#1d4ed8'; players[1].color = '#1d4ed8'; players[1].on = '#ffffff'; }
     // paramètres cachés : l'avantage d'une némésis s'applique quand on joue contre elle
     if (botMode) {
       for (var hi = 0; hi < 2; hi++) {
@@ -5040,6 +5049,7 @@
       var counts = [];
       for (var k = 0; k < players.length; k++) counts.push(players[k].name + ' ' + players[k].shots);
       extra.textContent = counts.join(' · ');
+      if (botMode) campResult(finishers.length === 1 && !players[finishers[0]].bot, extra);
     }
     hud();
     setTimeout(function () { elWin.classList.add('show'); }, 450);
@@ -5333,6 +5343,7 @@
     if (el.hasAttribute('data-go')) { go(el.getAttribute('data-go')); return; }
     if (el.hasAttribute('data-back')) { back(); return; }
     if (el.hasAttribute('data-carpick')) {
+      if (el.classList.contains('locked')) return;
       if (el.getAttribute('data-carpick') === 'mine') settings.playerCar = el.getAttribute('data-car');
       else settings.botCar = el.getAttribute('data-car');
       saveSettings();
@@ -5369,6 +5380,7 @@
       paused = false;
       elPause.classList.remove('show');
       elWin.classList.remove('show');
+      if (camp.active) { stack = ['main', 'solo']; show('campaign'); return; }
       stack = [];
       show('main');
     }

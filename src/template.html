@@ -29,7 +29,42 @@
     <button class="back" type="button" data-back>‹ Retour</button>
     <h2>Solo</h2>
     <button class="pic-btn" type="button" data-go="training" aria-label="Entraînement"><img alt="" src="data:image/jpeg;base64,@@A:solo-entrainement.jpg@@"><span>Entraînement</span></button>
-    <button class="pic-btn soon" type="button" disabled aria-label="Campagne, bientôt"><img alt="" src="data:image/jpeg;base64,@@A:solo-campagne.jpg@@"><span>Campagne<small>bientôt</small></span></button>
+    <button class="pic-btn" type="button" data-go="campaign" aria-label="Campagne"><img alt="" src="data:image/jpeg;base64,@@A:solo-campagne.jpg@@"><span>Campagne</span></button>
+  </div>
+</section>
+
+<!-- CAMPAGNE : 1/3 le circuit -->
+<section class="screen" id="s-campaign">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Campagne</h2>
+    <p class="note" id="campRecap"></p>
+    <h3>Choisis ton circuit</h3>
+    <div class="cards" id="cirCamp"></div>
+  </div>
+</section>
+
+<!-- CAMPAGNE : 2/3 ta voiture -->
+<section class="screen" id="s-campaign2">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Campagne</h2>
+    <p class="note" id="campCircuitName"></p>
+    <h3>Choisis ta voiture</h3>
+    <div class="cars" id="carsCamp"></div>
+  </div>
+</section>
+
+<!-- CAMPAGNE : 3/3 le pilotage et le départ -->
+<section class="screen" id="s-campaign3">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Campagne</h2>
+    <p class="note" id="campRecap2"></p>
+    <h3>Pilotage : difficulté</h3>
+    <div class="seg imgseg" data-key="diff" data-clone="diff"></div>
+    <p class="note" id="diffDesc6"></p>
+    <button class="launch" type="button" data-act="play-campaign" aria-label="Lancer"><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
   </div>
 </section>
 

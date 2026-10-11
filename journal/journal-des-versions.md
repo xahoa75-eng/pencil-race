@@ -834,3 +834,16 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les flaques d'encre (Plume), les taches et traînées de Colle et de Correcteur, et les petites taches au-dessus des voitures collées ou effacées ne sont plus des aplats à contour noir : fond de couleur, hachures de crayon, contour gris repassé plusieurs fois et petit reflet au trait, comme les lignes des voitures.
 - L'encre reste bleu nuit, la colle jaune orangé, le correcteur blanc cassé avec hachures grises.
 - Archive : pencil-race_v184_avant-taches-dessinees.html
+
+## v186 — Campagne (première version jouable)
+- Le bouton « Campagne » du menu Solo est actif. Trois écrans dans le même style crayon : choix du circuit (les 8 sont visibles), choix de ta voiture (seules les voitures débloquées sont utilisables, les autres sont grisées avec un cadenas), puis pilotage et « Lancer ».
+- Au départ, seule La Classique est utilisable. Battre le boss d'un circuit débloque sa voiture. Boss : Zigzag → Correcteur, Serpentin → Plume, Canyon → Gomme, Escalier → Porte-mine, Maelström → Colle, Jardin → Compas, Grotte → Bille.
+- L'Usine est le niveau final : elle s'ouvre quand les 7 autres sont gagnés. Son boss n'est pas encore choisi : provisoirement, c'est une Classique bleue (miroir de la tienne) en niveau Hard. À décider par Mika.
+- Match nul = défaite : rien n'est débloqué, on recommence.
+- Niveau du boss selon la progression (proposition, à valider) : 0 à 2 voitures gagnées = Facile, 3 à 5 = Normal, 6 et plus = Hard ; niveau final toujours Hard.
+- Sauvegarde sur le téléphone (localStorage « pr-campaign »). En quittant la campagne, les réglages d'avant sont remis.
+- Les voitures verrouillées sont aussi grisées dans le choix de voiture d'Entraînement. (Les choix de voiture du multi local et en ligne ne sont pas encore verrouillés.)
+- Pour tester : ajouter ?debloquer=1 à l'adresse (tout débloqué) ou ?campagne=reset (efface la progression).
+- Images et textes de la campagne : à venir (cartes provisoires dans le style crayon).
+- Testé : écrans, circuit final verrouillé, voiture verrouillée non cliquable, victoire → déblocage enregistré et conservé après rechargement, nul → rien, miroir Classique bleu, réglages restaurés, en ligne 2 joueurs synchronisé.
+- Archive : pencil-race_v185_avant-campagne.html
