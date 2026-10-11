@@ -84,13 +84,21 @@
   </div>
 </section>
 
-<!-- MULTI -->
+<!-- MULTI : 1/4 le mode -->
 <section class="screen" id="s-multi">
   <div class="panel">
     <button class="back" type="button" data-back>‹ Retour</button>
     <h2>Multi</h2>
-    <h3>Circuit</h3>
-    <div class="cards" id="cirMulti"></div>
+    <button class="pic-btn mode-pic" type="button" data-go="online" aria-label="Jouer en ligne"><img alt="" src="data:image/jpeg;base64,@@A:jouer-en-ligne.jpg@@"></button>
+    <button class="pic-btn mode-pic loc" type="button" data-go="multi2" aria-label="Jouer en local"><img alt="" src="data:image/jpeg;base64,@@A:jouer-en-local.jpg@@"></button>
+  </div>
+</section>
+
+<!-- MULTI : 2/4 le nombre de joueurs -->
+<section class="screen" id="s-multi2">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Jouer en local</h2>
     <h3>Nombre de joueurs</h3>
     <div class="seg imgseg" data-key="players" style="--n:3">
       <button type="button" data-val="2" aria-label="2 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-2.jpg@@"><span>2 joueurs</span></button>
@@ -98,10 +106,31 @@
       <button type="button" data-val="4" aria-label="4 joueurs"><img alt="" src="data:image/jpeg;base64,@@A:joueurs-4.jpg@@"><span>4 joueurs</span></button>
     </div>
     <div class="chips" id="multiPreview"></div>
-    <button class="pic-btn onl-pic" type="button" data-go="online" aria-label="Jouer en ligne"><img alt="" src="data:image/jpeg;base64,@@A:jouer-en-ligne.jpg@@"></button>
     <p class="note">Sur ce téléphone : chacun son tour. Les voitures partent toutes du même point.</p>
-    <button class="reminder" type="button" data-go="options"></button>
-    <button class="big primary" type="button" data-act="play-multi">Lancer la course</button>
+  </div>
+</section>
+
+<!-- MULTI : 3/4 le circuit -->
+<section class="screen" id="s-multi3">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Jouer en local</h2>
+    <p class="note" id="mRecap"></p>
+    <h3>Choisis ton circuit</h3>
+    <div class="cards" id="cirMulti"></div>
+  </div>
+</section>
+
+<!-- MULTI : 4/4 le pilotage et le départ -->
+<section class="screen" id="s-multi4">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Jouer en local</h2>
+    <p class="note" id="mRecap2"></p>
+    <h3>Pilotage : difficulté</h3>
+    <div class="seg imgseg" data-key="diff" data-clone="diff"></div>
+    <p class="note" id="diffDesc3"></p>
+    <button class="launch" type="button" data-act="play-multi" aria-label="Lancer"><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
   </div>
 </section>
 

@@ -1231,7 +1231,7 @@
   frameIcons();
 
   // ---------- navigation ----------
-  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'online', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];
+  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];
   var stack = [], currentScreen = 'main';
 
   // écran d'accueil : le cahier remplit l'écran (zoom limité pour ne pas trop rogner sur un écran large)
@@ -1306,6 +1306,9 @@
       pv += '<div class="chip on" style="--c:' + PL[k].color + ';--t:' + PL[k].on + '">' + PL[k].name + '</div>';
     }
     document.getElementById('multiPreview').innerHTML = pv;
+    document.getElementById('mRecap').textContent = settings.players + ' joueurs';
+    document.getElementById('mRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
+    document.getElementById('diffDesc3').textContent = DIFF_DESC[settings.diff];
     if (onlReady) onlineRefresh();
   }
 
@@ -5261,6 +5264,7 @@
       saveSettings();
       refresh();
       if (currentScreen === 'training') go('training2');
+      else if (currentScreen === 'multi3') go('multi4');
       return;
     }
     if (el.parentNode && el.parentNode.getAttribute && el.parentNode.getAttribute('data-key')) {
@@ -5269,6 +5273,7 @@
       settings[key] = key === 'players' ? parseInt(val, 10) : val;
       saveSettings();
       refresh();
+      if (key === 'players' && currentScreen === 'multi2') go('multi3');
       return;
     }
     var act = el.getAttribute('data-act');

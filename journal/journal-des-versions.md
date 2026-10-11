@@ -662,3 +662,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v152 — Règles : menu « Pilotage » retiré
 - L'écran Règles n'affiche plus que les deux icônes Voitures et Circuits. Le bouton « Pilotage » est retiré (sa page reste dans le code, inaccessible, au cas où).
 - Archive : pencil-race_v151_avant-sans-pilotage.html
+
+## v153 — Multi en 4 écrans
+- Écran 1 (Multi) : choix du mode, deux grandes icônes encadrées « JOUER EN LIGNE » (crayons branchés) et « JOUER EN LOCAL » (nouveau dessin : main qui tient le téléphone avec les 4 crayons). Image : `assets/images/jouer-en-local.jpg`.
+- Jouer en local → écran 2 : nombre de joueurs (2/3/4) ; toucher une icône passe à l'écran suivant.
+- Écran 3 : choix du circuit, mêmes grandes cartes qu'en Solo › Entraînement ; toucher un circuit passe à l'écran suivant.
+- Écran 4 : pilotage (Facile / Normal / Hard, comme en Entraînement) et le bouton « Lancer » de l'Entraînement, qui démarre la course.
+- Le rappel des options et l'ancien bouton texte « Lancer la course » sont retirés. Jouer en ligne ne change pas.
+- Archive : pencil-race_v152_avant-multi-ecrans.html

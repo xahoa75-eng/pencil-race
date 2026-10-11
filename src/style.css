@@ -154,10 +154,10 @@ canvas.thumb {
   border: 1px solid #bbb;
   border-radius: 4px;
 }
-#cirSolo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
-#cirSolo .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
-#cirSolo canvas.thumb { width: 100%; height: auto; }
-#cirSolo .card .cname { font-size: 17px; }
+#cirSolo, #cirMulti { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; padding-bottom: 12px; scroll-snap-type: none; }
+#cirSolo .card, #cirMulti .card { flex: none; width: 100%; min-width: 0; padding: 8px 6px 10px; }
+#cirSolo canvas.thumb, #cirMulti canvas.thumb { width: 100%; height: auto; }
+#cirSolo .card .cname, #cirMulti .card .cname { font-size: 17px; }
 .cars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
 .carbtn {
   display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 2px 6px;
@@ -383,7 +383,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .seg.imgseg[data-key="players"] button.fr img { aspect-ratio: 421 / 430; object-fit: cover; }
 .fr-s { --H: 20px; --fs: 12px; align-self: stretch; }
 .fr-s canvas.thumb { display: block; width: 100%; height: auto; border: 0 !important; border-radius: 0 !important; aspect-ratio: 190 / 340; }
-#cirSolo .fr-s { --H: 28px; --fs: 17px; }
+#cirSolo .fr-s, #cirMulti .fr-s { --H: 28px; --fs: 17px; }
 .card:not([aria-pressed="true"]) { border-color: transparent; }
 .card { padding-top: 6px; }
 .carbtn.pic.fr { --H: 28px; --fs: 17px; }
@@ -407,3 +407,9 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .fc-f.fr canvas { width: calc(100% + 34px) !important; max-width: none; margin-left: -20px; flex: 1; background: transparent; }
 .carbtn.pic.fr .carpic { width: calc(100% + 24px); margin-left: -13px; }
 .carbtn.pic.fr, .fc-f.fr:has(canvas) { background: #f1f1e9 !important; }
+
+/* Multi 1/4 : les deux modes */
+.pic-btn.mode-pic { width: 80%; margin: 0 auto; flex: none; }
+.pic-btn.mode-pic.fr { --H: 34px; --fs: 22px; }
+.pic-btn.mode-pic.fr img { aspect-ratio: 494 / 454; object-fit: contain; }
+.pic-btn.mode-pic.loc.fr img { aspect-ratio: 905 / 845; }
