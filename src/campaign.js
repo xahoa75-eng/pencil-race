@@ -65,9 +65,17 @@
       fw.className = 'fr fr-s fr-boss';
       fw.setAttribute('data-title', c.name);
       fw.appendChild(im2);
+      if (camp.won[cid]) {
+        // grande coche verte dans le coin en bas à droite : boss battu
+        var mk = document.createElement('div');
+        mk.className = 'wonmark';
+        mk.setAttribute('aria-label', 'Gagné');
+        mk.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M9 34 L25 51 L56 11" fill="none" stroke="#1d4d1d" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 34 L25 51 L56 11" fill="none" stroke="#2fa84f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        fw.appendChild(mk);
+      }
       var sb = document.createElement('div');
       sb.className = 'csub';
-      sb.textContent = !open ? '🔒 Bats les 7 autres' : (camp.won[cid] ? '✓ ' : '') + (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
+      sb.textContent = !open ? '🔒 Bats les 7 autres' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
       b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);

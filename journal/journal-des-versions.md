@@ -878,3 +878,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Quand l'adversaire a déjà passé la ligne d'arrivée et que la Plume joue son dernier coup (dernière chance), elle ne pose plus de flaque : elle la posait devant une voiture déjà arrivée, ce qui n'avait aucun sens (et pouvait tomber au-delà de la ligne). Valable en campagne, en entraînement, en local et en ligne (pour les adversaires encore en course, rien ne change).
 - Testé : adversaire encore en course → 1 flaque posée ; adversaire arrivé → 0 flaque (3 circuits) ; parties de bots sur les 8 circuits : jamais plus de 2 flaques ni de flaques superposées ; en ligne 2 joueurs avec Plume, synchronisé.
 - Archive : pencil-race_v190_avant-plume-fin.html
+
+## v192 — Campagne : grande coche verte sur les boss battus
+- Un boss battu reçoit une grande coche verte (tracé au crayon, contour vert foncé) dans le coin en bas à droite de sa carte. L'ancienne petite coche dans le texte sous la carte est supprimée (on la voyait à peine).
+- Testé : 7 boss battus + final → 8 coches ; aucune coche sur un boss non battu.
+- Archive : pencil-race_v191_avant-coche.html
