@@ -805,3 +805,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Ces pouvoirs n'existent qu'en bulle : aucune voiture ne les a, ils ne touchent ni le solo ni le local.
 - Testé : échange de place (le joueur arrière prend la place du premier, puis rien s'il est déjà premier), force ×2, parties en ligne à 3 joueurs avec chaque pouvoir forcé et avec bulles forcées (synchronisé).
 - Archive : pencil-race_v178_avant-2-powerups.html
+
+## v180 — Règles : bouton Power-up
+- Nouveau bouton « Power-up » dans le menu Règles (sous Circuits), avec le dessin du copeau de taille-crayon dans le cadre habituel. Il ouvre un écran « Power-up » vide pour l'instant.
+- Archive : pencil-race_v179_avant-bouton-powerup.html
