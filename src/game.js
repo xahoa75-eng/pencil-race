@@ -1408,7 +1408,7 @@
   var elPause = document.getElementById('pause');
 
   function goRequired() {
-    if (online) return false;   // en ligne : pas de bouton GO (seul ton tour te laisse viser)
+    if (online) return settings.goMulti !== 'non';   // en ligne : le GO est au choix de l'hôte
     var soloGo = settings.diff === 'hard' || settings.go === 'oui';
     if (botMode) return !(players[cur] && players[cur].bot) && soloGo;
     if (n > 1) return settings.goMulti !== 'non' || settings.diff === 'hard';   // multi : bouton GO au choix (toujours là en Hard pour le chrono)
@@ -2025,13 +2025,13 @@
     var ov = document.getElementById('ovBtn');
     var gb = document.getElementById('goBtn');
     var p = players[cur];
-    var sig = [req, big, phase, cur, !!anim, finished, paused, ovHeld, aiming, n].join('|');
+    var sig = [req, big, phase, cur, !!anim, finished, paused, ovHeld, aiming, n, online ? online.me : -1].join('|');
     if (sig === barSig) return;
     barSig = sig;
     ov.hidden = !big;
     ov.disabled = !(ovAllowed() || ovHeld);
     ov.classList.toggle('held', ovHeld);
-    var showGo = req && phase === 'pre' && !anim && !finished && !paused;
+    var showGo = req && phase === 'pre' && !anim && !finished && !paused && !(online && online.me !== cur);   // en ligne : le GO n'apparaît que chez le joueur dont c'est le tour
     gb.hidden = !showGo;
     gb.classList.toggle('peek', ovHeld);
     if (showGo) {

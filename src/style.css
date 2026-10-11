@@ -439,3 +439,6 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .fr.frlink .frlink-txt { display: block !important; font: 400 19px/1.25 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; color: #3a3a3e; padding: 12px 14px 14px; }
 .fr.frlink:active { transform: translateY(1px); }
 #s-online4 .launch.fr { width: 46%; margin: 4px auto 0; --H: 26px; --fs: 16px; }
+/* En ligne : les icônes du nombre de joueurs et du GO ont la même taille (comme en local) */
+#s-online2 .seg.imgseg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#s-online2 .seg.imgseg button.fr img { aspect-ratio: 421 / 430 !important; object-fit: cover; }

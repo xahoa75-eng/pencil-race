@@ -23,11 +23,11 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const host = pages[0];
   await click(host, '[data-go="multi"]');
   await click(host, '[data-go="online"]');
-  await host.evaluate(c => { document.querySelector('[data-circuit="' + c + '"].card') && document.querySelector('.screen.on [data-circuit="' + c + '"]').click(); }, circuit);
-  await host.evaluate(n => document.querySelector('#onl-host .seg [data-val="' + n + '"]').click(), N);
-  await click(host, '[data-act="onl-host"]');
-  await host.evaluate(c => { document.querySelector('#s-online [data-circuit="' + c + '"]').click(); }, circuit);
-  await host.evaluate(n => document.querySelector('#onl-host .seg [data-val="' + n + '"]').click(), N);
+  await click(host, '#onl-choose [data-go="online2"]');
+  await host.evaluate(n => document.querySelector('#s-online2 .seg[data-key="players"] [data-val="' + n + '"]').click(), N);
+  await host.evaluate(g => document.querySelector('#s-online2 .seg[data-key="goMulti"] [data-val="' + g + '"]').click(), process.env.ONL_GO || 'non');
+  await click(host, '#s-online2 .valider');
+  await host.evaluate(c => document.querySelector('#s-online3 [data-circuit="' + c + '"]').click(), circuit);
   await host.waitForFunction(() => /^[A-Z]{4}$/.test(document.getElementById('onlCode').textContent), null, { timeout: 15000 });
   const code = await host.evaluate(() => document.getElementById('onlCode').textContent);
   console.log('code', code);
@@ -35,7 +35,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const g = pages[i];
     await click(g, '[data-go="multi"]');
     await click(g, '[data-go="online"]');
-    await click(g, '[data-act="onl-join"]');
+    await click(g, '#onl-choose [data-act="onl-join"]');
     await g.fill('#onlInput', code.toLowerCase());
     await click(g, '[data-act="onl-connect"]');
     await g.waitForFunction(() => /Tu es/.test(document.getElementById('onlStatus2').textContent), null, { timeout: 20000 });
@@ -56,7 +56,16 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const cur = s[0].cur;
     const pg = pages[cur];
     const ang0 = await pg.evaluate(() => window.__T.circuitNow().ang0);
-    if (!(await pg.evaluate(() => document.getElementById('goBtn').hidden))) { console.log('ERREUR : le bouton GO est visible'); bad++; }
+    const goVisible = !(await pg.evaluate(() => document.getElementById('goBtn').hidden));
+    if (process.env.ONL_GO === 'oui') {
+      // GO activé : seul le joueur dont c'est le tour doit voir le bouton, et il doit l'ouvrir
+      const others = await Promise.all(pages.map((q, i) => i === cur ? Promise.resolve(true) : q.evaluate(() => document.getElementById('goBtn').hidden)));
+      if (!goVisible) { console.log('ERREUR : le bouton GO manque pour le joueur', cur); bad++; }
+      if (others.some(h => h === false)) { console.log('ERREUR : le bouton GO est visible chez un autre joueur'); bad++; }
+      await pg.evaluate(() => document.getElementById('goBtn').click());
+      await sleep(250);
+      if (!(await pg.evaluate(() => document.getElementById('goBtn').hidden))) { console.log('ERREUR : le GO ne disparaît pas après appui'); bad++; }
+    } else if (goVisible) { console.log('ERREUR : le bouton GO est visible'); bad++; }
     if (k < 2 && process.env.FORCE_BUB) await Promise.all(pages.map(q => q.evaluate(a => { const T = window.__T, P = T.S().players[T.S().cur], b = T.B(); b.length = 0; b.push({ id: 900 + T.S().cur, x: P.x + Math.cos(a) * 45, y: P.y + Math.sin(a) * 45, popped: false }); }, ang0)));
     if (process.env.FORCE_PU) await Promise.all(pages.map(q => q.evaluate(k => { const P = window.__T.S().players; P.forEach(x => { x.pu = k; }); }, ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle'][k % 6])));
     const box = await pg.evaluate(() => { const r = document.getElementById('c').getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; });

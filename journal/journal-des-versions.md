@@ -733,3 +733,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v167 — En ligne : choix du circuit en vertical
 - L'écran de choix du circuit de « Créer une partie » utilise la même grille verticale (2 colonnes, grandes cartes) que Solo › Entraînement et Jouer en local, au lieu du carrousel horizontal.
 - Archive : pencil-race_v166_avant-circuits-verticaux.html
+
+## v168 — En ligne : l'option « bouton GO »
+- L'écran du nombre de joueurs de « Créer une partie » a la même option « Bouton GO en multi » qu'en local (mêmes icônes, même taille). C'est l'hôte qui choisit : son réglage est envoyé aux invités au lancement de la course.
+- En ligne avec GO, le bouton n'apparaît que chez le joueur dont c'est le tour.
+- Testé avec le serveur local : 2 et 3 joueurs, avec GO et sans GO, tout reste synchronisé (tirs, bulles, pouvoirs).
+- Archive : pencil-race_v167_avant-go-en-ligne.html
