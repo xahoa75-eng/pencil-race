@@ -486,3 +486,5 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #campResetAsk[hidden], #campResetBox [hidden] { display: none !important; }
 #campResetBox .resetrow { display: flex; gap: 12px; }
 #campResetBox .resetrow .fr { flex: 1; width: auto; min-width: 0; }
+#campLevelBox { display: flex; flex-direction: column; gap: 12px; }
+#campLevelBox[hidden] { display: none !important; }

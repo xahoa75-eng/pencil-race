@@ -940,3 +940,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le bouton « Remettre la campagne à zéro » et la confirmation (« Es-tu certain ? », Oui / Non) reprennent les cadres au crayon du reste du jeu (bandeau avec damier et titre, texte à la main), comme les boutons « Valider » et « Rejoindre ». Le fonctionnement ne change pas.
 - Testé : captures du bouton seul et de la confirmation, sans erreur.
 - Archive : pencil-race_v199_avant-da-remise-a-zero.html
+
+## v201 — Campagne : choix du niveau lisible
+- Le bloc « Adversaire : niveau » (écran de choix de la voiture) n'avait plus d'espace entre le titre, les 3 casques et le texte : tout se collait aux carreaux. Il reprend maintenant le même espacement que le choix du niveau de bot de l'entraînement.
+- Testé : capture de l'écran, titre, casques et texte bien séparés.
+- Archive : pencil-race_v200_avant-espacement-niveau.html
