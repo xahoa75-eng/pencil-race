@@ -945,3 +945,10 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le bloc « Adversaire : niveau » (écran de choix de la voiture) n'avait plus d'espace entre le titre, les 3 casques et le texte : tout se collait aux carreaux. Il reprend maintenant le même espacement que le choix du niveau de bot de l'entraînement.
 - Testé : capture de l'écran, titre, casques et texte bien séparés.
 - Archive : pencil-race_v200_avant-espacement-niveau.html
+
+## v202 — Plume : une dernière flaque même sur le tir qui franchit la ligne d'arrivée
+- Avant, la Plume ne posait rien sur le tir qui lui faisait passer la ligne d'arrivée. Maintenant elle pose toujours une dernière flaque, dans tous les modes (campagne, entraînement, local, en ligne) : un peu avant la ligne, sur son passage.
+- S'il n'y a pas la place (piste étroite ou flaque précédente juste derrière), la flaque est décalée, puis un peu plus petite, puis posée plus loin en arrière sur la piste ; elle ne chevauche jamais une autre flaque et la Plume garde au maximum 2 flaques.
+- Inchangé : quand l'adversaire a déjà passé la ligne et que la Plume joue sa dernière chance sans arriver, elle ne pose pas de flaque (v191).
+- Testé : 4 parties sur chacun des 8 circuits, la Plume arrive à chaque fois avec sa flaque finale posée ; jamais plus de 2 flaques.
+- Archive : pencil-race_v201_avant-plume-ligne.html

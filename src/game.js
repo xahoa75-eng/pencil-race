@@ -5171,6 +5171,35 @@
       p.shots++;
       p.done = true;
       anim = null;
+      // la Plume pose toujours sa dernière flaque, même sur le tir qui franchit la ligne d'arrivée (un peu avant la ligne, sur son passage)
+      if (p.power === 'plume' && !p.erased) {
+        var pe = a.path[a.path.length - 1], pq = a.path[Math.max(0, a.path.length - 2)];
+        var pdx = pe[0] - pq[0], pdy = pe[1] - pq[1], pl = Math.hypot(pdx, pdy) || 1;
+        var px = -pdy / pl, py = pdx / pl, pw = circuit.puddleR + 14, placed = false;
+        var offs = [30, 60, 90, 15, 120, 150, 200], shifts = [0, 1, -1, 2, -2], rfs = [1, 0.75, 0.55];
+        // s'il n'y a pas la place pour une flaque normale (piste étroite, autres flaques), on en pose une un peu plus petite
+        for (var rf = 0; rf < rfs.length && !placed; rf++) {
+          var pr = circuit.puddleR * rfs[rf];
+          for (var fo = 0; fo < offs.length && !placed; fo++) {
+            var fb = backPoint(a.path, a.cum, circuit.puddleR + PUDDLE_GAP + offs[fo]);
+            for (var fs2 = 0; fs2 < shifts.length && !placed; fs2++) {
+              var fx = fb[0] + px * pw * shifts[fs2], fy = fb[1] + py * pw * shifts[fs2];
+              if (inTrack(fx, fy) && puddleOK(fx, fy, pr, p.id)) { dropPuddle(p, rf ? { x: fx, y: fy, r: pr } : [fx, fy]); placed = true; }
+            }
+          }
+        }
+        // encore pas de place sur son tir (flaque précédente juste derrière elle) : on la pose plus loin en arrière, sur la piste
+        if (!placed && !circuit.field) {
+          var se = projectS(circuit, pe[0], pe[1]);
+          for (var bs = 60; bs <= 520 && !placed; bs += 40) {
+            var bp = posAtS(Math.max(0, se - bs));
+            for (var rf2 = 0; rf2 < rfs.length && !placed; rf2++) {
+              var pr2 = circuit.puddleR * rfs[rf2];
+              if (inTrack(bp[0], bp[1]) && puddleOK(bp[0], bp[1], pr2, p.id)) { dropPuddle(p, rf2 ? { x: bp[0], y: bp[1], r: pr2 } : [bp[0], bp[1]]); placed = true; }
+            }
+          }
+        }
+      }
       finishers.push(cur);
       if (cur >= n - 1) {
         finished = true;
