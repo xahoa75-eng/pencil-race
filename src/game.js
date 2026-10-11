@@ -720,14 +720,14 @@
       cv2.className = 'thumb';
       cv2.width = 190;
       cv2.height = 340;
-      var nm = document.createElement('div');
-      nm.className = 'cname';
-      nm.textContent = c.name;
+      var fw = document.createElement('div');
+      fw.className = 'fr fr-s';
+      fw.setAttribute('data-title', c.name);
+      fw.appendChild(cv2);
       var sb = document.createElement('div');
       sb.className = 'csub';
       sb.textContent = c.sub;
-      b.appendChild(cv2);
-      b.appendChild(nm);
+      b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);
       drawThumb(cv2, c);
@@ -1111,6 +1111,8 @@
         var cv = document.createElement('canvas');
         cv.width = 448; cv.height = 400;
         f.appendChild(cv);
+        f.classList.add('fr');
+        f.setAttribute('data-title', sheet.name);
         CAR34.draw(cv, 'n_' + key, sheet);
         nameBar(f, sheet.name, null, sheet.color, sheet.on);
       }, function (b) {
@@ -1129,6 +1131,8 @@
         var cv = document.createElement('canvas');
         cv.width = 190; cv.height = 340;
         f.appendChild(cv);
+        f.classList.add('fr');
+        f.setAttribute('data-title', c.name);
         drawThumb(cv, c);
         nameBar(f, c.name, c.sub, '#151515', '#ffffff');
       }, function (b) {
@@ -1176,7 +1180,8 @@
         b.className = 'carbtn';
         b.setAttribute('data-carpick', cfg[1]);
         b.setAttribute('data-car', key);
-        b.classList.add('pic');
+        b.classList.add('pic', 'fr');
+        b.setAttribute('data-title', sheet.name);
         var cvs = document.createElement('canvas');
         cvs.className = 'carcv';
         cvs.width = 448;
@@ -1186,12 +1191,6 @@
         wrap.appendChild(cvs);
         b.appendChild(wrap);
         CAR34.draw(cvs, (cfg[1] === 'mine' ? 'n_' : 'o_') + key, sheet);
-        var nm = document.createElement('div');
-        nm.className = 'carname';
-        nm.style.background = sheet.color;
-        nm.style.color = sheet.on;
-        nm.textContent = sheet.name;
-        b.appendChild(nm);
         box.appendChild(b);
       });
     });
@@ -1205,6 +1204,31 @@
     d.style.cssText = src.style.cssText;
     Array.prototype.forEach.call(src.children, function (b) { d.appendChild(b.cloneNode(true)); });
   });
+
+  // chaque icône-image reçoit le cadre au crayon, son nom dans le bandeau
+  function frameIcons() {
+    Array.prototype.forEach.call(document.querySelectorAll('.seg.imgseg button:not(.fr)'), function (b) {
+      var sp = b.querySelector('span');
+      b.setAttribute('data-title', sp ? sp.textContent : (b.getAttribute('aria-label') || ''));
+      b.classList.add('fr');
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.pic-btn:not(.fr)'), function (b) {
+      var sp = b.querySelector('span'), t = b.getAttribute('aria-label') || '';
+      if (sp) {
+        t = '';
+        for (var i = 0; i < sp.childNodes.length; i++) if (sp.childNodes[i].nodeType === 3) t += sp.childNodes[i].textContent;
+        var sm = sp.querySelector('small');
+        if (sm) t += ' · ' + sm.textContent;
+      }
+      b.setAttribute('data-title', t);
+      b.classList.add('fr');
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.launch:not(.fr)'), function (b) {
+      b.setAttribute('data-title', 'Lancer');
+      b.classList.add('fr');
+    });
+  }
+  frameIcons();
 
   // ---------- navigation ----------
   var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'online', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];

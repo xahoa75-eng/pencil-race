@@ -624,3 +624,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v143 — Nouvel écran d'accueil
 - L'image d'accueil est remplacée par la nouvelle (titre en lettres de crayon, 4 voitures, 4 gommes Solo / Multi / Options / Règles). Le fond de papier de l'image est rendu transparent (détection du papier, ombres conservées en transparence douce) : on voit les carreaux derrière. Les 4 zones de clic sont recalées sur les nouvelles gommes (testées : Solo, Multi, Options et Règles ouvrent le bon écran). `assets/images/accueil-v2.webp` ; l'ancienne `accueil.webp` reste dans le dépôt.
 - Archive : pencil-race_v142_avant-accueil2.html
+
+## v144 — Le cadre crayon sur toutes les icônes
+- Le cadre dessiné (bandeau en haut avec damier en haut à gauche, damier en bas à droite) entoure maintenant TOUTES les icônes : circuits (Entraînement, Multi, Multi en ligne, Règles), voitures, nombre de joueurs, options (pilotage, bot, sons, GO), « Jouer en ligne », Entraînement / Campagne, « Lancer » et les cartes des règles. Le cadre est découpé en 9 morceaux : les coins gardent leur forme et seul le milieu s'étire, donc pas de déformation visible.
+- Le titre de chaque icône est écrit dans le bandeau, dans le même style que « JOUER EN LIGNE » (police Patrick Hand SC embarquée). Les anciens petits textes sous/dans les cartes sont retirés ; la sélection est un anneau noir.
+- Images recadrées pour retirer leurs anciens cadres (circuits, joueurs, jouer en ligne). Fichiers : `assets/images/cadre.png`, `patrick-hand-sc.woff2`.
+- Archive : pencil-race_v143_avant-cadres.html

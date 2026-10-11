@@ -356,3 +356,41 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 /* bouton « Jouer en ligne » : le dessin porte déjà le texte */
 .pic-btn.onl-pic { width: 50%; margin: 0 auto; flex: none; }
 .pic-btn.onl-pic img { aspect-ratio: 544 / 568; object-fit: contain; }
+
+/* ---------- cadre au crayon autour de toutes les icônes (bandeau du haut = titre) ---------- */
+@font-face { font-family: 'PRHand'; src: url(data:font/woff2;base64,@@A:patrick-hand-sc.woff2@@) format('woff2'); font-display: swap; }
+.fr {
+  --H: 26px; --fs: 16px;
+  position: relative; box-sizing: border-box;
+  border-style: solid !important; border-color: transparent !important;
+  border-width: var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) !important;
+  border-image: url(data:image/png;base64,@@A:cadre.png@@) 67 48 44 62 / var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) stretch !important;
+  border-radius: 0 !important; background: #f6f3ea !important; overflow: visible !important;
+  box-shadow: none !important; padding: 0 !important; margin: 0;
+}
+.fr::before {
+  content: attr(data-title); position: absolute; z-index: 2; pointer-events: none;
+  top: calc(var(--H) * -1); height: var(--H); left: calc(var(--H) * -.925); right: calc(var(--H) * -.72);
+  box-sizing: border-box; padding-left: calc(var(--H) * .925); padding-right: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font: 400 var(--fs)/1 'PRHand', 'Patrick Hand SC', 'Comic Sans MS', cursive, sans-serif; letter-spacing: .06em; text-transform: uppercase;
+  color: #3a3a3e; white-space: nowrap; overflow: hidden;
+}
+.fr[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--fg), 0 0 0 5px var(--bg) !important; }
+.fr > span, .fr > .cname { display: none !important; }
+.seg.imgseg button.fr { --H: 22px; --fs: 13px; }
+.seg.imgseg button.fr img { aspect-ratio: auto; }
+.seg.imgseg[data-key="players"] button.fr img { aspect-ratio: 421 / 430; object-fit: cover; }
+.fr-s { --H: 20px; --fs: 12px; align-self: stretch; }
+.fr-s canvas.thumb { display: block; width: 100%; height: auto; border: 0 !important; border-radius: 0 !important; aspect-ratio: 190 / 340; }
+#cirSolo .fr-s { --H: 28px; --fs: 17px; }
+.card:not([aria-pressed="true"]) { border-color: transparent; }
+.card { padding-top: 6px; }
+.carbtn.pic.fr { --H: 28px; --fs: 17px; }
+.pic-btn.fr, .launch.fr { --H: 44px; --fs: 28px; }
+.pic-btn.onl-pic.fr { --H: 34px; --fs: 22px; width: 62%; }
+.pic-btn.onl-pic.fr img { aspect-ratio: 494 / 454; }
+.pic-btn.fr img, .launch.fr img { border-radius: 0; }
+.pic-btn.soon.fr { opacity: .85; }
+.fc-f.fr { --H: 28px; --fs: 16px; }
+.fc-f.fr .fc-name { display: none; }
