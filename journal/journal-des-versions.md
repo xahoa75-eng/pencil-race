@@ -861,3 +861,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Même règle pour la flaque posée juste derrière la Plume, et pour les circuits à champ ouvert (Jardin).
 - Testé sur les 8 circuits (Plume contre Classique et Colle, 6 parties par circuit, toutes terminées) : écart minimum entre deux flaques de 12,2 ; jamais plus de 2 flaques ; en ligne 2 joueurs avec Plume, synchronisé.
 - Archive : pencil-race_v187_avant-sans-superposition.html
+
+## v189 — Campagne : crayons boss et Agrafeuse
+- Les cartes de la campagne montrent maintenant les crayons boss de ton image à la place des photos de circuit (reconnus par leur couleur) : vert = Bille (Grotte), rose = Gomme (Canyon), gris = Compas (Jardin), noir = Plume (Serpentin), jaune = Colle (Maelström), blanc = Correcteur (Zigzag), violet = Porte-mine (Escalier), rouge en flammes = l'Agrafeuse (Usine).
+- Fond homogénéisé : fond de papier retiré (y compris entre le bras et le corps), même échelle pour les 8, pieds alignés, posés sur le fond crème des cadres de voitures. Le nom du circuit reste dans le bandeau du cadre.
+- L'Usine est maintenant le dernier choix de la liste.
+- Le boss final est l'Agrafeuse (« Niveau final · L'Agrafeuse »). Son pouvoir viendra plus tard : en attendant, elle roule comme une Classique bleue en niveau Hard, et son nom s'affiche en course et sur l'écran de fin.
+- Outil : tools/boss_images.py refait les 8 images à partir de ton image d'origine.
+- Archive : pencil-race_v188_avant-crayons-boss.html

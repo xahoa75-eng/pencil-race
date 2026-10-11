@@ -3,6 +3,18 @@
   // (les adversaires sont choisis par Mika ; l'Usine est le niveau final : il s'ouvre quand les 7 autres sont gagnés)
   var CAMP_BOSS = { zigzag: 'correcteur', serpentin: 'plume', canyon: 'gomme', escalier: 'portemine', maelstrom: 'colle', jardin: 'compas', grotte: 'bille', usine: 'normale' };
   var CAMP_FINAL = 'usine';
+  // le boss final est l'Agrafeuse (son pouvoir viendra plus tard : pour l'instant elle roule comme une Classique bleue, niveau Hard)
+  var CAMP_BOSS_NAME = { usine: "L'Agrafeuse" };
+  var CAMP_BOSS_IMG = {
+    correcteur: 'data:image/webp;base64,@@A:boss-correcteur.webp@@', plume: 'data:image/webp;base64,@@A:boss-plume.webp@@',
+    gomme: 'data:image/webp;base64,@@A:boss-gomme.webp@@', portemine: 'data:image/webp;base64,@@A:boss-portemine.webp@@',
+    colle: 'data:image/webp;base64,@@A:boss-colle.webp@@', compas: 'data:image/webp;base64,@@A:boss-compas.webp@@',
+    bille: 'data:image/webp;base64,@@A:boss-bille.webp@@', agrafeuse: 'data:image/webp;base64,@@A:boss-agrafeuse.webp@@'
+  };
+  function campBossName(cid) { return CAMP_BOSS_NAME[cid] || CARS[CAMP_BOSS[cid]].name; }
+  function campBossImg(cid) { return CAMP_BOSS_IMG[cid === CAMP_FINAL ? 'agrafeuse' : CAMP_BOSS[cid]]; }
+  // l'adversaire de la campagne porte le nom de son boss (l'Agrafeuse pour le niveau final)
+  function campBotName(opp) { return camp.active && camp.circuit === CAMP_FINAL ? CAMP_BOSS_NAME[CAMP_FINAL] : opp.name; }
   // niveau du bot selon le nombre de voitures déjà débloquées (sans la Classique) ; le niveau final est toujours Hard
   function campLevel(cid) {
     if (cid === CAMP_FINAL) return 'hard';
@@ -37,28 +49,28 @@
     var box = document.getElementById('cirCamp');
     if (!box) return;
     box.innerHTML = '';
-    ORDER.forEach(function (cid) {
-      var c = CIRCUITS[cid], boss = CARS[CAMP_BOSS[cid]];
+    var order = ORDER.filter(function (cid) { return cid !== CAMP_FINAL; }).concat([CAMP_FINAL]);
+    order.forEach(function (cid) {
+      var c = CIRCUITS[cid];
       var open = campOpen(cid);
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'card' + (open ? '' : ' locked');
       b.setAttribute('data-camp', cid);
-      var cv2 = document.createElement('canvas');
-      cv2.className = 'thumb';
-      cv2.width = 190;
-      cv2.height = 340;
+      var im2 = document.createElement('img');
+      im2.className = 'bossimg';
+      im2.alt = '';
+      im2.src = campBossImg(cid);
       var fw = document.createElement('div');
-      fw.className = 'fr fr-s';
+      fw.className = 'fr fr-s fr-boss';
       fw.setAttribute('data-title', c.name);
-      fw.appendChild(cv2);
+      fw.appendChild(im2);
       var sb = document.createElement('div');
       sb.className = 'csub';
-      sb.textContent = !open ? '🔒 Bats les 7 autres' : (cid === CAMP_FINAL ? 'Niveau final' : 'Contre ' + boss.name) + (camp.won[cid] ? ' · ✓ gagné' : '');
+      sb.textContent = !open ? '🔒 Bats les 7 autres' : (camp.won[cid] ? '✓ ' : '') + (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
       b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);
-      drawThumb(cv2, c);
     });
     var rc = document.getElementById('campRecap');
     if (rc) rc.textContent = 'Voitures débloquées : ' + (1 + campWonCount()) + ' sur 8. Choisis un circuit : bats son adversaire pour gagner sa voiture.';
@@ -66,11 +78,10 @@
   function campRefresh() {
     var el = document.getElementById('campCircuitName');
     if (el && camp.circuit) {
-      var boss = CARS[CAMP_BOSS[camp.circuit]];
-      el.textContent = CIRCUITS[camp.circuit].name + ' · adversaire : ' + boss.name + ' (niveau ' + BOT_LEVEL[campLevel(camp.circuit)] + ')';
+      el.textContent = CIRCUITS[camp.circuit].name + ' · adversaire : ' + campBossName(camp.circuit) + ' (niveau ' + BOT_LEVEL[campLevel(camp.circuit)] + ')';
     }
     var rc = document.getElementById('campRecap2');
-    if (rc && camp.circuit) rc.textContent = 'Circuit : ' + CIRCUITS[camp.circuit].name + ' · Ta voiture : ' + CARS[campCar].name + ' · Adversaire : ' + CARS[CAMP_BOSS[camp.circuit]].name;
+    if (rc && camp.circuit) rc.textContent = 'Circuit : ' + CIRCUITS[camp.circuit].name + ' · Ta voiture : ' + CARS[campCar].name + ' · Adversaire : ' + campBossName(camp.circuit);
     var dd = document.getElementById('diffDesc6');
     if (dd) dd.textContent = DIFF_DESC[settings.diff];
     var cbs = document.querySelectorAll('#carsCamp .carbtn');

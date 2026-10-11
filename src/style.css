@@ -471,3 +471,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .carbtn.locked { opacity: .45; cursor: not-allowed; }
 .carbtn.locked .carpic { position: relative; }
 .carbtn.locked .carpic::after { content: '🔒'; position: absolute; right: 4px; top: 2px; font-size: 18px; }
+
+/* Campagne : crayons boss à la place des photos de circuit */
+.fr-boss { background: #f1f1e9 !important; }
+.fr-boss img.bossimg { display: block; width: calc(100% + 34px); margin-left: -20px; height: auto; aspect-ratio: 340 / 360; max-width: none; }

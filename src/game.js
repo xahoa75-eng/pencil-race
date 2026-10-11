@@ -1642,7 +1642,7 @@
     }
     for (var i = 0; i < n; i++) {
       if (botMode) {
-        players.push(i === 0 ? mk(0, mine, 'Toi', false) : mk(1, opp, opp.name, true));
+        players.push(i === 0 ? mk(0, mine, 'Toi', false) : mk(1, opp, campBotName(opp), true));
       } else if (n === 1) {
         var solo = mk(0, mine, 'Solo', false);
         // en solo, chaque voiture trace dans sa couleur (la Classique en rouge, le Correcteur en blanc crème)
