@@ -4716,7 +4716,7 @@
     var path = lite ? null : [[x, y]];
     var ev = lite ? null : [];
     var onTrack = true, lx = x, ly = y, li = 0, bounced = false, nb = 0, guard = 0, hit = {};
-    var power = (p.erased && p.power !== 'bounce') ? null : p.power;   // pouvoir effacé : elle joue comme une Classique (la Bille garde ses rebonds, sans bonus)
+    var power = p.erased ? null : p.power;   // pouvoir effacé (Correcteur) : elle joue comme une Classique, la Bille n'a plus ses rebonds
     // si elle part déjà de l'intérieur d'une flaque, celle-ci ne l'arrête pas
     var pi = puddleAt(p, x, y, hit);
     if (pi >= 0) hit[pi] = 1;

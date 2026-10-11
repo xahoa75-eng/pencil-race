@@ -1002,3 +1002,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Image d'origine petite (≈ 400 px) : les grandes icônes sont un peu agrandies ; pour les stores il faudra l'image en 1024 px.
 - Testé : les 3 balises d'icône sont présentes, manifest valide, aucune erreur.
 - Archive : pencil-race_v209_avant-icone.html
+
+## v211 — Correcteur : efface aussi les rebonds de la Bille
+- Quand la Bille est touchée par le Correcteur, son pouvoir est effacé en entier : plus de bonus de force, et plus aucun rebond (elle joue comme une Classique, un mur la bloque). Avant, elle gardait ses rebonds sans bonus.
+- Valable pour le joueur, les bots et la trajectoire visible.
+- Testé sur le Canyon : 300 tirs de Bille au hasard, 231 avec rebond normalement, 0 quand elle est effacée ; aucune erreur.
+- Archive : pencil-race_v210_avant-correcteur-bille.html
