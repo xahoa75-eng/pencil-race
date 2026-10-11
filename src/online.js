@@ -171,6 +171,8 @@
       o.hostConn = rc;
       wire(rc);
       try { if (old) old.close(); } catch (e) {}
+      o.status = 'Liaison directe impossible, j’essaie par un autre chemin…';
+      onlineRefresh();
       onlSend(rc, { t: 'hello' });
     }
     pr.on('open', function () {
@@ -186,7 +188,7 @@
       o.hostConn = c;
       c.on('open', function () { if (online === o && o.hostConn === c) onlSend(c, { t: 'hello' }); });
       wire(c);
-      setTimeout(useRelay, 6000);      // pas de réponse en direct au bout de 6 s : on passe par le serveur
+      setTimeout(useRelay, 4000);      // pas de réponse en direct au bout de 4 s : on passe par le serveur
     });
     onlineRefresh();
   }

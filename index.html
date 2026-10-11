@@ -627,6 +627,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       <div class="chips" id="onlChips2"></div>
       <p class="note" id="onlStatus2"></p>
     </div>
+    <p class="note" style="text-align:center;opacity:.5;font-size:12px">version 178</p>
   </div>
 </section>
 
@@ -6307,6 +6308,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       o.hostConn = rc;
       wire(rc);
       try { if (old) old.close(); } catch (e) {}
+      o.status = 'Liaison directe impossible, j’essaie par un autre chemin…';
+      onlineRefresh();
       onlSend(rc, { t: 'hello' });
     }
     pr.on('open', function () {
@@ -6322,7 +6325,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
       o.hostConn = c;
       c.on('open', function () { if (online === o && o.hostConn === c) onlSend(c, { t: 'hello' }); });
       wire(c);
-      setTimeout(useRelay, 6000);      // pas de réponse en direct au bout de 6 s : on passe par le serveur
+      setTimeout(useRelay, 4000);      // pas de réponse en direct au bout de 4 s : on passe par le serveur
     });
     onlineRefresh();
   }

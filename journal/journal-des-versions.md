@@ -791,3 +791,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - L'hôte accepte les deux chemins et ne donne pas deux places au même invité.
 - Testé : liaison directe (2 joueurs) ; chemin de secours forcé (3 joueurs, GO, power-ups : synchronisé) ; liaison directe sabotée côté invité : bascule automatique OK. Les vrais réseaux restent à essayer sur vos appareils.
 - Archive : pencil-race_v176_avant-relais.html
+
+## v178 — En ligne : diagnostic du chemin de secours
+- Retour d'essai : sur le même Wi-Fi, 2 téléphones n'arrivent pas à se connecter ; si l'un est en 5G, ça marche.
+- Le passage au chemin de secours se fait au bout de 4 s (au lieu de 6) et l'invité voit « Liaison directe impossible, j'essaie par un autre chemin… ».
+- « version 178 » est écrit en petit en bas de l'écran En ligne, pour vérifier que le téléphone a bien la dernière version.
+- Archive : pencil-race_v177_avant-diagnostic.html
