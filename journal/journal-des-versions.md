@@ -978,3 +978,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Sur chaque carte de boss, une coche par niveau où il a été battu, côte à côte en bas à droite : verte = Facile, bleue = Normal, rouge = Hard (toujours dans cet ordre, de gauche à droite). Elles remplacent la grande coche verte unique et la ligne « Battu : … » sous la carte.
 - Testé : captures avec 0 à 3 coches selon les cartes, sans erreur.
 - Archive : pencil-race_v205_avant-coches-niveaux.html
+
+## v207 — Tolérance de traversée au bord de la piste
+- Une voiture collée à un mur ou dans un coin n'est plus bloquée dès le premier pas : si elle part à moins de 7 unités d'un bord, elle peut frôler le mur sur 12 unités maximum (elle dépasse un peu du bord puis revient sur la piste). Valable pour toutes les voitures, pour le joueur comme pour les bots, et dans la trajectoire visible.
+- Si elle ne revient pas sur la piste dans cette limite, le tir est rejoué depuis le bord comme avant (mur, rebond de la Bille, sortie de piste inchangés). La Gomme, qui traverse déjà les murs, n'est pas concernée ; pas de tolérance au-dessus de l'eau, de la fontaine ni des gouffres.
+- Testé : tirs au ras des murs sur les 8 circuits (moins de sorties, aucun tir plus court), courses de bots sur Canyon, Jardin, Grotte et Usine sans erreur.
+- Archive : pencil-race_v206_avant-tolerance-bord.html

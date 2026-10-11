@@ -5881,6 +5881,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     return -1;
   }
   // simule un tir complet : rebond, traversée des murs, flaques, arrivée. lite = sans tracé (pour le bot)
+  var EDGE_NEAR = 7, EDGE_TOL = 12;   // tolérance de bord : distance « collée au bord » et distance qu'on peut frôler hors piste
   function simulateShot(p, x0, y0, ang, dist, inT, rnd, lite) {
     var ux = Math.cos(ang), uy = Math.sin(ang);
     var x = x0, y = y0, rem = dist;
@@ -5893,6 +5894,12 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     if (pi >= 0) hit[pi] = 1;
     var th = {}, bgot = false;
     if (tunnels.length) { var ti0 = tunnelAt(x, y, th); if (ti0 >= 0) th[ti0] = 1; }
+    // tolérance au bord : une voiture collée à un mur ou dans un coin peut « frôler » le mur sur les premières unités de son tir
+    // (elle dépasse un peu du bord puis revient sur la piste) au lieu d'être bloquée tout de suite ; si elle ne revient pas, le tir est refait sans tolérance
+    var tolLeft = 0, tolSnap = null;
+    for (var ea = 0; ea < 8; ea++) {
+      if (!inT(x0 + Math.cos(ea * Math.PI / 4) * EDGE_NEAR, y0 + Math.sin(ea * Math.PI / 4) * EDGE_NEAR)) { tolLeft = EDGE_TOL; break; }
+    }
     while (rem > 0 && guard++ < 4000) {
       var s = Math.min(STEP, rem);
       if (p.follow && !p.erased) {
@@ -5908,7 +5915,23 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
           if (Math.hypot(nx - bb.x, ny - bb.y) <= BUB_R + 2) { bgot = true; ev.push({ i: path.length - 1, t: 'pick', b: bb.id, k: puPick(p) }); break; }
         }
       }
-      if (inT(nx, ny)) {
+      var insideNow = inT(nx, ny);
+      if (insideNow) tolSnap = null;
+      else if (tolLeft >= s && power !== 'cross' && !circuit.block && !(circuit.rockMask && circuit.rockMask[(ny | 0) * circuit.mw + (nx | 0)])) {
+        // pas encore de blocage : on laisse passer ce petit bout hors de la piste (on garde de quoi revenir en arrière)
+        if (!tolSnap) tolSnap = { x: x, y: y, rem: rem, ux: ux, uy: uy, pl: lite ? 0 : path.length, el: lite ? 0 : ev.length, li: li };
+        tolLeft -= s;
+        x = nx; y = ny; rem -= s;
+        if (!lite) path.push([x, y]);
+        continue;
+      } else if (tolSnap) {
+        // la tolérance est épuisée et elle est toujours dehors : on rejoue le tir depuis le bord, sans tolérance
+        x = tolSnap.x; y = tolSnap.y; rem = tolSnap.rem; ux = tolSnap.ux; uy = tolSnap.uy;
+        if (!lite) { path.length = tolSnap.pl; ev.length = tolSnap.el; li = tolSnap.li; }
+        tolSnap = null; tolLeft = 0;
+        continue;
+      }
+      if (insideNow) {
         onTrack = true;
         x = nx;
         y = ny;
