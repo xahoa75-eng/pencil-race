@@ -199,8 +199,27 @@
     }
   }
   document.addEventListener('click', function (e) {
-    var el = e.target.closest ? e.target.closest('[data-camp],[data-campcar],[data-act="play-campaign"]') : null;
+    var el = e.target.closest ? e.target.closest('[data-camp],[data-campcar],[data-campreset],[data-act="play-campaign"]') : null;
     if (!el) return;
+    if (el.hasAttribute('data-campreset')) {
+      var rk = el.getAttribute('data-campreset'), ask = document.getElementById('campResetAsk'), rb = document.querySelector('[data-campreset="ask"]');
+      if (rk === 'ask') { ask.hidden = false; rb.hidden = true; }
+      else {
+        if (rk === 'yes') {
+          camp.won = {};
+          camp.level = 'normal';
+          campSave();
+          if (!carUnlocked(settings.playerCar)) settings.playerCar = 'normale';
+          campCar = 'normale';
+          buildCarPickers();
+          campBuildCards();
+          refresh();
+        }
+        ask.hidden = true;
+        rb.hidden = false;
+      }
+      return;
+    }
     if (el.hasAttribute('data-camp')) {
       var cid = el.getAttribute('data-camp');
       if (!campOpen(cid)) return;

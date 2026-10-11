@@ -522,6 +522,13 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     <p class="note" id="campRecap"></p>
     <h3>Choisis ton circuit</h3>
     <div class="cards" id="cirCamp"></div>
+    <div id="campResetBox">
+      <button class="big" type="button" data-campreset="ask">Remettre la campagne à zéro</button>
+      <div id="campResetAsk" hidden>
+        <p class="note">Es-tu certain ? Toutes tes victoires et les voitures débloquées seront effacées.</p>
+        <div class="seg"><button type="button" data-campreset="yes">Oui</button><button type="button" data-campreset="no">Non</button></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1606,8 +1613,27 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
     }
   }
   document.addEventListener('click', function (e) {
-    var el = e.target.closest ? e.target.closest('[data-camp],[data-campcar],[data-act="play-campaign"]') : null;
+    var el = e.target.closest ? e.target.closest('[data-camp],[data-campcar],[data-campreset],[data-act="play-campaign"]') : null;
     if (!el) return;
+    if (el.hasAttribute('data-campreset')) {
+      var rk = el.getAttribute('data-campreset'), ask = document.getElementById('campResetAsk'), rb = document.querySelector('[data-campreset="ask"]');
+      if (rk === 'ask') { ask.hidden = false; rb.hidden = true; }
+      else {
+        if (rk === 'yes') {
+          camp.won = {};
+          camp.level = 'normal';
+          campSave();
+          if (!carUnlocked(settings.playerCar)) settings.playerCar = 'normale';
+          campCar = 'normale';
+          buildCarPickers();
+          campBuildCards();
+          refresh();
+        }
+        ask.hidden = true;
+        rb.hidden = false;
+      }
+      return;
+    }
     if (el.hasAttribute('data-camp')) {
       var cid = el.getAttribute('data-camp');
       if (!campOpen(cid)) return;

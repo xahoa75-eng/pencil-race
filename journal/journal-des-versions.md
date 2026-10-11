@@ -930,3 +930,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Entraînement : une voiture reste disponible si son boss a été battu au moins une fois, à n'importe quel niveau.
 - Testé : verrous corrects aux 3 niveaux (Facile / Normal / Hard), voiture verrouillée non sélectionnable, victoire enregistrée au bon niveau, affichage des cartes, sans erreur.
 - Archive : pencil-race_v197_avant-victoires-par-niveau.html
+
+## v199 — Campagne : bouton « Remettre la campagne à zéro »
+- Tout en bas de la sélection des boss, un bouton « Remettre la campagne à zéro ». Il demande d'abord « Es-tu certain ? » avec Oui / Non (dans la page, pas de fenêtre du navigateur). Non (ou rien) ne change rien ; Oui efface toutes les victoires, les voitures débloquées et le niveau choisi (retour à Normal).
+- Testé : demande de confirmation, Non sans effet, Oui qui vide la sauvegarde et réaffiche « Victoires : 0 sur 21 », sans erreur.
+- Archive : pencil-race_v198_avant-remise-a-zero.html
