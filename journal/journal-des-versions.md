@@ -869,3 +869,7 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le boss final est l'Agrafeuse (« Niveau final · L'Agrafeuse »). Son pouvoir viendra plus tard : en attendant, elle roule comme une Classique bleue en niveau Hard, et son nom s'affiche en course et sur l'écran de fin.
 - Outil : tools/boss_images.py refait les 8 images à partir de ton image d'origine.
 - Archive : pencil-race_v188_avant-crayons-boss.html
+
+## v190 — Crayons boss : même boîte, taille maximale
+- Chaque crayon boss est agrandi au maximum pour remplir la case de la carte : les 8 images ont maintenant exactement la même hauteur (de la gomme à la pointe, accessoires et flammes compris) et sont centrées. Avant, ils étaient à la même échelle mais de hauteurs différentes (la fumée et les flammes de l'Agrafeuse, les accessoires...) et laissaient du vide.
+- Archive : pencil-race_v189_avant-boss-max.html

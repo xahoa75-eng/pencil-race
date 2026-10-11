@@ -61,12 +61,12 @@ def cut(key, box):
 chars = {k: cut(k, b) for k, b in cells.items()}
 for k, c in chars.items(): print(k, c.size)
 CW, CH = 340, 360
-maxW = max(c.size[0] for c in chars.values()); maxH = max(c.size[1] for c in chars.values())
-sc = min(0.94 * CW / maxW, 0.96 * CH / maxH)
-print('échelle', sc)
+# chaque crayon est agrandi au maximum pour remplir la case (même boîte pour les 8), centré
 for k, c in chars.items():
+    sc = min(0.97 * CW / c.size[0], 0.97 * CH / c.size[1])
     w, h = round(c.size[0] * sc), round(c.size[1] * sc)
+    print(k, 'échelle', round(sc, 2), (w, h))
     r = c.resize((w, h), Image.LANCZOS)
     canvas = Image.new('RGBA', (CW, CH), (0, 0, 0, 0))
-    canvas.paste(r, ((CW - w) // 2, CH - h - round(0.02 * CH)), r)
+    canvas.paste(r, ((CW - w) // 2, (CH - h) // 2), r)
     canvas.save(out + '/boss-' + k + '.webp', 'WEBP', quality=88, method=6)
