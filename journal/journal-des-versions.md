@@ -984,3 +984,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Si elle ne revient pas sur la piste dans cette limite, le tir est rejoué depuis le bord comme avant (mur, rebond de la Bille, sortie de piste inchangés). La Gomme, qui traverse déjà les murs, n'est pas concernée ; pas de tolérance au-dessus de l'eau, de la fontaine ni des gouffres.
 - Testé : tirs au ras des murs sur les 8 circuits (moins de sorties, aucun tir plus court), courses de bots sur Canyon, Jardin, Grotte et Usine sans erreur.
 - Archive : pencil-race_v206_avant-tolerance-bord.html
+
+## v208 — Canyon : les rochers 1 et 3 forment un seul grand rocher
+- Dans le Canyon, les deux rochers de droite (celui du haut et celui du milieu) sont reliés en un seul grand rocher en diagonale, pour que la Gomme ne puisse plus passer entre eux.
+- Les objectifs de coups des bots sur le Canyon ne sont pas recalculés.
+- Testé : image du circuit avant/après ; un tir de Gomme qui traversait l'espace (jusqu'au mur d'en face) est maintenant arrêté par le rocher ; aucune erreur.
+- Archive : pencil-race_v207_avant-rochers-canyon.html
