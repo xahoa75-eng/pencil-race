@@ -431,6 +431,13 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .launch.fr { width: 78%; margin: 0 auto; }
 .launch.fr img { aspect-ratio: 949 / 884; object-fit: fill; object-position: 50% 50%; }
 .launch[disabled] { opacity: .45; cursor: not-allowed; }
+
+/* Jouer en local : les 5 icônes (3 joueurs + 2 GO) ont toutes la même taille ;
+   dernier écran : les 3 pilotages et le bouton Lancer aussi. */
+#s-multi2 .seg.imgseg, #s-multi4 .seg.imgseg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#s-multi2 .seg.imgseg button.fr img, #s-multi4 .seg.imgseg button.fr img,
+#s-multi4 .launch.fr img { aspect-ratio: 421 / 430 !important; object-fit: cover; }
+#s-multi4 .launch.fr { width: calc((100% - 16px) / 3); margin: 0 auto; --H: 22px; --fs: 13px; }
 </style>
 </head>
 <body>

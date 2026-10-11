@@ -718,3 +718,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les boutons « Lancer » (Entraînement, Jouer en local) et « Lancer la course » (En ligne) utilisent tous la même nouvelle icône : le feu tricolore, la ligne de damier et le GO vert avec la flèche. En ligne, le bouton garde son état grisé tant que tous les joueurs ne sont pas connectés.
 - L'ancienne image est conservée (`assets/images/lancer-ancienne.jpg`). Nouvelle image : `assets/images/lancer.jpg`.
 - Archive : pencil-race_v163_avant-icone-go.html
+
+## v165 — Jouer en local : toutes les icônes à la même taille
+- Écran du nombre de joueurs : les 5 icônes (2/3/4 joueurs + GO activé / Sans GO) font exactement la même taille (mesuré : 114 × 116 px sur un écran de 393 px) ; les deux icônes GO sont sur la même grille de 3 colonnes que les joueurs.
+- Dernier écran : les 3 icônes de pilotage et le bouton « Lancer » font la même taille ; le bouton Lancer est centré sous les trois.
+- Archive : pencil-race_v164_avant-tailles-egales.html
