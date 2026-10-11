@@ -4,7 +4,7 @@
   python3 tools/build.py            -> écrit index.html à la racine
   python3 tools/build.py sortie.html
 
-src/template.html contient la page ; {{CSS}} et {{JS}} sont remplacés par src/style.css et src/game.js ;
+src/template.html contient la page ; {{CSS}} et {{JS}} sont remplacés par src/style.css et src/game.js (qui peut inclure d'autres fichiers avec //@@INCLUDE online.js@@) ; {{PEERJS}} par vendor/peerjs.min.js ;
 chaque @@A:nom@@ est remplacé par le fichier assets/images/nom (ou assets/sounds/nom) encodé en base64.
 """
 import base64, os, re, sys
@@ -23,7 +23,10 @@ def asset(m):
 
 def build():
     page = read('src/template.html')
-    page = page.replace('{{CSS}}', read('src/style.css')).replace('{{JS}}', read('src/game.js'))
+    js = read('src/game.js')
+    # //@@INCLUDE fichier.js@@ : insère un autre fichier de src/ à cet endroit (dans la même fonction du jeu)
+    js = re.sub(r'//@@INCLUDE ([A-Za-z0-9_./-]+)@@', lambda m: read('src/' + m.group(1)), js)
+    page = page.replace('{{CSS}}', read('src/style.css')).replace('{{PEERJS}}', read('vendor/peerjs.min.js')).replace('{{JS}}', js)
     # le CSS et le JS contiennent eux aussi des @@A:...@@ : on remplace après l'assemblage
     return re.sub(r'@@A:([A-Za-z0-9_./-]+)@@', asset, page)
 

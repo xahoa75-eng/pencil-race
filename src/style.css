@@ -338,3 +338,12 @@ canvas.carcv { width: 100%; height: auto; aspect-ratio: 120 / 70; background: #f
 #s-main .home { background: transparent !important; }
 .screen:not(#s-game) .big:not(.primary), .screen:not(#s-game) .card, .screen:not(#s-game) .carbtn, .screen:not(#s-game) .reminder,
 .screen:not(#s-game) .seg button[aria-pressed="false"] { background-color: rgba(255,255,255,0.88); }
+
+/* ---------- en ligne ---------- */
+.onl { display: flex; flex-direction: column; gap: 12px; }
+.onl[hidden] { display: none; }
+.onl-code { text-align: center; font-size: 44px; font-weight: 800; letter-spacing: 0.18em; padding-left: 0.18em; color: var(--fg); user-select: all; }
+.onl-input { font: inherit; font-size: 34px; font-weight: 800; text-align: center; letter-spacing: 0.18em; text-transform: uppercase; padding: 10px; border: 2px solid var(--fg); border-radius: 12px; background: var(--bg); color: var(--fg); width: 100%; box-sizing: border-box; }
+.onl-warn { color: #b3261e; font-weight: 600; }
+.chip:not(.on) { opacity: 0.55; }
+body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display: none; }

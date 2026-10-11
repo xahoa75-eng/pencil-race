@@ -10,7 +10,8 @@ hook = """
     S: function () { return { players: players, finished: finished, finishers: finishers, anim: anim, cur: cur, phase: phase }; },
     circuitNow: function () { return circuit; },
     inTrack: inTrack, progressOf: progressOf, simulateShot: simulateShot, botPlan: botPlan,
-    levelTarget: levelTarget, tunnels: function () { return tunnels; }, pickTunnels: pickTunnels
+    levelTarget: levelTarget, tunnels: function () { return tunnels; }, pickTunnels: pickTunnels,
+    O: function () { return online; }, P: function () { return { players: players, cur: cur, anim: anim, finished: finished, n: n, tunnels: tunnels.length, doors: circuit.closedDoors, lastDoor: lastDoor, lastTun: lastTun }; }
   };
 """
 open(dst,'w',encoding='utf-8').write(s[:k]+hook+s[k:])

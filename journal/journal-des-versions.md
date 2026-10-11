@@ -581,3 +581,12 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v134 — Menu Solo : boutons-images
 - « Entraînement » devient un bouton-image avec le dessin des deux mécaniciens sur la ligne d'arrivée ; « Campagne » un bouton-image avec le dessin du podium (« bientôt », image grisée, toujours non cliquable). Le nom est écrit sur l'image (blanc, contour noir).
 - Archive : pencil-race_v133_avant-menu-solo-images.html
+
+## v135 — Multi en ligne (prototype, 2 à 4 joueurs)
+- Multi → « Jouer en ligne » : un joueur crée la partie (circuit + nombre de joueurs, 2 à 4) et reçoit un code de 4 lettres ; les amis ouvrent le lien « …/pencil-race/?join=CODE » (ou tapent le code dans « Rejoindre »). Pas de compte. Chacun joue sur son téléphone, couleur attribuée dans l'ordre d'arrivée (Rouge = hôte).
+- Principe : l'hôte calcule chaque tir (hasard compris) et envoie le tracé à tous ; chacun l'anime et déroule la fin du tour de la même façon. Mise en relation par PeerJS (serveur gratuit, connexion ensuite directe téléphone à téléphone ; relais TURN gratuit de PeerJS en secours). Portes du Jardin et tunnels de la Grotte tirés par l'hôte et envoyés à tous.
+- En ligne : pas de chrono Hard, pause sans arrêt de la partie, « Rejouer » réservé à l'hôte, message si un joueur quitte. Les réglages forcés pour la partie ne sont jamais enregistrés.
+- Ne marche que sur le site GitHub Pages (https://xahoa75-eng.github.io/pencil-race/), pas dans l'Artifact (pas de WebRTC) : l'Artifact affiche un message qui renvoie au site.
+- Code : `src/online.js` (inclus par `tools/build.py`), `vendor/peerjs.min.js` (PeerJS 1.5.4, MIT), `fire` découpé en `buildShot` + `launch`. Test : `tools/online135.js` (serveur PeerJS local + 2 à 3 navigateurs : positions identiques après chaque tour sur Zigzag, Grotte à 3 joueurs, Jardin).
+- À vérifier par Mika sur de vrais téléphones (4G / Wi-Fi différents).
+- Archive : pencil-race_v134_avant-multi-en-ligne.html

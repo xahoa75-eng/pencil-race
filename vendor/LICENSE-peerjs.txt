@@ -1,0 +1,3 @@
+PeerJS 1.5.4 — MIT License — https://github.com/peers/peerjs
+Copyright (c) 2013 Michelle Bu and Eric Zhang
+Fichier vendor/peerjs.min.js : copie non modifiée de dist/peerjs.min.js (sans la ligne sourceMappingURL).

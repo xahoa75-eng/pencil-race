@@ -500,7 +500,10 @@
     }
   } catch (e) {}
   function saveSettings() {
-    try { localStorage.setItem('pr-settings', JSON.stringify(settings)); } catch (e) {}
+    var o = {}, k;
+    for (k in settings) o[k] = settings[k];
+    if (online && online.saved) for (k in online.saved) o[k] = online.saved[k];   // en ligne, les réglages forcés ne sont jamais enregistrés
+    try { localStorage.setItem('pr-settings', JSON.stringify(o)); } catch (e) {}
   }
   // ---------- sons (vrais fichiers audio, intégrés dans la page ; WebAudio) ----------
   var Snd = (function () {
@@ -699,6 +702,7 @@
   }
   buildCards('cirSolo');
   buildCards('cirMulti');
+  buildCards('cirOnline');
 
   // ---------- voitures en 3/4 face (illustrations pour la fiche « Voitures ») ----------
   var CAR34 = (function () {
@@ -1170,7 +1174,7 @@
   });
 
   // ---------- navigation ----------
-  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];
+  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'online', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'game'];
   var stack = [], currentScreen = 'main';
 
   // écran d'accueil : le cahier remplit l'écran (zoom limité pour ne pas trop rogner sur un écran large)
@@ -1245,6 +1249,7 @@
       pv += '<div class="chip on" style="--c:' + PL[k].color + ';--t:' + PL[k].on + '">' + PL[k].name + '</div>';
     }
     document.getElementById('multiPreview').innerHTML = pv;
+    if (onlReady) onlineRefresh();
   }
 
   // ---------- circuit en cours ----------
@@ -1275,8 +1280,9 @@
     buildField(c);
   }
   function pickDoors() {
-    var c = circuit, k = (settings.doorIndex != null) ? settings.doorIndex : ((Math.random() * c.doorSets.length) | 0);
-    applyDoors(c, c.doorSets[k % c.doorSets.length]);
+    var c = circuit, k = (forced && forced.door != null) ? forced.door : (settings.doorIndex != null) ? settings.doorIndex : ((Math.random() * c.doorSets.length) | 0);
+    lastDoor = k % c.doorSets.length;
+    applyDoors(c, c.doorSets[lastDoor]);
   }
   function useCircuit(id) {
     circuit = CIRCUITS[id];
@@ -1317,6 +1323,9 @@
   var lastChance = false, finishers = [], turnStart = null;
   var paused = false, pauseAt = 0;
   var botMode = false, lastStart = { count: 1, bot: false }, botAt = 0;
+  var online = null;      // partie en ligne en cours (voir online.js) : { role, me, ... }
+  var forced = null;      // tirage imposé par l'hôte en ligne : { door, tun }
+  var lastDoor = null, lastTun = null;   // ce qui a été tiré au début de la partie (envoyé aux invités)
   var puddles = [];
   var tunnels = [];       // tunnels de la Grotte (tirés au hasard à chaque partie) : { id, kind: 'in' (petite bouche) | 'out' (grande bouche), x, y, r, to: [x, y] }
   var fx = [];            // traînées et flaques de la Colle et du Correcteur : { kind: 'glue'|'corr', type: 'trail'|'blob', owner, pts, hw }
@@ -1331,6 +1340,7 @@
   var elPause = document.getElementById('pause');
 
   function goRequired() {
+    if (online) return cur === online.me;
     var soloGo = settings.diff === 'hard' || settings.go === 'oui';
     if (botMode) return !(players[cur] && players[cur].bot) && soloGo;
     return n > 1 || soloGo;
@@ -1404,7 +1414,7 @@
         ? "Appuie sur GO quand tu es prêt, puis glisse vers l'arrière et relâche."
         : "Glisse le doigt vers l'arrière, relâche : la voiture part dans l'autre sens.";
     } else {
-      t = "Chacun son tour : GO, puis glisse vers l'arrière et relâche. Rouge commence !";
+      t = online ? 'Tu es ' + players[online.me].name + ". Chacun son tour : GO, puis glisse vers l'arrière et relâche." : "Chacun son tour : GO, puis glisse vers l'arrière et relâche. Rouge commence !";
     }
     if (players[0] && humanOf().follow) t += " Compas : choisis la direction et la force, ta voiture épouse la courbe du circuit.";
     if (circuit.big) t += " Maintiens le bouton carte (en bas à droite) pour voir toute la piste, avant le GO.";
@@ -1419,6 +1429,7 @@
   var TUN_COLORS = ['#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#3a6ea5', '#8ab17d', '#6a4c93', '#1982c4', '#d90368', '#7cb518', '#ff7b00', '#b5179e'];
   function pickTunnels() {
     tunnels = [];
+    lastTun = null;
     var c = circuit;
     if (!c.rock0) c.rock0 = new Uint8Array(c.mw * c.mh);
     c.rockMask = c.rock0;
@@ -1432,6 +1443,7 @@
       return true;
     }
     var NT = 8 + ((Math.random() * 3) | 0);
+    if (forced && forced.tun) got = forced.tun.map(function (ix) { return W[ix]; });   // en ligne : mêmes tunnels que l'hôte
     for (var att = 0; att < 300 && !got; att++) {
       var idx = [], sel = [];
       for (q = 0; q < n; q++) idx.push(q);
@@ -1445,6 +1457,7 @@
     }
     if (!got) return;
     got.sort(function (u, v) { return u.s - v.s; });
+    lastTun = got.map(function (w) { return W.indexOf(w); });
     var m = c.rock0.slice();
     for (var i = 0; i < got.length; i++) {
       var w = got[i];
@@ -1554,6 +1567,7 @@
     corrFlip = false;
     if (circuit.doorSets) say('Portes fermées au hasard : regarde la carte !', performance.now());
     else if (tunnels.length) say('Tunnels tirés au hasard : regarde la carte !', performance.now());
+    else if (online) say(cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name, performance.now());
     corrTurn(performance.now());
     phase = goRequired() ? 'pre' : 'aim';
     elWin.classList.remove('show');
@@ -1717,6 +1731,7 @@
     ovHeld = false;
     phase = goRequired() ? 'pre' : 'aim';
     botAt = now + 800;
+    if (online && !(toast && toast.until > now)) say(cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name, now);
   }
 
   // passe au joueur suivant ; une voiture qui joue « un tour sur deux » saute son tour
@@ -4715,7 +4730,7 @@
     return [ang0 + jitter, dist];
   }
   // lance un tir (joueur ou bot) avec un peu de hasard, comme une vraie pichenette
-  function fire(p, ang0, dist0, extra) {
+  function buildShot(p, ang0, dist0, extra) {
     var nz = noisy(p, ang0, dist0, extra);
     var ang = nz[0], dist = nz[1];
     var sim = simulateShot(p, p.x, p.y, ang, dist, inTrack, Math.random, false);
@@ -4751,12 +4766,20 @@
       }
       total = cum[cum.length - 1];
     }
+    return { path: used, ev: evs, res: res, ang: ang, dist: dist };
+  }
+  function fire(p, ang0, dist0, extra) { launch(p, buildShot(p, ang0, dist0, extra)); }
+  // démarre l'animation d'un tir déjà calculé (en ligne : calculé par l'hôte, identique chez tout le monde)
+  function launch(p, shot) {
+    var used = shot.path, cum = [0];
+    for (var i = 1; i < used.length; i++) cum.push(cum[i - 1] + Math.hypot(used[i][0] - used[i - 1][0], used[i][1] - used[i - 1][1]));
+    var total = cum[cum.length - 1];
     anim = {
-      path: used, cum: cum, total: total, res: res, ev: evs, evi: 0, idx: 0, dist: dist,
-      x0: p.x, y0: p.y, cx: p.x, cy: p.y, ang: ang,
+      path: used, cum: cum, total: total, res: shot.res, ev: shot.ev, evi: 0, idx: 0, dist: shot.dist,
+      x0: p.x, y0: p.y, cx: p.x, cy: p.y, ang: shot.ang,
       t0: performance.now(), dur: 250 + total * 2.2
     };
-    p.ang = ang;
+    p.ang = shot.ang;
     Snd.pencil(cur);
     elHint.style.visibility = 'hidden';
   }
@@ -4908,6 +4931,7 @@
   }
 
   function tick(now) {
+    if (online && !anim) onlineTick(now);
     if (anim) { updateAnim(now); return; }
     if (finished) return;
     if (players[cur].bot) {
@@ -4993,6 +5017,7 @@
   function pauseGame() {
     soundLabel();
     if (paused || currentScreen !== 'game' || finished) return;
+    if (online) { elPause.classList.add('show'); return; }   // en ligne la partie ne s'arrête pas
     paused = true;
     pauseAt = performance.now();
     aiming = false;
@@ -5000,6 +5025,7 @@
     elPause.classList.add('show');
   }
   function resumeGame() {
+    if (online) { elPause.classList.remove('show'); return; }
     if (!paused) return;
     var d = performance.now() - pauseAt;
     if (anim) {
@@ -5021,6 +5047,7 @@
     if (anim || finished || paused) return;
     e.preventDefault();
     if (players[cur].bot) return;
+    if (online && (cur !== online.me || online.sent)) return;
     if (phase === 'pre') { say('Appuie sur GO !', performance.now()); return; }
     if (ovHeld || Math.abs(cam.z - 1) > 0.03) return;
     aiming = true;
@@ -5040,6 +5067,7 @@
     var v = aimVec();
     if (v.len < 12) return;
     var pl = players[cur];
+    if (online) { onlineAim(Math.atan2(v.dy, v.dx), v.l * POWER * (pl.rm || 1)); return; }
     fire(pl, Math.atan2(v.dy, v.dx), v.l * POWER * (pl.rm || 1), 0);
   });
 
@@ -5104,8 +5132,9 @@
     else if (act === 'play-multi') startGame(settings.players, false);
     else if (act === 'resume') resumeGame();
     else if (act === 'sound') { settings.sound = settings.sound === 'non' ? 'oui' : 'non'; saveSettings(); soundLabel(); }
-    else if (act === 'restart') startGame(lastStart.count, lastStart.bot);
+    else if (act === 'restart') { if (online) onlineRestart(); else startGame(lastStart.count, lastStart.bot); }
     else if (act === 'quit') {
+      if (online) onlineLeave();
       paused = false;
       elPause.classList.remove('show');
       elWin.classList.remove('show');
@@ -5114,7 +5143,8 @@
     }
   });
 
-  
+  //@@INCLUDE online.js@@
+
   refresh();
   requestAnimationFrame(loop);
 })();

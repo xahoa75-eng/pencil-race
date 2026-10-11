@@ -98,9 +98,47 @@
       <button type="button" data-val="4">4 joueurs</button>
     </div>
     <div class="chips" id="multiPreview"></div>
-    <p class="note">Chacun son tour, sur le même téléphone. Les voitures partent toutes du même point.</p>
+    <button class="big" type="button" data-go="online">Jouer en ligne (chacun son téléphone)</button>
+    <p class="note">Sur ce téléphone : chacun son tour. Les voitures partent toutes du même point.</p>
     <button class="reminder" type="button" data-go="options"></button>
     <button class="big primary" type="button" data-act="play-multi">Lancer la course</button>
+  </div>
+</section>
+
+<!-- EN LIGNE -->
+<section class="screen" id="s-online">
+  <div class="panel">
+    <button class="back" type="button" data-act="onl-back">‹ Retour</button>
+    <h2>En ligne</h2>
+    <div class="onl" id="onl-choose">
+      <button class="big primary" type="button" data-act="onl-host">Créer une partie</button>
+      <button class="big" type="button" data-act="onl-join">Rejoindre une partie</button>
+      <p class="note">Un joueur crée la partie et envoie le lien (ou le code) à ses amis. Chacun joue sur son propre téléphone.</p>
+      <p class="note onl-warn" id="onlNo" hidden></p>
+    </div>
+    <div class="onl" id="onl-host" hidden>
+      <h3>Circuit</h3>
+      <div class="cards" id="cirOnline"></div>
+      <h3>Nombre de joueurs</h3>
+      <div class="seg" data-key="players">
+        <button type="button" data-val="2">2 joueurs</button>
+        <button type="button" data-val="3">3 joueurs</button>
+        <button type="button" data-val="4">4 joueurs</button>
+      </div>
+      <h3>Code de la partie</h3>
+      <div class="onl-code" id="onlCode">····</div>
+      <button class="big" type="button" data-act="onl-share">Envoyer le lien</button>
+      <div class="chips" id="onlChips"></div>
+      <p class="note" id="onlStatus"></p>
+      <button class="big primary" type="button" data-act="onl-start" id="onlStart" disabled>Lancer la course</button>
+    </div>
+    <div class="onl" id="onl-join" hidden>
+      <h3>Code de la partie</h3>
+      <input class="onl-input" id="onlInput" type="text" inputmode="text" maxlength="4" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="ABCD">
+      <button class="big primary" type="button" data-act="onl-connect" id="onlConnect">Rejoindre</button>
+      <div class="chips" id="onlChips2"></div>
+      <p class="note" id="onlStatus2"></p>
+    </div>
   </div>
 </section>
 
@@ -235,6 +273,7 @@
   </div>
 </div>
 
+<script>{{PEERJS}}</script>
 <script>{{JS}}</script>
 </body>
 </html>
