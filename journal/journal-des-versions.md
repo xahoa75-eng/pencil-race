@@ -688,3 +688,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 ## v157 — Icônes « Créer » et « Rejoindre » (en ligne)
 - Écran En ligne : les boutons texte « Créer une partie » et « Rejoindre une partie » sont remplacés par deux icônes encadrées côte à côte. CRÉER = la voiture rouge en réseau avec les câbles de couleur ; REJOINDRE = la main qui dessine le circuit sur le téléphone. Elles ouvrent les mêmes écrans qu'avant. Images : `assets/images/creer-partie.jpg`, `rejoindre-partie.jpg`.
 - Archive : pencil-race_v156_avant-creer-rejoindre.html
+
+## v158 — Créer / Rejoindre : dessins plus grands, l'un sous l'autre
+- Les deux images sont recadrées au plus près du dessin (marges blanches retirées en haut) : elles sont nettement plus grandes dans leur cadre.
+- Les boutons CRÉER et REJOINDRE passent côte à côte → l'un sous l'autre, dans la même disposition que l'écran « En ligne / En local ».
+- Archive : pencil-race_v157_avant-creer-rejoindre-grand.html
