@@ -1014,3 +1014,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Valable pour toutes les voitures sauf la Gomme (elle traverse déjà) et la Bille (elle rebondit) ; pas sur les circuits sur l'eau (Maelström : elle tombe à l'eau). Joueur, bots et trajectoire visible utilisent la même règle. Elle complète la tolérance de la v207.
 - Testé : tirs au ras des murs, voitures bloquées sur place : Canyon 26 → 4, Jardin 15 → 3, Grotte 14 → 2, Usine 30 → 10, Serpentin 6 → 1 ; courses de bots identiques (±2 coups) ; aucune erreur.
 - Archive : pencil-race_v211_avant-glissement.html
+
+## v213 — Campagne : l'Usine s'ouvre en Normal minimum
+- L'Usine (Agrafeuse) s'ouvre quand les 7 autres boss sont battus en Normal au minimum : Normal ou Hard, au choix pour chaque boss. Battre les 7 boss en Facile seulement ne suffit plus. Le cadenas indique maintenant « Bats les 7 autres en Normal minimum ».
+- Une fois ouverte, l'Usine garde son choix de niveau, Facile compris.
+- Testé : 7 boss en Facile → fermée ; 7 en Normal → ouverte ; 7 en Hard → ouverte ; mélange Normal/Hard → ouverte ; 6 en Normal + 1 en Facile → fermée ; aucun boss → fermée ; aucune erreur.
+- Archive : pencil-race_v212_avant-usine-normal.html

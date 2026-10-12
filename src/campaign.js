@@ -41,8 +41,8 @@
   function campWonCount() { var k = 0; for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && campWonAny(c)) k++; return k; }
   // nombre de victoires sur les 24 (8 boss x 3 niveaux)
   function campWinTotal() { var k = 0; for (var c in CAMP_BOSS) CAMP_LEVELS.forEach(function (l) { if (campWon(c, l)) k++; }); return k; }
-  // le niveau final s'ouvre quand les 7 autres boss sont battus en Facile
-  function campFinalOpen() { for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && !campWon(c, 'facile')) return false; return true; }
+  // le niveau final s'ouvre quand les 7 autres boss sont battus en Normal au minimum (Normal ou Hard ; Facile seul ne suffit pas)
+  function campFinalOpen() { for (var c in CAMP_BOSS) if (c !== CAMP_FINAL && !campWon(c, 'normal') && !campWon(c, 'hard')) return false; return true; }
   // lvl : niveau de l'adversaire (campagne) ; sans niveau : battue au moins une fois, à n'importe quel niveau
   function carUnlocked(key, lvl) {
     if (CAMP_ALL || key === 'normale') return true;
@@ -159,7 +159,7 @@
       if (wm.children.length) fw.appendChild(wm);
       var sb = document.createElement('div');
       sb.className = 'csub';
-      sb.textContent = !open ? '🔒 Bats les 7 autres en Facile' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
+      sb.textContent = !open ? '🔒 Bats les 7 autres en Normal minimum' : (cid === CAMP_FINAL ? 'Final · ' + campBossName(cid) : 'Contre ' + campBossName(cid));
       b.appendChild(fw);
       b.appendChild(sb);
       box.appendChild(b);
