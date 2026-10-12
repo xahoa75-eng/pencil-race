@@ -1673,7 +1673,7 @@
       botFirst = true;
     }
     // le Compas a besoin de la progression sur la piste pour épouser sa courbe
-    if (online || players.some(function (pl) { return pl.follow; })) ensureProgGrid();
+    if (online || localPU() || players.some(function (pl) { return pl.follow; })) ensureProgGrid();
     cur = 0;
     trails = [];
     puddles = [];
@@ -1693,6 +1693,9 @@
     ovHeld = false;
     toast = null;
     corrFlip = false;
+    // power-ups en multi local : une bulle près de chaque joueur au départ (comme en ligne)
+    bubSeq = 0;
+    if (localPU()) for (var lb = 0; lb < players.length; lb++) { var lnb = onlSpawn(players[lb], null, bubbles); if (lnb) bubbles.push({ id: lnb.id, x: lnb.x, y: lnb.y, popped: false }); }
     if (circuit.doorSets) say('Portes fermées au hasard : regarde la carte !', performance.now());
     else if (tunnels.length) say('Tunnels tirés au hasard : regarde la carte !', performance.now());
     else if (online) say(cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name, performance.now());
@@ -1720,6 +1723,21 @@
   // La Colle et le Correcteur : une voiture qui a traversé leur traînée (ou leur flaque) subit l'effet à son tour suivant :
   // Colle = son tir suivant est réduit de moitié ; Correcteur = son pouvoir est annulé pour ce tour (elle joue comme une Classique)
   var corrFlip = false;
+  // power-ups : en ligne et en multi local (plusieurs joueurs sur le même téléphone, sans bot ni campagne)
+  function localPU() { return !online && n > 1 && !botMode && !camp.active; }
+  // après chaque tir local : une bulle près du prochain joueur, et une près du tireur une fois sur deux (comme en ligne)
+  function localSpawn(shot) {
+    var taken = 0, i, pend = [];
+    for (i = 0; shot.ev && i < shot.ev.length; i++) if (shot.ev[i].t === 'pick') { taken = 1; break; }
+    var targets = [players[(cur + 1) % n]];
+    if (Math.random() < 0.5) targets.push({ x: shot.res.x, y: shot.res.y });
+    for (var ti = 0; ti < targets.length; ti++) {
+      if (bubbles.length - taken + pend.length >= BUB_MAX()) break;
+      var nb = onlSpawn(targets[ti], shot.res, pend);
+      if (nb) pend.push(nb);
+    }
+    for (i = 0; i < pend.length; i++) bubbles.push({ id: pend[i].id, x: pend[i].x, y: pend[i].y, popped: false });
+  }
   function hasPower(q) { return !!(q.power || q.spt > 1 || q.follow || q.puActive === 'taille'); }
   // power-ups (en ligne) : une bulle donne le pouvoir d'une voiture pour le prochain tour de celui qui l'a ramassée
   var PU_KEYS = ['bille', 'plume', 'gomme', 'portemine', 'compas', 'colle', 'taille', 'agrafeuse'];
@@ -1951,6 +1969,7 @@
     phase = goRequired() ? 'pre' : 'aim';
     botAt = now + 800;
     if (online && !(toast && toast.until > now)) say((cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name) + (players[cur].puActive ? ' · pouvoir ' + puShort(players[cur].puActive) : ''), now);
+    else if (localPU() && players[cur].puActive && !(toast && toast.until > now)) say(players[cur].name + ' · pouvoir ' + puShort(players[cur].puActive), now);
   }
 
   // passe au joueur suivant ; une voiture qui joue « un tour sur deux » saute son tour
@@ -5123,6 +5142,7 @@
       t0: performance.now(), dur: 250 + total * 2.2
     };
     p.ang = shot.ang;
+    if (localPU()) localSpawn(shot);
     Snd.pencil(cur);
     elHint.style.visibility = 'hidden';
   }

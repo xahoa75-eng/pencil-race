@@ -1020,3 +1020,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Une fois ouverte, l'Usine garde son choix de niveau, Facile compris.
 - Testé : 7 boss en Facile → fermée ; 7 en Normal → ouverte ; 7 en Hard → ouverte ; mélange Normal/Hard → ouverte ; 6 en Normal + 1 en Facile → fermée ; aucun boss → fermée ; aucune erreur.
 - Archive : pencil-race_v212_avant-usine-normal.html
+
+## v214 — Power-ups en multi local
+- Les bulles « ? » (power-ups) existent maintenant aussi en multi local (2 à 4 joueurs sur le même téléphone), avec les mêmes règles qu'en ligne : une bulle près de chaque joueur au départ, puis une près du prochain joueur après chaque tir (et une près du tireur une fois sur deux), 2 × joueurs + 1 bulles au maximum ; le pouvoir ramassé s'utilise au prochain tour de celui qui l'a pris (le premier n'a jamais l'Agrafeuse). Au début du tour, le nom du pouvoir s'affiche.
+- Pas de bulles en solo, en duel contre un bot ni en campagne. Le texte des règles « Power-up » mentionne le multi local.
+- Testé : parties complètes à 1, 2, 3 et 4 joueurs (0 bulle en solo ; les 8 pouvoirs ramassés et activés ; parties terminées), duel contre bot sans bulle, aucune erreur. Le multi en ligne n'est pas modifié.
+- Archive : pencil-race_v213_avant-powerups-local.html
