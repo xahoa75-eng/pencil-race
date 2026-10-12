@@ -1695,7 +1695,7 @@
     corrFlip = false;
     // power-ups en multi local : une bulle près de chaque joueur au départ (comme en ligne)
     bubSeq = 0;
-    if (localPU()) for (var lb = 0; lb < players.length; lb++) { var lnb = onlSpawn(players[lb], null, bubbles); if (lnb) bubbles.push({ id: lnb.id, x: lnb.x, y: lnb.y, popped: false }); }
+    if (localPU()) localRefill();
     if (circuit.doorSets) say('Portes fermées au hasard : regarde la carte !', performance.now());
     else if (tunnels.length) say('Tunnels tirés au hasard : regarde la carte !', performance.now());
     else if (online) say(cur === online.me ? 'À toi de jouer !' : 'Tour de ' + players[cur].name, performance.now());
@@ -1725,18 +1725,22 @@
   var corrFlip = false;
   // power-ups : en ligne et en multi local (plusieurs joueurs sur le même téléphone, sans bot ni campagne)
   function localPU() { return !online && n > 1 && !botMode && !camp.active; }
-  // après chaque tir local : une bulle près du prochain joueur, et une près du tireur une fois sur deux (comme en ligne)
-  function localSpawn(shot) {
-    var taken = 0, i, pend = [];
-    for (i = 0; shot.ev && i < shot.ev.length; i++) if (shot.ev[i].t === 'pick') { taken = 1; break; }
-    var targets = [players[(cur + 1) % n]];
-    if (Math.random() < 0.5) targets.push({ x: shot.res.x, y: shot.res.y });
-    for (var ti = 0; ti < targets.length; ti++) {
-      if (bubbles.length - taken + pend.length >= BUB_MAX()) break;
-      var nb = onlSpawn(targets[ti], shot.res, pend);
-      if (nb) pend.push(nb);
+  // multi local : il y a toujours 2 bulles devant chaque joueur (entre 20 et 300 de piste devant lui) ; on complète au début de chaque tour
+  var LOCAL_AHEAD = 2, LOCAL_AHEAD_MAX = 300;
+  function localRefill() {
+    for (var i = 0; i < players.length; i++) {
+      var q = players[i];
+      if (q.done) continue;
+      var s0 = projectS(circuit, q.x, q.y), cnt = 0, k;
+      for (k = 0; k < bubbles.length; k++) {
+        var d = (bubbles[k].s != null ? bubbles[k].s : projectS(circuit, bubbles[k].x, bubbles[k].y)) - s0;
+        if (!bubbles[k].popped && d > 20 && d < LOCAL_AHEAD_MAX) cnt++;
+      }
+      for (var tries = 0; cnt < LOCAL_AHEAD && tries < 10; tries++) {
+        var nb = onlSpawn(q, null, [], true);
+        if (nb) { bubbles.push({ id: nb.id, x: nb.x, y: nb.y, s: nb.s, popped: false }); cnt++; }
+      }
     }
-    for (i = 0; i < pend.length; i++) bubbles.push({ id: pend[i].id, x: pend[i].x, y: pend[i].y, popped: false });
   }
   function hasPower(q) { return !!(q.power || q.spt > 1 || q.follow || q.puActive === 'taille'); }
   // power-ups (en ligne) : une bulle donne le pouvoir d'une voiture pour le prochain tour de celui qui l'a ramassée
@@ -1947,12 +1951,13 @@
     fxTrim(p.id, cfg.kind, 'blob', MARK_KEEP);
   }
   // power-ups (en ligne) : une bulle restée loin derrière le dernier joueur disparaît
-  var BUB_BEHIND = 180;
+  var BUB_BEHIND = 180;   // en ligne : distance derrière le dernier joueur
+  var BUB_BEHIND_LOCAL = 100;   // multi local : une bulle restée plus loin que ça derrière le dernier joueur disparaît
   function cleanBubbles() {
     if (!bubbles.length) return;
     var lo = 1e9, i;
     for (i = 0; i < players.length; i++) lo = Math.min(lo, projectS(circuit, players[i].x, players[i].y));
-    for (i = bubbles.length - 1; i >= 0; i--) if (projectS(circuit, bubbles[i].x, bubbles[i].y) < lo - BUB_BEHIND) bubbles.splice(i, 1);
+    for (i = bubbles.length - 1; i >= 0; i--) if ((bubbles[i].s != null ? bubbles[i].s : projectS(circuit, bubbles[i].x, bubbles[i].y)) < lo - (online ? BUB_BEHIND : BUB_BEHIND_LOCAL)) bubbles.splice(i, 1);
   }
   function ageMarks() {
     var lim = MARK_AGE * players.length, i;
@@ -1963,6 +1968,7 @@
     markClock++;
     ageMarks();
     cleanBubbles();
+    if (localPU()) localRefill();
     corrTurn(now);
     turnStart = null;
     ovHeld = false;
@@ -5142,7 +5148,6 @@
       t0: performance.now(), dur: 250 + total * 2.2
     };
     p.ang = shot.ang;
-    if (localPU()) localSpawn(shot);
     Snd.pencil(cur);
     elHint.style.visibility = 'hidden';
   }

@@ -288,24 +288,24 @@
   var bubSeq = 0;
   function BUB_MAX() { return 2 * n + 1; }
   // une bulle près du joueur `target` : surtout devant lui (70 à 220 de piste), parfois derrière (50 à 110)
-  function onlSpawn(target, res, pend) {
+  function onlSpawn(target, res, pend, aheadOnly) {
     var cum = circuit.cum;
     if (!cum || !target) return null;
     var total = cum[cum.length - 1];
     var s0 = projectS(circuit, target.x, target.y);
     for (var t = 0; t < 80; t++) {
-      var off = Math.random() < 0.25 ? -(50 + Math.random() * 60) : 70 + Math.random() * 150;
+      var off = (!aheadOnly && Math.random() < 0.25) ? -(50 + Math.random() * 60) : (aheadOnly && t >= 40 ? 45 + Math.random() * 230 : 70 + Math.random() * 150);   // multi local : si c'est serré, on cherche plus large
       var sx = s0 + off;
       if (sx < 20 || sx > total - 40) continue;
       var pt = posAtS(sx);
       var x = pt[0], y = pt[1], ok = inTrack(x, y), i;
-      for (i = 0; ok && i < bubbles.length; i++) if (Math.hypot(x - bubbles[i].x, y - bubbles[i].y) < (t < 40 ? 60 : 34)) ok = false;
+      for (i = 0; ok && i < bubbles.length; i++) if (Math.hypot(x - bubbles[i].x, y - bubbles[i].y) < (t < 40 ? 60 : (aheadOnly ? 30 : 34))) ok = false;
       for (i = 0; ok && pend && i < pend.length; i++) if (Math.hypot(x - pend[i].x, y - pend[i].y) < (t < 40 ? 60 : 34)) ok = false;
       for (i = 0; ok && i < players.length; i++) if (Math.hypot(x - players[i].x, y - players[i].y) < 36) ok = false;
       if (ok && res && Math.hypot(x - res.x, y - res.y) < 36) ok = false;
       for (i = 0; ok && i < tunnels.length; i++) if (Math.hypot(x - tunnels[i].x, y - tunnels[i].y) < 45) ok = false;
       for (i = 0; ok && i < puddles.length; i++) if (Math.hypot(x - puddles[i].x, y - puddles[i].y) < puddles[i].r + 25) ok = false;
-      if (ok) return { id: ++bubSeq, x: r2(x), y: r2(y) };
+      if (ok) return { id: ++bubSeq, x: r2(x), y: r2(y), s: sx };
     }
     return null;
   }

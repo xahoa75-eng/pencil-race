@@ -1026,3 +1026,10 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Pas de bulles en solo, en duel contre un bot ni en campagne. Le texte des règles « Power-up » mentionne le multi local.
 - Testé : parties complètes à 1, 2, 3 et 4 joueurs (0 bulle en solo ; les 8 pouvoirs ramassés et activés ; parties terminées), duel contre bot sans bulle, aucune erreur. Le multi en ligne n'est pas modifié.
 - Archive : pencil-race_v213_avant-powerups-local.html
+
+## v215 — Power-ups en multi local : toujours 2 bulles devant chaque joueur
+- En multi local, au début de chaque tour (et au départ), on complète pour qu'il y ait toujours 2 bulles devant chaque joueur qui court encore (entre 20 et 300 de piste devant lui, plutôt que n'importe où). Les bulles qui apparaissent sont toujours devant le joueur concerné ; si la piste est étroite ou encombrée, la recherche s'élargit.
+- Les bulles restées à plus de 100 de piste derrière le dernier joueur disparaissent (180 en ligne, inchangé). Plus de bulle près du tireur ni derrière.
+- Le multi en ligne garde son ancien fonctionnement.
+- Testé : parties complètes à 2 et 4 joueurs sur Zigzag, Canyon, Jardin et Grotte : parties terminées, aucune erreur ; presque tous les tours ont 2 bulles devant chaque joueur (quelques tours à 1 seule, surtout dans le Canyon très étroit) ; aucune bulle à plus de 100 derrière le dernier joueur (sauf juste après un saut de tunnel, nettoyé au tour suivant).
+- Archive : pencil-race_v214_avant-bulles-devant.html
