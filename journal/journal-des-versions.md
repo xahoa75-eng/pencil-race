@@ -1041,3 +1041,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les trois trophées (assets `trophee-or/argent/bronze.png`) sont découpés du dessin de Mika, sur fond transparent. Les voitures verrouillées restent verrouillées comme en Entraînement.
 - Testé : parcours complet par les écrans (circuit → voiture → objectifs → course → fin), médaille de bronze sur le Jardin avec la Gomme (10 coups) enregistrée, trophée affiché sur la carte, aucune erreur. Le Canyon à la Gomme sans médaille (25 coups) affiche bien « Pas de médaille ».
 - Archive : pencil-race_v215_avant-contre-la-montre.html
+
+## v217 — Contre la montre : mêmes menus que l'Entraînement
+- Les choix de circuit et de voiture du Contre la montre s'affichent maintenant comme dans l'Entraînement : cartes en grille de 2 colonnes qui défilent verticalement, au lieu d'une rangée horizontale (il manquait leur mise en forme).
+- Testé : captures comparées Entraînement / Contre la montre (circuits et voitures identiques), aucune erreur.
+- Archive : pencil-race_v216_avant-menus-verticaux.html
