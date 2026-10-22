@@ -1046,3 +1046,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les choix de circuit et de voiture du Contre la montre s'affichent maintenant comme dans l'Entraînement : cartes en grille de 2 colonnes qui défilent verticalement, au lieu d'une rangée horizontale (il manquait leur mise en forme).
 - Testé : captures comparées Entraînement / Contre la montre (circuits et voitures identiques), aucune erreur.
 - Archive : pencil-race_v216_avant-menus-verticaux.html
+
+## v218 — Écran Solo : les images remplissent les cartes
+- Sur l'écran Solo, les illustrations « Entraînement » et « Campagne » débordent maintenant sur la marge crème du cadre (gauche, droite, bas) : plus de vide inutile, l'image prend toute la place. Les images elles-mêmes ont aussi été rognées de leur bord crème intégré.
+- « Contre la montre » : seul le bas est concerné, pour ne pas couper les trophées.
+- Testé : captures de l'écran Solo, cartes cliquables, aucune erreur.
+- Archive : pencil-race_v217_avant-images-icones.html

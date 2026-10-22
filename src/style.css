@@ -500,3 +500,8 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .ttgoal.got { background: #fff6c9; }
 .card .medal { position: absolute; top: 4px; right: 4px; height: 46px; width: auto; pointer-events: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.45)); }
 #winTrophy { display: block; margin: 0 auto 4px; height: 96px; width: auto; }
+
+/* v218 — écran Solo : l'image déborde sur la marge crème du cadre (plus de vide inutile) */
+#s-solo .pic-btn.fr { overflow: visible; }
+#s-solo .pic-btn.fr img { width: calc(100% + var(--H) * .8); max-width: none; margin-left: calc(var(--H) * -.62); margin-right: calc(var(--H) * -.18); margin-bottom: calc(var(--H) * -.4); aspect-ratio: 16 / 11; }
+#s-solo .pic-btn.fr[data-go="tt"] img { width: 100%; margin-left: 0; margin-right: 0; margin-bottom: 0; }
