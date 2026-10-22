@@ -130,6 +130,7 @@ p.note { margin: 0; font-size: 13px; color: var(--muted); }
 }
 .cards { display: flex; flex-shrink: 0; gap: 10px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
 .card {
+  position: relative;
   flex: 0 0 100px;
   scroll-snap-align: start;
   display: flex;
@@ -489,3 +490,13 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #campResetBox .resetrow .fr { flex: 1; width: auto; min-width: 0; }
 #campLevelBox { display: flex; flex-direction: column; gap: 12px; }
 #campLevelBox[hidden] { display: none !important; }
+
+/* contre la montre : objectifs et trophées */
+.ttgoals { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 10px; }
+.ttgoal { display: flex; align-items: center; gap: 14px; padding: 6px 12px; border: 3px solid var(--fg); border-radius: 12px; background: #fff; }
+.ttgoal img { height: 54px; width: auto; flex: none; }
+.ttgoal b { font-size: 20px; display: block; }
+.ttgoal span { font-size: 18px; }
+.ttgoal.got { background: #fff6c9; }
+.card .medal { position: absolute; top: 4px; right: 4px; height: 46px; width: auto; pointer-events: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.45)); }
+#winTrophy { display: block; margin: 0 auto 4px; height: 96px; width: auto; }

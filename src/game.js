@@ -593,6 +593,56 @@
     if (CIRCUITS[settings.circuit] && (CIRCUITS[settings.circuit].doorSets || CIRCUITS[settings.circuit].tunnelSites)) return;
     try { localStorage.setItem(bestKey(), String(v)); } catch (e) {}
   }
+  // ---------- contre la montre : objectifs en nombre de coups [or, argent, bronze] ----------
+  var TT_GOALS = {
+    zigzag: [8, 11, 14], serpentin: [12, 16, 20], canyon: [12, 16, 20], escalier: [8, 11, 14],
+    maelstrom: [20, 26, 33], usine: [15, 19, 25], jardin: [7, 9, 11], grotte: [49, 63, 82]
+  };
+  var TT_NAMES = ['Or', 'Argent', 'Bronze'], TT_IMG = ['@@A:trophee-or.png@@', '@@A:trophee-argent.png@@', '@@A:trophee-bronze.png@@'];
+  function ttTrophySrc(i) { return 'data:image/png;base64,' + TT_IMG[i]; }
+  function ttMedal(cid, shots) {   // 0 = or, 1 = argent, 2 = bronze, -1 = aucune
+    var g = TT_GOALS[cid];
+    if (!g) return -1;
+    for (var i = 0; i < 3; i++) if (shots <= g[i]) return i;
+    return -1;
+  }
+  function ttLoad(cid) {
+    try { var o = JSON.parse(localStorage.getItem('pr-tt-' + cid) || 'null'); if (o && typeof o.shots === 'number') return o; } catch (e) {}
+    return null;
+  }
+  function ttSave(cid, shots, car) {   // garde le meilleur résultat (moins de coups) pour ce circuit
+    var o = ttLoad(cid);
+    if (o && o.shots <= shots) return o;
+    o = { shots: shots, car: car, m: ttMedal(cid, shots) };
+    try { localStorage.setItem('pr-tt-' + cid, JSON.stringify(o)); } catch (e) {}
+    return o;
+  }
+  function ttRefresh() {
+    var cid = settings.circuit, g = TT_GOALS[cid] || [0, 0, 0], html = '', i;
+    var best = ttLoad(cid);
+    for (i = 0; i < 3; i++) {
+      html += '<div class="ttgoal' + (best && best.m !== -1 && best.m <= i ? ' got' : '') + '"><img alt="" src="' + ttTrophySrc(i) + '"><div><b>' + TT_NAMES[i] + '</b><span>' + g[i] + ' coups ou moins</span></div></div>';
+    }
+    document.getElementById('ttGoals').innerHTML = html;
+    document.getElementById('ttCircuitName').textContent = 'Circuit : ' + CIRCUITS[cid].name;
+    document.getElementById('ttRecap').textContent = 'Circuit : ' + CIRCUITS[cid].name + ' · Ta voiture : ' + CARS[settings.playerCar].name;
+    document.getElementById('diffDesc3').textContent = DIFF_DESC[settings.diff];
+    document.getElementById('ttBest').textContent = best ? 'Ton meilleur : ' + plural(best.shots) + ' (' + (CARS[best.car] ? CARS[best.car].name : '') + ')' + (best.m !== -1 ? ' · ' + TT_NAMES[best.m] : '') : 'Pas encore de résultat sur ce circuit.';
+    // trophée de chaque circuit sur les cartes
+    var cards = document.querySelectorAll('#cirTT .card');
+    for (var k = 0; k < cards.length; k++) {
+      var old = cards[k].querySelector('.medal');
+      if (old) old.parentNode.removeChild(old);
+      var bb = ttLoad(cards[k].getAttribute('data-circuit'));
+      if (bb && bb.m !== -1) {
+        var im = document.createElement('img');
+        im.className = 'medal';
+        im.alt = TT_NAMES[bb.m];
+        im.src = ttTrophySrc(bb.m);
+        cards[k].appendChild(im);
+      }
+    }
+  }
   function oppKey() {
     if (settings.botCar === 'none') return 'none';
     if (camp.active) return settings.botCar;      // campagne : le boss est toujours sa voiture, même face à la même
@@ -736,6 +786,7 @@
     });
   }
   buildCards('cirSolo');
+  buildCards('cirTT');
   buildCards('cirMulti');
   buildCards('cirOnline');
   campBuildCards();
@@ -1191,7 +1242,7 @@
     car(g, cvs.width / 2, cvs.height / 2, -0.35, sheet.car, 1.9);
   }
   function buildCarPickers() {
-    [['carsMine', 'mine'], ['carsBot', 'bot'], ['carsCamp', 'camp']].forEach(function (cfg) {
+    [['carsMine', 'mine'], ['carsTT', 'mine'], ['carsBot', 'bot'], ['carsCamp', 'camp']].forEach(function (cfg) {
       var box = document.getElementById(cfg[0]);
       box.innerHTML = '';
       if (cfg[1] === 'bot') {
@@ -1271,7 +1322,7 @@
   frameIcons();
 
   // ---------- navigation ----------
-  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'rpowerup', 'campaign', 'campaign2', 'campaign3', 'game'];
+  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'tt', 'tt2', 'tt3', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'rpowerup', 'campaign', 'campaign2', 'campaign3', 'game'];
   var stack = [], currentScreen = 'main';
 
   // écran d'accueil : le cahier remplit l'écran (zoom limité pour ne pas trop rogner sur un écran large)
@@ -1357,6 +1408,7 @@
     document.getElementById('oRecap2').textContent = settings.players + ' joueurs · Circuit : ' + CIRCUITS[settings.circuit].name;
     document.getElementById('diffDesc4').textContent = DIFF_DESC[settings.diff];
     document.getElementById('diffDesc5').textContent = DIFF_DESC[settings.diff];
+    ttRefresh();
     campRefresh();
     // en Hard, le bouton GO est obligatoire (il lance le chrono) : l'option est grisée et bloquée sur « GO activé »
     var hard = settings.diff === 'hard';
@@ -1438,6 +1490,7 @@
   var lastChance = false, finishers = [], turnStart = null;
   var paused = false, pauseAt = 0;
   var botMode = false, lastStart = { count: 1, bot: false }, botAt = 0;
+  var ttMode = false, ttPending = false;   // « contre la montre » (solo, médailles)
   var online = null;      // partie en ligne en cours (voir online.js) : { role, me, ... }
   var forced = null;      // tirage imposé par l'hôte en ligne : { door, tun }
   var lastDoor = null, lastTun = null;   // ce qui a été tiré au début de la partie (envoyé aux invités)
@@ -1511,7 +1564,7 @@
       s1.hidden = false;
       s2.hidden = true;
       elShots.textContent = players[0].shots + (players[0].spt > 1 ? ' (' + Math.max(0, players[0].shotsLeft) + '/' + players[0].spt + ')' : '');
-      var b = getBest();
+      var b = ttMode ? (ttLoad(settings.circuit) || {}).shots : getBest();
       elBest.textContent = b == null ? '–' : b;
     } else {
       s1.hidden = true;
@@ -1620,7 +1673,9 @@
     if (circuit.doorSets) pickDoors();
     if (circuit.tunnelSites) pickTunnels(); else tunnels = [];
     botMode = !!bot;
-    lastStart = { count: count, bot: botMode };
+    if (!ttPending) ttMode = false;
+    ttPending = false;
+    lastStart = { count: count, bot: botMode, tt: ttMode };
     n = botMode ? 2 : count;
     players = [];
     var mine = CARS[settings.playerCar] || CARS.normale;
@@ -5157,7 +5212,24 @@
     var title = document.getElementById('winTitle');
     var text = document.getElementById('winText');
     var extra = document.getElementById('winBest');
-    if (n === 1) {
+    var wt = document.getElementById('winTrophy');
+    wt.hidden = true;
+    if (n === 1 && ttMode) {
+      var q0 = players[0], md = ttMedal(circuit.id, q0.shots), prev = ttLoad(circuit.id), sv = ttSave(circuit.id, q0.shots, settings.playerCar);
+      title.style.color = '#151515';
+      text.textContent = plural(q0.shots);
+      if (md !== -1) {
+        wt.src = ttTrophySrc(md);
+        wt.hidden = false;
+        title.textContent = md === 0 ? 'Médaille d\'or !' : md === 1 ? 'Médaille d\'argent !' : 'Médaille de bronze !';
+        var dn = q0.shots - TT_GOALS[circuit.id][md > 0 ? md - 1 : 0];
+        extra.textContent = md === 0 ? 'Le plus beau trophée : bravo !' : 'Encore ' + dn + (dn > 1 ? ' coups' : ' coup') + ' de moins pour ' + (md === 1 ? 'l\'or' : 'l\'argent') + '.';
+      } else {
+        title.textContent = 'Arrivée !';
+        extra.textContent = 'Pas de médaille : il faut ' + TT_GOALS[circuit.id][2] + ' coups ou moins pour le bronze.';
+      }
+      if (prev && prev.shots < q0.shots) extra.textContent += ' · Ton meilleur : ' + plural(prev.shots);
+    } else if (n === 1) {
       var p0 = players[0];
       var b = getBest();
       if (b == null || p0.shots < b) { b = p0.shots; setBest(b); }
@@ -5509,7 +5581,8 @@
       else settings.botCar = el.getAttribute('data-car');
       saveSettings();
       refresh();
-      if (currentScreen === 'training2') go('training3');
+      if (currentScreen === 'tt2') go('tt3');
+      else if (currentScreen === 'training2') go('training3');
       else if (currentScreen === 'training3') go('training4');
       return;
     }
@@ -5517,7 +5590,8 @@
       settings.circuit = el.getAttribute('data-circuit');
       saveSettings();
       refresh();
-      if (currentScreen === 'training') go('training2');
+      if (currentScreen === 'tt') go('tt2');
+      else if (currentScreen === 'training') go('training2');
       else if (currentScreen === 'multi3') go('multi4');
       else if (currentScreen === 'online3') go('online4');
       return;
@@ -5531,11 +5605,12 @@
       return;
     }
     var act = el.getAttribute('data-act');
-    if (act === 'play-training') startGame(1, settings.botCar !== 'none');
+    if (act === 'play-tt') { ttMode = true; ttPending = true; startGame(1, false); }
+    else if (act === 'play-training') startGame(1, settings.botCar !== 'none');
     else if (act === 'play-multi') startGame(settings.players, false);
     else if (act === 'resume') resumeGame();
     else if (act === 'sound') { settings.sound = settings.sound === 'non' ? 'oui' : 'non'; saveSettings(); soundLabel(); }
-    else if (act === 'restart') { if (online) onlineRestart(); else startGame(lastStart.count, lastStart.bot); }
+    else if (act === 'restart') { if (online) onlineRestart(); else { ttMode = !!lastStart.tt; ttPending = ttMode; startGame(lastStart.count, lastStart.bot); } }
     else if (act === 'quit') {
       if (online) onlineLeave();
       paused = false;

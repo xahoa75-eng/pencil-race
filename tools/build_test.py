@@ -12,7 +12,7 @@ hook = """
     inTrack: inTrack, progressOf: progressOf, simulateShot: simulateShot, botPlan: botPlan,
     levelTarget: levelTarget, tunnels: function () { return tunnels; }, pickTunnels: pickTunnels,
     O: function () { return online; }, P: function () { return { players: players, cur: cur, anim: anim, finished: finished, n: n, tunnels: tunnels.length, doors: circuit.closedDoors, lastDoor: lastDoor, lastTun: lastTun, pus: players.map(function (q) { return (q.pu || '-') + '/' + (q.puActive || '-'); }).join(), bub: bubbles.map(function (b) { return b.id + '@' + Math.round(b.x) + ',' + Math.round(b.y); }).join(';') }; },
-    B: function () { return bubbles; }, cleanBubbles: cleanBubbles, win: win, plumeSpot: plumeSpot, afterShot: afterShot, dropPuddle: dropPuddle, applyFx: applyFx, startTurn: startTurn, clock: function () { return markClock; }, camp: camp, carUnlocked: carUnlocked, campLevel: campLevel, campOpen: campOpen, localRefill: function () { localRefill(); }, projectSX: projectS, onlSpawn: onlSpawn
+    B: function () { return bubbles; }, cleanBubbles: cleanBubbles, win: win, plumeSpot: plumeSpot, afterShot: afterShot, dropPuddle: dropPuddle, applyFx: applyFx, startTurn: startTurn, clock: function () { return markClock; }, camp: camp, carUnlocked: carUnlocked, campLevel: campLevel, campOpen: campOpen, ttMedal: ttMedal, TT_GOALS: TT_GOALS, localRefill: function () { localRefill(); }, projectSX: projectS, onlSpawn: onlSpawn
   };
 """
 open(dst,'w',encoding='utf-8').write(s[:k]+hook+s[k:])

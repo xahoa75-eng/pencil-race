@@ -1033,3 +1033,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le multi en ligne garde son ancien fonctionnement.
 - Testé : parties complètes à 2 et 4 joueurs sur Zigzag, Canyon, Jardin et Grotte : parties terminées, aucune erreur ; presque tous les tours ont 2 bulles devant chaque joueur (quelques tours à 1 seule, surtout dans le Canyon très étroit) ; aucune bulle à plus de 100 derrière le dernier joueur (sauf juste après un saut de tunnel, nettoyé au tour suivant).
 - Archive : pencil-race_v214_avant-bulles-devant.html
+
+## v216 — Nouveau mode solo « Contre la montre » (médailles)
+- Nouveau bouton « Contre la montre » dans Solo (image des trois trophées de Mika). Parcours comme l'Entraînement, sans adversaire : 1. circuit, 2. voiture, 3. dernier menu avec les trois objectifs (or, argent, bronze, en nombre de coups maximum), le choix du pilotage (Facile / Normal / Hard) et le bouton Lancer.
+- Objectifs (identiques pour toutes les voitures, à tester par Mika) — or / argent / bronze : Zigzag 8/11/14, Serpentin 12/16/20, Canyon 12/16/20, Escalier 8/11/14, Maelström 20/26/33, Usine 15/19/25, Jardin 7/9/11, Grotte 49/63/82.
+- À l'arrivée : trophée et message (médaille d'or, d'argent ou de bronze, ou « Pas de médaille »), avec combien de coups il manque pour la médaille du dessus. Le meilleur résultat par circuit (coups, voiture, médaille) est enregistré sur le téléphone (clé `pr-tt-<circuit>`), affiché sur le trophée de la carte du circuit et dans le menu de lancement ; le « Record » en haut de l'écran de jeu est celui du Contre la montre. Les records de l'Entraînement ne sont pas touchés.
+- Les trois trophées (assets `trophee-or/argent/bronze.png`) sont découpés du dessin de Mika, sur fond transparent. Les voitures verrouillées restent verrouillées comme en Entraînement.
+- Testé : parcours complet par les écrans (circuit → voiture → objectifs → course → fin), médaille de bronze sur le Jardin avec la Gomme (10 coups) enregistrée, trophée affiché sur la carte, aucune erreur. Le Canyon à la Gomme sans médaille (25 coups) affiche bien « Pas de médaille ».
+- Archive : pencil-race_v215_avant-contre-la-montre.html

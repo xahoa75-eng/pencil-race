@@ -38,6 +38,7 @@
     <h2>Solo</h2>
     <button class="pic-btn" type="button" data-go="training" aria-label="Entraînement"><img alt="" src="data:image/jpeg;base64,@@A:solo-entrainement.jpg@@"><span>Entraînement</span></button>
     <button class="pic-btn" type="button" data-go="campaign" aria-label="Campagne"><img alt="" src="data:image/jpeg;base64,@@A:solo-campagne.jpg@@"><span>Campagne</span></button>
+    <button class="pic-btn" type="button" data-go="tt" aria-label="Contre la montre"><img alt="" src="data:image/jpeg;base64,@@A:solo-contre-la-montre.jpg@@"><span>Contre la montre</span></button>
   </div>
 </section>
 
@@ -139,6 +140,43 @@
     </div>
     <button class="launch" type="button" data-act="play-training" aria-label="Lancer"><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
     <p class="note" id="soloRecord"></p>
+  </div>
+</section>
+
+<!-- CONTRE LA MONTRE : 1/3 le circuit -->
+<section class="screen" id="s-tt">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Contre la montre</h2>
+    <h3>Choisis ton circuit</h3>
+    <div class="cards" id="cirTT"></div>
+  </div>
+</section>
+
+<!-- CONTRE LA MONTRE : 2/3 ta voiture -->
+<section class="screen" id="s-tt2">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Contre la montre</h2>
+    <p class="note" id="ttCircuitName"></p>
+    <h3>Choisis ta voiture</h3>
+    <div class="cars" id="carsTT"></div>
+  </div>
+</section>
+
+<!-- CONTRE LA MONTRE : 3/3 pilotage et objectifs -->
+<section class="screen" id="s-tt3">
+  <div class="panel">
+    <button class="back" type="button" data-back>‹ Retour</button>
+    <h2>Contre la montre</h2>
+    <p class="note" id="ttRecap"></p>
+    <h3>Objectifs</h3>
+    <div class="ttgoals" id="ttGoals"></div>
+    <h3>Pilotage : difficulté</h3>
+    <div class="seg imgseg" data-key="diff" data-clone="diff"></div>
+    <p class="note" id="diffDesc3"></p>
+    <button class="launch" type="button" data-act="play-tt" aria-label="Lancer"><img alt="" src="data:image/jpeg;base64,@@A:lancer.jpg@@"><span>Lancer</span></button>
+    <p class="note" id="ttBest"></p>
   </div>
 </section>
 
@@ -416,6 +454,7 @@
 
 <div class="overlay" id="win" role="dialog" aria-live="polite">
   <div class="box fr" data-title="Fin de course">
+    <img id="winTrophy" alt="" hidden>
     <h2 id="winTitle">Arrivée !</h2>
     <p id="winText"></p>
     <p id="winBest"></p>
