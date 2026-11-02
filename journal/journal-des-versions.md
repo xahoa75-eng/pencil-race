@@ -1060,3 +1060,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Écran Solo : les images remplissent tout l'intérieur du cadre jusqu'au trait (coins du bas arrondis), « Contre la montre » reste à sa taille.
 - Testé : captures Solo et choix du circuit, aucune erreur. Pas encore vérifié : tous les autres écrans en détail.
 - Archive : pencil-race_v218_avant-icones-blancs.html
+
+## v220 — Icône des Power-up : la bille
+- Mika valide les icônes blancs et le cadre neutre (v219).
+- L'image « Power-up » de l'écran Règles est remplacée par le dessin de la bille de Mika (fond ramené au blanc, proportions du cadre ajustées).
+- Testé : capture de l'écran Règles, aucune erreur.
+- Archive : pencil-race_v219_avant-bille-powerup.html
