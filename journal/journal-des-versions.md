@@ -1052,3 +1052,11 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - « Contre la montre » : seul le bas est concerné, pour ne pas couper les trophées.
 - Testé : captures de l'écran Solo, cartes cliquables, aucune erreur.
 - Archive : pencil-race_v217_avant-images-icones.html
+
+## v219 — Icônes en blanc et nouveau cadre neutre
+- Les 74 images (voitures, cartes, casques, volants, circuits, joueurs, drapeaux GO, son, règles, Solo, jouer en ligne/local, créer/rejoindre, lancer) ont perdu leur ton beige : la teinte du papier est ramenée au blanc, les dessins gardent leurs couleurs. Planche de validation de Mika : `planche-icones-blanc.png`.
+- Nouveau cadre générique (`cadre.png`) : style net et neutre (plus d'effet crayon), coins bien arrondis, sans damier, trait sous le titre. Choisi par Mika parmi deux tests.
+- Fond des boutons et cartes à cadre : blanc (au lieu du beige `#f6f3ea` / `#f1f1e9`).
+- Écran Solo : les images remplissent tout l'intérieur du cadre jusqu'au trait (coins du bas arrondis), « Contre la montre » reste à sa taille.
+- Testé : captures Solo et choix du circuit, aucune erreur. Pas encore vérifié : tous les autres écrans en détail.
+- Archive : pencil-race_v218_avant-icones-blancs.html

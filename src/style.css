@@ -366,7 +366,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
   border-style: solid !important; border-color: transparent !important;
   border-width: var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) !important;
   border-image: url(data:image/png;base64,@@A:cadre.png@@) 67 48 44 62 / var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) stretch !important;
-  border-radius: 0 !important; background: #f6f3ea !important; overflow: visible !important;
+  border-radius: 0 !important; background: #ffffff !important; overflow: visible !important;
   box-shadow: none !important; padding: 0 !important; margin: 0;
 }
 .fr::before {
@@ -395,7 +395,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .pic-btn.soon.fr { opacity: .85; }
 .fc-f.fr, .fc-b.fr { --H: 28px; --fs: 16px; }
 .fc-f.fr, .fc-b.fr { position: absolute !important; inset: 0; margin: 0 !important; }
-.fc-b.fr { background: #f6f3ea !important; color: #222; }
+.fc-b.fr { background: #ffffff !important; color: #222; }
 .fc-b.fr .fc-txt { padding: 4px 2px 4px; margin: 0 -9px 0 -16px; font-size: 11px; line-height: 1.25; color: #222; }
 .fc-b.fr .fc-txt b { color: #555; font-size: 10px; }
 .fc-f.fr .fc-name { display: none; }
@@ -408,7 +408,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .carbtn.pic.fr .carpic { width: calc(100% + 34px); margin-left: -20px; background: transparent !important; }
 .fc-f.fr canvas { width: calc(100% + 34px) !important; max-width: none; margin-left: -20px; flex: 1; background: transparent; }
 .carbtn.pic.fr .carpic { width: calc(100% + 24px); margin-left: -13px; }
-.carbtn.pic.fr, .fc-f.fr:has(canvas) { background: #f1f1e9 !important; }
+.carbtn.pic.fr, .fc-f.fr:has(canvas) { background: #ffffff !important; }
 
 /* Multi 1/4 : les deux modes */
 .pic-btn.mode-pic { width: 80%; margin: 0 auto; flex: none; }
@@ -453,12 +453,12 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .overlay .box.fr { --H: 34px; --fs: 22px; width: 82%; max-width: 330px; box-sizing: border-box; padding: 14px 14px 12px !important; color: #2e2e32; }
 .overlay .box.fr > h2 { font: 400 28px/1.1 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; }
 .overlay .box.fr p { font: 400 18px/1.25 'PRHand', 'Patrick Hand SC', system-ui, sans-serif; }
-.overlay .box.fr button.fr { background: #f6f3ea !important; color: inherit; }
+.overlay .box.fr button.fr { background: #ffffff !important; color: inherit; }
 .overlay .box.fr { gap: 16px; margin-top: 20px; }
 .overlay .box.fr > .fr.frb { margin: 0; }
 .carbtn.none.fr, .fr.frbox.none { grid-column: 1 / -1; --H: 26px; --fs: 17px; padding: 0 !important; }
 .fr.frbox.none .frlink-txt { padding: 8px 14px 12px; }
-#ovBtn { width: 54px; height: 54px; border-radius: 50%; background: #f6f3ea; border: 3px solid #2e2e32; box-shadow: inset 0 0 0 2px #f6f3ea, inset 0 0 0 3px #8a877d, 0 2px 4px rgba(0,0,0,.25); }
+#ovBtn { width: 54px; height: 54px; border-radius: 50%; background: #ffffff; border: 3px solid #2e2e32; box-shadow: inset 0 0 0 2px #ffffff, inset 0 0 0 3px #8a877d, 0 2px 4px rgba(0,0,0,.25); }
 #ovBtn.held { background: #e4e0d2; transform: scale(1.12); }
 #goBtn.fr { --H: 34px; --fs: 20px; border-radius: 0 !important; }
 #goBtn.fr > span { display: block !important; text-align: center; }
@@ -474,7 +474,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .carbtn.locked .carpic::after { content: '🔒'; position: absolute; right: 4px; top: 2px; font-size: 18px; }
 
 /* Campagne : crayons boss à la place des photos de circuit */
-.fr-boss { background: #f1f1e9 !important; }
+.fr-boss { background: #ffffff !important; }
 .fr-boss img.bossimg { display: block; width: calc(100% + 34px); margin-left: -20px; height: auto; aspect-ratio: 340 / 360; max-width: none; }
 
 /* Campagne : grande coche verte (boss battu), en bas à droite du cadre */
@@ -501,7 +501,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .card .medal { position: absolute; top: 4px; right: 4px; height: 46px; width: auto; pointer-events: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.45)); }
 #winTrophy { display: block; margin: 0 auto 4px; height: 96px; width: auto; }
 
-/* v218 — écran Solo : l'image déborde sur la marge crème du cadre (plus de vide inutile) */
+/* v218/v219 — écran Solo : l'image remplit tout l'intérieur du cadre (jusqu'au trait) */
 #s-solo .pic-btn.fr { overflow: visible; }
-#s-solo .pic-btn.fr img { width: calc(100% + var(--H) * .8); max-width: none; margin-left: calc(var(--H) * -.62); margin-right: calc(var(--H) * -.18); margin-bottom: calc(var(--H) * -.4); aspect-ratio: 16 / 11; }
-#s-solo .pic-btn.fr[data-go="tt"] img { width: 100%; margin-left: 0; margin-right: 0; margin-bottom: 0; }
+#s-solo .pic-btn.fr img { width: calc(100% + var(--H) * 1.36); max-width: none; margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50); aspect-ratio: 16 / 11; border-radius: 0 0 14px 14px; }
+#s-solo .pic-btn.fr[data-go="tt"] img { width: 100%; margin-left: 0; margin-right: 0; margin-bottom: 0; border-radius: 0; }
