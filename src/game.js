@@ -1498,7 +1498,7 @@
   var bubbles = [];       // bulles « ? » (power-ups, multi en ligne) : { id, x, y, popped }
   var BUB_R = 13;
   var BUB_IMG = new Image();
-  BUB_IMG.src = 'data:image/png;base64,@@A:bulle-taille-crayon.png@@';
+  BUB_IMG.src = 'data:image/png;base64,@@A:bulle-cadeau.png@@';
   var tunnels = [];       // tunnels de la Grotte (tirés au hasard à chaque partie) : { id, kind: 'in' (petite bouche) | 'out' (grande bouche), x, y, r, to: [x, y] }
   var markClock = 0;      // compteur de tours : sert à faire vieillir les flaques et traînées
   var MARK_KEEP = 2;      // la Plume, la Colle et le Correcteur : 2 flaques au plus sur la piste (la plus ancienne disparaît)

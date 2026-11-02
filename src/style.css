@@ -366,7 +366,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
   border-style: solid !important; border-color: transparent !important;
   border-width: var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) !important;
   border-image: url(data:image/png;base64,@@A:cadre.png@@) 67 48 44 62 / var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) stretch !important;
-  border-radius: 0 !important; background: #ffffff !important; overflow: visible !important;
+  border-radius: calc(var(--H) * .45) !important; background: #ffffff !important; overflow: visible !important;
   box-shadow: none !important; padding: 0 !important; margin: 0;
 }
 .fr::before {

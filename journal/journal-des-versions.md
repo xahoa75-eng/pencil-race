@@ -1077,3 +1077,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le bouton « Power-up » du menu Règles affiche maintenant le cadeau (cadre dessiné retiré, fond blanc). Fichier `regles-powerup.jpg` ; la bulle vide est gardée dans `bulle-vide.jpg`.
 - Testé : captures du menu Règles et du menu Power-up, aucune erreur.
 - Archive : pencil-race_v221_avant-menu-powerup-bulles.html
+
+## v223 — Bulle cadeau sur la route
+- Le power-up qui apparaît sur la route en multi est maintenant la bulle de savon avec le cadeau arc-en-ciel (image `bulle-cadeau.png`, fond transparent) à la place des copeaux. Même taille, même oscillation et même ombre.
+- Correction : depuis le fond blanc de la v219, les boutons à cadre (Menu, etc.) avaient des coins blancs carrés qui dépassaient du cadre arrondi. Le fond suit maintenant les coins arrondis.
+- Testé : capture d'une partie multi local sur le Serpentin (2 bulles devant le joueur), aucune erreur.
+- Archive : pencil-race_v222_avant-bulle-cadeau.html
