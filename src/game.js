@@ -1155,14 +1155,14 @@
     parent.appendChild(nm);
   }
   var PU_CARDS = [
-    { name: 'Le Taille-crayon', img: 'data:image/webp;base64,@@A:pu-taille.webp@@', txt: "Double la force de ton prochain tir." },
-    { name: 'La Bille', img: 'data:image/webp;base64,@@A:pu-bille.webp@@', txt: "Au prochain tour, ta voiture rebondit sur les murs, et chaque rebond (jusqu'à trois) lui redonne un peu de vitesse." },
-    { name: 'La Gomme', img: 'data:image/webp;base64,@@A:pu-gomme.webp@@', txt: "Au prochain tour, ta voiture traverse les murs sans rien perdre de sa force." },
-    { name: 'La Plume', img: 'data:image/webp;base64,@@A:pu-plume.webp@@', txt: "Après ton prochain tir, tu poses une flaque d'encre : la voiture qui roule dedans s'arrête net." },
-    { name: 'Le Porte-mine', img: 'data:image/webp;base64,@@A:pu-portemine.webp@@', txt: "Au prochain tour, trois petits tirs, chacun trois fois moins fort qu'un tir normal." },
-    { name: 'Le Compas', img: 'data:image/webp;base64,@@A:pu-compas.webp@@', txt: "Au prochain tour, ta trajectoire suit la courbe de la piste, mais ta voiture porte un peu moins loin (90 % de la force)." },
-    { name: "L'Agrafeuse", img: 'data:image/webp;base64,@@A:pu-agrafeuse.webp@@', txt: "Au prochain tour, ta voiture échange sa place avec celle du premier. Le premier ne peut jamais l'avoir." },
-    { name: 'La Colle', img: 'data:image/webp;base64,@@A:pu-colle.webp@@', txt: "Ton prochain tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant." }
+    { name: 'Le Taille-crayon', img: 'data:image/jpeg;base64,@@A:pu2-taille.jpg@@', txt: "Double la force de ton prochain tir." },
+    { name: 'La Bille', img: 'data:image/jpeg;base64,@@A:pu2-bille.jpg@@', txt: "Au prochain tour, ta voiture rebondit sur les murs, et chaque rebond (jusqu'à trois) lui redonne un peu de vitesse." },
+    { name: 'La Gomme', img: 'data:image/jpeg;base64,@@A:pu2-gomme.jpg@@', txt: "Au prochain tour, ta voiture traverse les murs sans rien perdre de sa force." },
+    { name: 'La Plume', img: 'data:image/jpeg;base64,@@A:pu2-plume.jpg@@', txt: "Après ton prochain tir, tu poses une flaque d'encre : la voiture qui roule dedans s'arrête net." },
+    { name: 'Le Porte-mine', img: 'data:image/jpeg;base64,@@A:pu2-portemine.jpg@@', txt: "Au prochain tour, trois petits tirs, chacun trois fois moins fort qu'un tir normal." },
+    { name: 'Le Compas', img: 'data:image/jpeg;base64,@@A:pu2-compas.jpg@@', txt: "Au prochain tour, ta trajectoire suit la courbe de la piste, mais ta voiture porte un peu moins loin (90 % de la force)." },
+    { name: "L'Agrafeuse", img: 'data:image/jpeg;base64,@@A:pu2-agrafeuse.jpg@@', txt: "Au prochain tour, ta voiture échange sa place avec celle du premier. Le premier ne peut jamais l'avoir." },
+    { name: 'La Colle', img: 'data:image/jpeg;base64,@@A:pu2-colle.jpg@@', txt: "Ton prochain tir laisse une traînée collante : la voiture qui la traverse tire deux fois moins fort au coup suivant." }
   ];
   function buildRulesCards() {
     var gc = document.getElementById('rgCars');

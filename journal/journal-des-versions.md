@@ -1071,3 +1071,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - L'image « Power-up » de l'écran Règles devient la bulle de savon dessinée par Mika (fond ramené au blanc, proportions du cadre ajustées). Elle remplace la bille de la v220.
 - Testé : capture de l'écran Règles, aucune erreur.
 - Archive : pencil-race_v220_avant-bulle-powerup.html
+
+## v222 — Menu Power-up : bulles de savon avec les objets
+- Les 8 cartes du menu Power-up (Règles) utilisent les nouvelles images : ta bulle de savon avec l'objet au centre (taille-crayon, bille, gomme, plume, porte-mine, compas, agrafeuse, colle). Objets de Gemini découpés puis posés dans la même bulle, à des tailles homogènes. Fichiers `pu2-*.jpg` (les anciens `pu-*.webp` restent dans le dépôt).
+- Le bouton « Power-up » du menu Règles affiche maintenant le cadeau (cadre dessiné retiré, fond blanc). Fichier `regles-powerup.jpg` ; la bulle vide est gardée dans `bulle-vide.jpg`.
+- Testé : captures du menu Règles et du menu Power-up, aucune erreur.
+- Archive : pencil-race_v221_avant-menu-powerup-bulles.html
