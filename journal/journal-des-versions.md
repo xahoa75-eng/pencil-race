@@ -1066,3 +1066,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - L'image « Power-up » de l'écran Règles est remplacée par le dessin de la bille de Mika (fond ramené au blanc, proportions du cadre ajustées).
 - Testé : capture de l'écran Règles, aucune erreur.
 - Archive : pencil-race_v219_avant-bille-powerup.html
+
+## v221 — Icône des Power-up : la bulle de savon
+- L'image « Power-up » de l'écran Règles devient la bulle de savon dessinée par Mika (fond ramené au blanc, proportions du cadre ajustées). Elle remplace la bille de la v220.
+- Testé : capture de l'écran Règles, aucune erreur.
+- Archive : pencil-race_v220_avant-bulle-powerup.html
