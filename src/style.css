@@ -510,8 +510,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #s-rules { --rch: max(60px, calc((100vh - 424px) / 3)); --rch: max(60px, calc((100dvh - 424px) / 3)); }
 #s-rules .pic-btn.rc-pic { width: fit-content; max-width: 100%; overflow: visible; }
 #s-rules .pic-btn.rc-pic.fr img {
-  height: calc(var(--rch) + var(--H) * .62); width: calc(var(--rch) * 1.2 + var(--H) * 1.4); max-width: none;
+  height: calc(var(--rch) + var(--H) * .62); width: calc((var(--rch) + var(--H) * .62) * 1.2); max-width: none;
   margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50);
-  aspect-ratio: auto; object-fit: cover; border-radius: 0 0 14px 14px;
+  aspect-ratio: auto; object-fit: contain; border-radius: 0 0 14px 14px;
 }
-#s-rules .pic-btn.rc-pic[data-go="rpowerup"].fr img { object-fit: contain; }

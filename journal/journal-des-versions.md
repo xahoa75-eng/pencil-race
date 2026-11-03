@@ -1099,3 +1099,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Voitures et Circuits : les images sont rognées de leur marge blanche, et le dessin remplit tout l'intérieur du cadre (il déborde sur la marge du cadre jusqu'au trait, comme sur l'écran Solo). Plus d'espace blanc à gauche, à droite et en bas. Power-up (bulle) inchangé, elle reste entière.
 - Les trois cartes tiennent toujours dans l'écran sans défiler (écrans 393 × 851 et 360 × 640 testés, aucune erreur).
 - Archive : pencil-race_v225_avant-regles-dessins-agrandis.html
+
+## v227 — Menu Règles : images entières
+- Mika : en v226 les dessins Voitures et Circuits étaient coupés sur les bords. Ils s'affichent maintenant en entier (plus aucun rognage), tout en remplissant l'intérieur du cadre jusqu'au trait. La carte s'ajuste aux proportions du dessin.
+- Testé : écrans 393 × 851 et 360 × 640, dessins entiers, aucun défilement, aucune erreur.
+- Archive : pencil-race_v226_avant-images-entieres.html
