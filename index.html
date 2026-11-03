@@ -387,7 +387,7 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 .fr::before {
   content: attr(data-title); position: absolute; z-index: 2; pointer-events: none;
   top: calc(var(--H) * -1); height: var(--H); left: calc(var(--H) * -.925); right: calc(var(--H) * -.72);
-  box-sizing: border-box; padding-left: calc(var(--H) * .925); padding-right: 2px;
+  box-sizing: border-box; padding: 0 8px;
   display: flex; align-items: center; justify-content: center;
   font: 400 var(--fs)/1 'PRHand', 'Patrick Hand SC', 'Comic Sans MS', cursive, sans-serif; letter-spacing: .06em; text-transform: uppercase;
   color: #3a3a3e; white-space: nowrap; overflow: hidden;
@@ -517,9 +517,15 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #winTrophy { display: block; margin: 0 auto 4px; height: 96px; width: auto; }
 
 /* v218/v219 — écran Solo : l'image remplit tout l'intérieur du cadre (jusqu'au trait) */
-#s-solo .pic-btn.fr { overflow: visible; }
-#s-solo .pic-btn.fr img { width: calc(100% + var(--H) * 1.36); max-width: none; margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50); aspect-ratio: 16 / 11; border-radius: 0 0 14px 14px; }
-#s-solo .pic-btn.fr[data-go="tt"] img { width: 100%; margin-left: 0; margin-right: 0; margin-bottom: 0; border-radius: 0; }
+#s-solo { --sch: max(60px, calc((100vh - 392px) / 3)); --sch: max(60px, calc((100dvh - 392px) / 3)); }
+#s-solo .pic-btn.fr { --fs: clamp(13px, calc(var(--sch) * .13), 22px); }
+#s-solo .pic-btn.fr::before { letter-spacing: .02em; }
+#s-solo .pic-btn.fr { width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto; overflow: visible; }
+#s-solo .pic-btn.fr img {
+  height: calc(var(--sch) + var(--H) * .62); width: calc((var(--sch) + var(--H) * .62) * 1.045); max-width: none;
+  margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50);
+  aspect-ratio: auto; object-fit: contain; border-radius: 0 0 14px 14px;
+}
 
 /* v225/v226 — menu Règles : les 3 cartes tiennent dans l'écran sans défiler (hauteur de l'image = (hauteur de l'écran - 400px) / 3), toutes de même taille ; le dessin remplit tout l'intérieur du cadre (déborde sur la marge du cadre jusqu'au trait) */
 #s-rules { --rch: max(60px, calc((100vh - 424px) / 3)); --rch: max(60px, calc((100dvh - 424px) / 3)); }

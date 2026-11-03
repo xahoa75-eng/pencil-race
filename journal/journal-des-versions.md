@@ -1104,3 +1104,10 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Mika : en v226 les dessins Voitures et Circuits étaient coupés sur les bords. Ils s'affichent maintenant en entier (plus aucun rognage), tout en remplissant l'intérieur du cadre jusqu'au trait. La carte s'ajuste aux proportions du dessin.
 - Testé : écrans 393 × 851 et 360 × 640, dessins entiers, aucun défilement, aucune erreur.
 - Archive : pencil-race_v226_avant-images-entieres.html
+
+## v228 — Menu Solo : comme le menu Règles
+- Les trois cartes du menu Solo (Entraînement, Campagne, Contre la montre) tiennent dans l'écran sans défiler, sont de même taille et centrées. Les dessins sont entiers (plus de rognage) et remplissent l'intérieur du cadre jusqu'au trait.
+- La taille du titre des cartes Solo s'adapte à la carte pour que « Contre la montre » ne soit jamais coupé.
+- Tous les titres de cadres sont maintenant bien centrés : la place réservée à gauche pour l'ancien damier (supprimé en v219) est retirée.
+- Testé : écrans 393 × 851 et 360 × 640 (Solo et Règles), aucun défilement, aucune erreur.
+- Archive : pencil-race_v227_avant-solo-sans-scroll.html
