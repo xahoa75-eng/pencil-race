@@ -1089,3 +1089,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Le bouton ouvre un écran « Boutique » vide pour l'instant (titre, bouton Retour, petit message), en attendant le menu de Mika (skins, points).
 - Testé : accueil et clic sur Options, Boutique, Règles, Solo, Multi (bons écrans), aucune erreur.
 - Archive : pencil-race_v223_avant-boutique.html
+
+## v225 — Menu Règles sans défilement
+- Les trois cartes du menu Règles (Voitures, Circuits, Power-up) sont réduites et de même taille : leur hauteur s'adapte à l'écran du téléphone, donc plus besoin de défiler. Cartes centrées.
+- Testé : écrans 393 × 851 et 360 × 640, aucun défilement, aucune erreur.
+- Archive : pencil-race_v224_avant-regles-sans-scroll.html
