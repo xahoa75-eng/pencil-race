@@ -1111,3 +1111,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Tous les titres de cadres sont maintenant bien centrés : la place réservée à gauche pour l'ancien damier (supprimé en v219) est retirée.
 - Testé : écrans 393 × 851 et 360 × 640 (Solo et Règles), aucun défilement, aucune erreur.
 - Archive : pencil-race_v227_avant-solo-sans-scroll.html
+
+## v229 — Petits boutons sans ligne
+- Les petits boutons texte (Retour, Menu, et dans les fenêtres Pause et fin de course : Reprendre, Rejouer, Sons, Quitter, Menu) n'ont plus la ligne du bandeau qui les coupait en deux : nouveau cadre `cadre-plein.png` (même cadre arrondi, sans ligne).
+- Le texte est centré sur toute la hauteur du bouton et un peu plus grand (18 px pour Retour/Menu, 20 px dans les fenêtres).
+- Testé : bouton Retour (Solo), bouton Menu en course, fenêtre Pause, aucune erreur.
+- Archive : pencil-race_v228_avant-petits-boutons.html

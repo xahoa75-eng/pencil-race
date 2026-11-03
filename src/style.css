@@ -520,3 +520,11 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
   margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50);
   aspect-ratio: auto; object-fit: contain; border-radius: 0 0 14px 14px;
 }
+
+/* v229 — petits boutons texte (Retour, Menu, Rejouer…) : cadre sans la ligne du bandeau, texte centré sur toute la hauteur */
+.back.fr, #pauseBtn.fr, .fr.frb {
+  border-image: url(data:image/png;base64,@@A:cadre-plein.png@@) 67 48 44 62 / var(--H) calc(var(--H) * .72) calc(var(--H) * .66) calc(var(--H) * .925) stretch !important;
+}
+.back.fr::before, #pauseBtn.fr::before, .fr.frb::before { top: calc(var(--H) * -1); bottom: calc(var(--H) * -.66); height: auto; }
+.back.fr, #pauseBtn.fr { --fs: 18px; }
+.fr.frb { --fs: 20px; }
