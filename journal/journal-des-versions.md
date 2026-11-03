@@ -1083,3 +1083,9 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Correction : depuis le fond blanc de la v219, les boutons à cadre (Menu, etc.) avaient des coins blancs carrés qui dépassaient du cadre arrondi. Le fond suit maintenant les coins arrondis.
 - Testé : capture d'une partie multi local sur le Serpentin (2 bulles devant le joueur), aucune erreur.
 - Archive : pencil-race_v222_avant-bulle-cadeau.html
+
+## v224 — Accueil : bouton Boutique
+- Nouveau bouton « Boutique » (bleu) sur l'accueil, entre Options et Règles. Les trois boutons du bas sont réduits pour faire ensemble la même largeur que Solo et Multi. Nouvelle image d'accueil `accueil-v3.webp` (l'ancienne `accueil-v2.webp` reste dans le dépôt).
+- Le bouton ouvre un écran « Boutique » vide pour l'instant (titre, bouton Retour, petit message), en attendant le menu de Mika (skins, points).
+- Testé : accueil et clic sur Options, Boutique, Règles, Solo, Multi (bons écrans), aucune erreur.
+- Archive : pencil-race_v223_avant-boutique.html

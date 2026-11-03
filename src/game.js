@@ -1322,7 +1322,7 @@
   frameIcons();
 
   // ---------- navigation ----------
-  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'tt', 'tt2', 'tt3', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'rpowerup', 'campaign', 'campaign2', 'campaign3', 'game'];
+  var screens = ['main', 'solo', 'training', 'training2', 'training3', 'training4', 'tt', 'tt2', 'tt3', 'multi', 'multi2', 'multi3', 'multi4', 'online', 'online2', 'online3', 'online4', 'options', 'boutique', 'rules', 'rpilotage', 'rvoitures', 'rcircuits', 'rpowerup', 'campaign', 'campaign2', 'campaign3', 'game'];
   var stack = [], currentScreen = 'main';
 
   // écran d'accueil : le cahier remplit l'écran (zoom limité pour ne pas trop rogner sur un écran large)
