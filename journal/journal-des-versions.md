@@ -1094,3 +1094,8 @@ Grotte Compas 86 > Porte-mine 80 > Gomme 63 > Bille 61 > Plume 49 > Colle 23 > C
 - Les trois cartes du menu Règles (Voitures, Circuits, Power-up) sont réduites et de même taille : leur hauteur s'adapte à l'écran du téléphone, donc plus besoin de défiler. Cartes centrées.
 - Testé : écrans 393 × 851 et 360 × 640, aucun défilement, aucune erreur.
 - Archive : pencil-race_v224_avant-regles-sans-scroll.html
+
+## v226 — Menu Règles : dessins plus grands dans les cartes
+- Voitures et Circuits : les images sont rognées de leur marge blanche, et le dessin remplit tout l'intérieur du cadre (il déborde sur la marge du cadre jusqu'au trait, comme sur l'écran Solo). Plus d'espace blanc à gauche, à droite et en bas. Power-up (bulle) inchangé, elle reste entière.
+- Les trois cartes tiennent toujours dans l'écran sans défiler (écrans 393 × 851 et 360 × 640 testés, aucune erreur).
+- Archive : pencil-race_v225_avant-regles-dessins-agrandis.html

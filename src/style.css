@@ -506,7 +506,12 @@ body.onl-guest [data-act="restart"], body.onl-end [data-act="restart"] { display
 #s-solo .pic-btn.fr img { width: calc(100% + var(--H) * 1.36); max-width: none; margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50); aspect-ratio: 16 / 11; border-radius: 0 0 14px 14px; }
 #s-solo .pic-btn.fr[data-go="tt"] img { width: 100%; margin-left: 0; margin-right: 0; margin-bottom: 0; border-radius: 0; }
 
-/* v225 — menu Règles : les 3 cartes tiennent dans l'écran sans défiler (hauteur de l'image = (hauteur de l'écran - 400px) / 3), toutes de même taille */
-#s-rules { --rch: max(80px, calc((100vh - 400px) / 3)); --rch: max(80px, calc((100dvh - 400px) / 3)); }
-#s-rules .pic-btn.rc-pic { width: fit-content; max-width: 100%; }
-#s-rules .pic-btn.rc-pic.fr img { height: var(--rch); width: calc(var(--rch) * 1.21); max-width: 100%; aspect-ratio: auto; object-fit: contain; }
+/* v225/v226 — menu Règles : les 3 cartes tiennent dans l'écran sans défiler (hauteur de l'image = (hauteur de l'écran - 400px) / 3), toutes de même taille ; le dessin remplit tout l'intérieur du cadre (déborde sur la marge du cadre jusqu'au trait) */
+#s-rules { --rch: max(60px, calc((100vh - 424px) / 3)); --rch: max(60px, calc((100dvh - 424px) / 3)); }
+#s-rules .pic-btn.rc-pic { width: fit-content; max-width: 100%; overflow: visible; }
+#s-rules .pic-btn.rc-pic.fr img {
+  height: calc(var(--rch) + var(--H) * .62); width: calc(var(--rch) * 1.2 + var(--H) * 1.4); max-width: none;
+  margin-left: calc(var(--H) * -.80); margin-right: calc(var(--H) * -.56); margin-bottom: calc(var(--H) * -.50);
+  aspect-ratio: auto; object-fit: cover; border-radius: 0 0 14px 14px;
+}
+#s-rules .pic-btn.rc-pic[data-go="rpowerup"].fr img { object-fit: contain; }
